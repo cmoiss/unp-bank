@@ -35,5 +35,6 @@ CONTA BANCÁRIA:
 +VerificarSaldo()
 +VerificarSaque() 
 +VerificarDeposito()
++tranferirDinheiro()
 
 
