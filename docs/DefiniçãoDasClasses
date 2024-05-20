@@ -1,0 +1,40 @@
+Classes
+
+
+
+PESSOA:
+-Nome
+-CPF
+-DataNascimento
+-Idade
+-Email
++VerificarIdade()
++VerificarCPF()
+
+GERENTE: HerdaDePessoa
+-IDgerente
++CadastrarCliente()
++CadastrarGerente()
++ChecarListaDeContas()
++ChecarDadosDaConta()
++VerListaDeClientes()
++ExcluirClientes()
++PesquisarCliente()
+
+CLIENTE: HerdaDePessoa
+-IDconta∆
+-IDcliente
+-Status
++EfetuarDeposito()
++SolicitarSaque()
++ChecarDados()
+
+CONTA BANCÁRIA:
+-IDconta∆
+-SaldoAtual
++VerificarSaldo()
++VerificarSaque() 
++VerificarDeposito()
++tranferirDinheiro()
+
+
