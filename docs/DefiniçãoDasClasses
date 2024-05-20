@@ -27,7 +27,7 @@ CLIENTE: HerdaDePessoa
 -Status
 +EfetuarDeposito()
 +SolicitarSaque()
-+ChecarDados()
++ChecarDadosConta()
 
 CONTA BANCÁRIA:
 -IDconta∆
