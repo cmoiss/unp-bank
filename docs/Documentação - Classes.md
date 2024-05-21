@@ -1,5 +1,5 @@
-# Classes
-PESSOA:
+## Classes
+#PESSOA:
 -nome
 -CPF
 -dataNascimento
@@ -8,7 +8,7 @@ PESSOA:
 +verificarIdade()
 +verificarCPF()
 
-GERENTE: -> HerdaDePessoa
+#GERENTE: -> HerdaDePessoa
 -idGerente
 +cadastrarCliente()
 +cadastrarGerente()
@@ -18,7 +18,7 @@ GERENTE: -> HerdaDePessoa
 +excluirClientes()
 +pesquisarCliente()
 
-CLIENTE: -> HerdaDePessoa
+#CLIENTE: -> HerdaDePessoa
 -idConta
 -idCliente
 -status
@@ -26,7 +26,7 @@ CLIENTE: -> HerdaDePessoa
 +solicitarSaque()
 +checarDadosConta()
 
-CONTA BANCÁRIA:
+#CONTA BANCÁRIA:
 -idConta
 -saldoAtual
 +verificarSaldo()
