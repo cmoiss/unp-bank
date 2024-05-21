@@ -1,37 +1,42 @@
+Claro, aqui está o texto convertido para Markdown:
+
+```markdown
 # Classes
-##PESSOA:
-  -nome
-  -CPF
-  -dataNascimento
-  -idade
-  -email
-  +verificarIdade()
-  +verificarCPF()
 
-###GERENTE: -> HerdaDePessoa
-  -idGerente
-  +cadastrarCliente()
-  +cadastrarGerente()
-  +checarListaDeContas()
-  +checarDadosDaConta()
-  +verListaDeClientes()
-  +excluirClientes()
-  +pesquisarCliente()
+## PESSOA:
+- nome
+- CPF
+- dataNascimento
+- idade
+- email
++ verificarIdade()
++ verificarCPF()
 
-####CLIENTE: -> HerdaDePessoa
-  -idConta
-  -idCliente
-  -status
-  +efetuarDeposito()
-  +solicitarSaque()
-  +checarDadosConta()
+### GERENTE: HerdaDePessoa
+- idGerente
++ cadastrarCliente()
++ cadastrarGerente()
++ checarListaDeContas()
++ checarDadosDaConta()
++ verListaDeClientes()
++ excluirClientes()
++ pesquisarCliente()
 
-####CONTA BANCÁRIA:
-  -idConta
-  -saldoAtual
-  +verificarSaldo()
-  +verificarSaque() 
-  +verificarDeposito()
-  +tranferirDinheiro()
+#### CLIENTE: HerdaDePessoa
+- idConta
+- idCliente
+- status
++ efetuarDeposito()
++ solicitarSaque()
++ checarDadosConta()
+
+#### CONTA BANCÁRIA:
+- idConta
+- saldoAtual
++ verificarSaldo()
++ verificarSaque() 
++ verificarDeposito()
++ tranferirDinheiro()
+```
 
 
