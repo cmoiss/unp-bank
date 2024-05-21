@@ -1,4 +1,4 @@
-Claro, aqui está o texto convertido para Markdown:
+
 
 ```markdown
 # Classes
