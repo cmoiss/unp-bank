@@ -1,3 +1,5 @@
+package Control;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
@@ -8,6 +10,7 @@ public class Idade {
     private Date dataNascimento;
 
     public static void main(String[] args) {
+        //Instância de um objeto da classe Idade
         Idade idade;
         idade.formatarDataNascimento(lerNascimentoString());
 
