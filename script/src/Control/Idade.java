@@ -1,13 +1,15 @@
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Date;
 import java.util.Scanner;
 
 public class Idade {
-    Date dataNascimento;
+    private Date dataNascimento;
 
     public static void main(String[] args) {
-        lerNascimentoString();
+        Idade idade;
+        idade.formatarDataNascimento(lerNascimentoString());
 
         // Analisa a string de data de entrada em um objeto LocalDate
         String[] partesData = dataNascimento.split(",");
@@ -49,5 +51,11 @@ public class Idade {
         ler.close();
 
         return dataNascimentoString;
+    }
+
+    private void formatarDataNascimento(String dataNascimento) {
+        //Converte para Date alguma data (em String) informada pelo usuário
+        SimpleDateFormat formatarData = new SimpleDateFormat("dd/MM/yyyy");
+        this.dataNascimento = formatarData.parse(dataNascimento);
     }
 }
