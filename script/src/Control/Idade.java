@@ -16,14 +16,7 @@ public class Idade {
         //Instância de um objeto da classe Idade
         Idade idade;
         idade.formatarDataNascimento(lerNascimentoString());
-
-        // Calcula a idade atual
-        LocalDate dataAtual = LocalDate.now();
-        Period periodo = Period.between(dataNascimento, dataAtual);
-        int idadeEmAnos = periodo.getYears();
-
-        // Exibe a idade
-        System.out.println("\nSua idade em anos é: " + idadeEmAnos);
+        idade.imprimirIdade();
 
         // Verifica se a pessoa é maior de idade
         boolean maiorDeIdade = idadeEmAnos >= 18;
@@ -91,5 +84,10 @@ public class Idade {
         if (this.idade < 0) {
             this.idade = 0;
         }
+    }
+
+    private void imprimirIdade() {
+        // Exibe a idade
+        System.out.println("\nSua idade em anos é: " + idade);
     }
 }
