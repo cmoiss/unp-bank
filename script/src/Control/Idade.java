@@ -1,25 +1,21 @@
 package Control;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
 public class Idade {
     private Date dataNascimento;
+    private int idade;
 
     public static void main(String[] args) {
         //Instância de um objeto da classe Idade
         Idade idade;
         idade.formatarDataNascimento(lerNascimentoString());
-
-        // Analisa a string de data de entrada em um objeto LocalDate
-        String[] partesData = dataNascimento.split(",");
-        int dia = Integer.parseInt(partesData[0]);
-        int mes = Integer.parseInt(partesData[1]);
-        int ano = Integer.parseInt(partesData[2]);
-        LocalDate dataNascimento = LocalDate.of(ano, mes, dia);
 
         // Calcula a idade atual
         LocalDate dataAtual = LocalDate.now();
@@ -56,9 +52,44 @@ public class Idade {
         return dataNascimentoString;
     }
 
-    private void formatarDataNascimento(String dataNascimento) {
+    private void formatarDataNascimento(String dataNascimento) throws ParseException {
         //Converte para Date alguma data (em String) informada pelo usuário
         SimpleDateFormat formatarData = new SimpleDateFormat("dd/MM/yyyy");
         this.dataNascimento = formatarData.parse(dataNascimento);
+    }
+
+    private void calcularIdade() {
+        //Armazena as partes da data de nascimento para viabilizar o cálculo da idade
+        int diaAtual, mesAtual, anoAtual;
+        int diaNascimento, mesNascimento, anoNascimento;
+
+        //Pega data atual do sistema
+        Date hoje = new Date();
+
+        Calendar calendario = Calendar.getInstance();
+
+        //Passa data de hoje no calendário
+        calendario.setTime(hoje);
+        diaAtual = calendario.get(Calendar.DAY_OF_MONTH);
+        mesAtual = calendario.get(Calendar.MONTH) + 1;
+        anoAtual = calendario.get(Calendar.YEAR);        
+
+        calendario.setTime(this.dataNascimento);
+        diaNascimento = calendario.get(Calendar.DAY_OF_MONTH);
+        mesNascimento = calendario.get(Calendar.MONTH) + 1;
+        anoNascimento = calendario.get(Calendar.YEAR);
+
+        //Calcula idade
+        this.idade = anoNascimento - anoAtual;
+        if (mesAtual < mesNascimento) {
+            this.idade--;
+        } else if (mesAtual < mesNascimento && diaAtual < diaNascimento) {
+            this.idade--;
+        }
+
+        //Tratamento para evitar resultados negativos, pois não existe idade negativa
+        if (this.idade < 0) {
+            this.idade = 0;
+        }
     }
 }
