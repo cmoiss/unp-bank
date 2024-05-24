@@ -1,17 +1,16 @@
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Idade {
+    Date dataNascimento;
 
     public static void main(String[] args) {
-        Scanner entrada = new Scanner(System.in);
-
-        System.out.print("Digite sua data de nascimento (DIA,MES,ANO): ");
-        String dataNascimentoString = entrada.nextLine();
+        lerNascimentoString();
 
         // Analisa a string de data de entrada em um objeto LocalDate
-        String[] partesData = dataNascimentoString.split(",");
+        String[] partesData = dataNascimento.split(",");
         int dia = Integer.parseInt(partesData[0]);
         int mes = Integer.parseInt(partesData[1]);
         int ano = Integer.parseInt(partesData[2]);
@@ -38,6 +37,17 @@ public class Idade {
         if (idadeExtrema) {
             System.out.println("Sua idade é considerada extrema (120 anos ou mais).");
         }
-        entrada.close();
+    }
+
+    private static String lerNascimentoString() {
+        //Lê e armazena data de nascimento
+        String dataNascimentoString;
+        Scanner ler = new Scanner(System.in);
+
+        System.out.print("Digite sua data de nascimento (dd/mm/aaaa): ");
+        dataNascimentoString = ler.nextLine();
+        ler.close();
+
+        return dataNascimentoString;
     }
 }
