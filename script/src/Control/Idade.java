@@ -12,25 +12,15 @@ public class Idade {
     private Date dataNascimento;
     private int idade;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         //Instância de um objeto da classe Idade
-        Idade idade;
+        Idade idade = new Idade();
+
+        idade.espaçoVazio();
         idade.formatarDataNascimento(lerNascimentoString());
+        idade.calcularIdade();
         idade.imprimirIdade();
-
-        // Verifica se a pessoa é maior de idade
-        boolean maiorDeIdade = idadeEmAnos >= 18;
-        if (maiorDeIdade) {
-            System.out.println("Você é maior de idade!");
-        } else {
-            System.out.println("Você é menor de idade.");
-        }
-
-        // Verifica se a pessoa tem 120 anos ou mais
-        boolean idadeExtrema = idadeEmAnos >= 120;
-        if (idadeExtrema) {
-            System.out.println("Sua idade é considerada extrema (120 anos ou mais).");
-        }
+        idade.verificarIdade();
     }
 
     private static String lerNascimentoString() {
@@ -73,7 +63,7 @@ public class Idade {
         anoNascimento = calendario.get(Calendar.YEAR);
 
         //Calcula idade
-        this.idade = anoNascimento - anoAtual;
+        this.idade = anoAtual - anoNascimento;
         if (mesAtual < mesNascimento) {
             this.idade--;
         } else if (mesAtual < mesNascimento && diaAtual < diaNascimento) {
@@ -88,6 +78,26 @@ public class Idade {
 
     private void imprimirIdade() {
         // Exibe a idade
-        System.out.println("\nSua idade em anos é: " + idade);
+        System.out.println("\nSua idade é " + idade + " anos.");
+    }
+
+    private boolean verificarIdade() {
+        //Verifica se a pessoa é elegível para efetuar cadastro com base em sua idade
+        boolean idadeCorreta = false;
+
+        if (idade >= 18 && idade <= 120) {
+            System.out.println("Você está apto a prosseguir com o cadastro.");
+            idadeCorreta = true;
+        } else if (idade < 18) {
+            System.out.println("Você é menor de idade, portanto não está apto a prosseguir com o cadastro.");
+        } else if (idade > 120) {
+            System.out.println("Sua idade é considerada extrema (120 anos ou mais), portanto não está apto a prosseguir com o cadastro.");
+        }
+
+        return idadeCorreta;
+    }
+
+    private void espaçoVazio() {
+        System.out.println("");
     }
 }
