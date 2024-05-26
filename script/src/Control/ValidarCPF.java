@@ -32,8 +32,7 @@ public class ValidarCPF {
         //Passo 01: Ler CPF
         System.out.print("Digite seu CPF: ");
         CPF = ler.nextLine();
-        ler.close();
-
+        
         //Passo 02: Preencher os dígitos do CPF no vetor digitosCPF
         for(int i = 0; i < 11; i++) {
             digitosCPF[i] = CPF.charAt(i) - 48;
