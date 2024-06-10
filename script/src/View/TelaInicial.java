@@ -121,8 +121,8 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_botSouGerenteMouseClicked
 
     private void chamarTelaLogin() {
-        new TelaInicial().
-        new TelaLogin().setVisible(true);
+        this.dispose(); //fecha tela atual
+        new TelaLogin().setVisible(true); //abre tela de login
     }
 
     /**
