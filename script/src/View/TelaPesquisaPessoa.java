@@ -29,7 +29,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        botCadastrar = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -51,8 +51,13 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         jButton2.setText("Excluir");
         jButton2.setPreferredSize(new java.awt.Dimension(88, 25));
 
-        jButton3.setText("Cadastrar");
-        jButton3.setPreferredSize(new java.awt.Dimension(88, 25));
+        botCadastrar.setText("Cadastrar");
+        botCadastrar.setPreferredSize(new java.awt.Dimension(88, 25));
+        botCadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botCadastrarMouseClicked(evt);
+            }
+        });
 
         jTextField1.setText("Digite o nome de usuário ou iD");
 
@@ -83,7 +88,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
                         .addGap(11, 11, 11)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -105,7 +110,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(botCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
@@ -126,6 +131,11 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void botCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botCadastrarMouseClicked
+        this.dispose();
+        new TelaCadastro().setVisible(true);
+    }//GEN-LAST:event_botCadastrarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -163,9 +173,9 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botCadastrar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JList<String> jList1;
