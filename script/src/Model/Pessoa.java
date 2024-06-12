@@ -1,22 +1,33 @@
-
 package Model;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+<<<<<<< HEAD
 import java.util.Date;
+=======
+import Control.Idade;
+import Control.ValidarCPF;
+>>>>>>> CRUD
+
+import java.util.Date;
+
 
 
 /* Classe Pai de Cliente e Gerente*/
 public class Pessoa {
     private String nome;
-    private String CPF;
-    private Date dataNascimento;
-    private int idade;
+    private String CPF=null;
     private String email;
+<<<<<<< HEAD
+    private String login;
+    private String senha;
+=======
+    
+    Idade idade = new Idade();
+>>>>>>> CRUD
 
-    public Pessoa(String nome, String CPF, Date dataNascimento, String email) {
+
+    public Pessoa(String nome, String CPF, Date dataNascimento, String email, String login, String senha) {
         this.nome = nome;
         this.CPF = CPF;
-        this.dataNascimento = dataNascimento;
+        this.idade.setDataNascimento(dataNascimento);
         this.email = email;
     }
 
@@ -37,19 +48,19 @@ public class Pessoa {
     }
 
     public Date getDataNascimento() {
-        return dataNascimento;
+        return idade.getDataNascimento();
     }
 
     public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
+        this.idade.setDataNascimento(dataNascimento);
     }
 
     public int getIdade() {
-        return idade;
+        return idade.getIdade();
     }
 
     public void setIdade(int idade) {
-        this.idade = idade;
+        this.idade.setIdade(idade);
     }
 
     public String getEmail() {
@@ -60,7 +71,8 @@ public class Pessoa {
         this.email = email;
     }
 
-    public void verificarDados(){
-    /*Método para verificar idade e cpf*/
+    public void verificarDados(String CPF){
+    ValidarCPF validador = new ValidarCPF();
+    validador.getValidarCPF(CPF);
     }
 }

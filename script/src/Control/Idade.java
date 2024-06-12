@@ -2,43 +2,35 @@ package Control;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
 public class Idade {
-    private Date dataNascimento;
+
+    private Date dataNascimento = null;
     private int idade;
 
-    public static void main(String[] args) throws ParseException {
-        //Instância de um objeto da classe Idade
-        Idade idade = new Idade();
-
-        idade.espaçoVazio();
-        idade.formatarDataNascimento(lerNascimentoString());
-        idade.calcularIdade();
-        idade.imprimirIdade();
-        idade.verificarIdade();
-    }
-
-    private static String lerNascimentoString() {
+    private String lerNascimentoString() {
         //Lê e armazena data de nascimento
         String dataNascimentoString;
         Scanner ler = new Scanner(System.in);
-
-        System.out.print("Digite sua data de nascimento (dd/mm/aaaa): ");
+        
         dataNascimentoString = ler.nextLine();
         ler.close();
 
         return dataNascimentoString;
     }
 
-    private void formatarDataNascimento(String dataNascimento) throws ParseException {
+    private Date formatarDataNascimento(String dataNascimentoString) throws ParseException {
+        Date dataNascimentoDate;
+
         //Converte para Date alguma data (em String) informada pelo usuário
         SimpleDateFormat formatarData = new SimpleDateFormat("dd/MM/yyyy");
-        this.dataNascimento = formatarData.parse(dataNascimento);
+        dataNascimentoDate = formatarData.parse(dataNascimentoString);
+        this.dataNascimento = dataNascimentoDate;
+        
+        return dataNascimentoDate;
     }
 
     private void calcularIdade() {
@@ -55,7 +47,7 @@ public class Idade {
         calendario.setTime(hoje);
         diaAtual = calendario.get(Calendar.DAY_OF_MONTH);
         mesAtual = calendario.get(Calendar.MONTH) + 1;
-        anoAtual = calendario.get(Calendar.YEAR);        
+        anoAtual = calendario.get(Calendar.YEAR);
 
         calendario.setTime(this.dataNascimento);
         diaNascimento = calendario.get(Calendar.DAY_OF_MONTH);
@@ -99,5 +91,45 @@ public class Idade {
 
     private void espaçoVazio() {
         System.out.println("");
+    }
+
+    public Date getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+    
+    public int getIdade() {
+        return idade;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
+
+    public String getLerNascimentoString() {
+        return lerNascimentoString();
+    }
+
+    public void getFormatarDataNascimento(String dataNascimento) throws ParseException {
+        formatarDataNascimento(dataNascimento);
+    }
+
+    public void getCalcularIdade() {
+        calcularIdade();
+    }
+
+    public void getImprimirIdade() {
+        imprimirIdade();
+    }
+
+    public void getVerificarIdade() {
+        verificarIdade();
+    }
+
+    public void getEspaçoVazio() {
+        espaçoVazio();
     }
 }

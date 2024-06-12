@@ -1,10 +1,13 @@
 
 package Model;
 
+import Control.DAO.CRUD_DAO;
+import Control.DAO.CadastroDAO;
 import java.util.Date;
 
 public class Gerente extends Pessoa {
     private String idGerente;
+    CRUD_DAO funcao=new CRUD_DAO();
 
     public Gerente(String idGerente, String nome, String CPF, Date dataNascimento, String email) {
         super(nome, CPF, dataNascimento, email);
@@ -20,24 +23,28 @@ public class Gerente extends Pessoa {
     }
     
     public void cadastrarCliente(){
-     /* Gerente cadastra cliente */
+     CadastroDAO cadastrar=new CadastroDAO();
+     cadastrar.CadastroCL(null, null, null,null,null, 0);
+           
     }
     public void cadastrarGerente(){
-    /* Gerente ADM cadastra novo Gerente*/
+     CadastroDAO cadastrar=new CadastroDAO();
+     cadastrar.CadastroG(null, null, null,null,null, 0);
+           
     }
     public void checarListaDeContas(){
-    /* Gerente acessa lista de contas no database*/
+    funcao.verificarTblContas();
     }
     public void checarDadosDaConta(){
-    /* Gerente checa dados de uma conta especifica */
+    funcao.checkDadosTblContas(null);
     }
     public void verListaDeClientes(){
-    /* Gerente Acessa Lista de Clientes do Banco*/
+    funcao.verifcarTblCliente();
     }
     public void excluirClientes(){
-    /* Gerente pode excluir clientes do database*/
+    funcao.excluiirTblCliente(null);
     }
     public void pesquisarCliente(){
-    /* Gerente pesquisa cliente no databse */
+    funcao.pesquisarTblCliente(null);
     }
 }
