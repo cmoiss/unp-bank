@@ -4,6 +4,7 @@
  */
 package View;
 
+import Control.DAO.CRUD_DAO;
 import Control.ValidarCPF;
 import javax.swing.JOptionPane;
 
@@ -34,7 +35,6 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         botExcluirItem = new javax.swing.JButton();
         botCadastrarNovoItem = new javax.swing.JButton();
         caixaPesquisaUsuario = new javax.swing.JTextField();
-        botPesquisar = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -76,8 +76,6 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
             }
         });
 
-        botPesquisar.setText("jButton4");
-
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Gerente" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,9 +110,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(caixaPesquisaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(caixaPesquisaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(16, 16, 16))
@@ -132,7 +128,6 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(caixaPesquisaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botPesquisar)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -200,7 +195,10 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         ValidarCPF validador = new ValidarCPF();
         
         if (validador.getValidarCPF(cpf) == false) {
-            JOptionPane.showMessageDialog(null, "CPF Inválido", "Validador de CPF", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "CPF inválido! Por favor, digite novamente.", "Validador de CPF", JOptionPane.ERROR_MESSAGE);
+        } else {
+            CRUD_DAO crud = new CRUD_DAO();
+            crud.pesquisarTblCliente(cpf);
         }
         
     }//GEN-LAST:event_caixaPesquisaUsuarioActionPerformed
@@ -210,34 +208,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         new TelaCadastro(tipoUsuario).setVisible(true);
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaPesquisaPessoa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaPesquisaPessoa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaPesquisaPessoa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaPesquisaPessoa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TelaPesquisaPessoa().setVisible(true);
@@ -249,7 +220,6 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     private javax.swing.JButton botCadastrarNovoItem;
     private javax.swing.JButton botEditarItem;
     private javax.swing.JButton botExcluirItem;
-    private javax.swing.JButton botPesquisar;
     private javax.swing.JTextField caixaPesquisaUsuario;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JPanel jPanel1;
