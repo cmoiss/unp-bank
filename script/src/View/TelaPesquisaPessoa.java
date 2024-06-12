@@ -53,6 +53,16 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
 
         botExcluirItem.setText("Excluir");
         botExcluirItem.setPreferredSize(new java.awt.Dimension(88, 25));
+        botExcluirItem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botExcluirItemMouseClicked(evt);
+            }
+        });
+        botExcluirItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botExcluirItemActionPerformed(evt);
+            }
+        });
 
         botCadastrarNovoItem.setText("Cadastrar");
         botCadastrarNovoItem.setPreferredSize(new java.awt.Dimension(88, 25));
@@ -200,8 +210,28 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
             CRUD_DAO crud = new CRUD_DAO();
             crud.pesquisarTblCliente(cpf);
         }
-        
     }//GEN-LAST:event_caixaPesquisaUsuarioActionPerformed
+
+    private void botExcluirItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botExcluirItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botExcluirItemActionPerformed
+
+    private void botExcluirItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botExcluirItemMouseClicked
+        int opçao = JOptionPane.showConfirmDialog(null, "Realmente deseja excluir esse usuário?", "Excluir usuário", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        
+        switch (opçao) {
+            case JOptionPane.YES_OPTION -> {
+                //Excluir item
+                //Confirmação de exclusão
+            }
+            
+            case JOptionPane.NO_OPTION -> {
+                //Não excluir
+            }
+            
+            default -> throw new AssertionError();
+        }
+    }//GEN-LAST:event_botExcluirItemMouseClicked
 
     private void chamarTelaCadastro(String tipoUsuario) {
         this.dispose();
