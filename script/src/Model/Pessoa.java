@@ -1,14 +1,8 @@
 package Model;
 
-import java.util.Date;
 import Control.Idade;
 import Control.ValidarCPF;
-
-import java.util.Date;
-
-import Control.Idade;
 import Control.TipoPessoa;
-import Control.ValidarCPF;
 import java.util.Date;
 import java.util.Random;
 
@@ -27,7 +21,7 @@ public class Pessoa {
         this.id = gerarID(tipoPessoa);
     }
 
-    private String gerarID(String tipoPessoa) {
+    private String gerarID(TipoPessoa tipoPessoa) {
         //Gera ID de Cliente
         String sigla = null;
         String idCliente;
@@ -47,9 +41,9 @@ public class Pessoa {
             }
         }
 
-        if (tipoPessoa.equals("Cliente")) {
+        if (tipoPessoa.equals(TipoPessoa.CLIENTE)) {
             sigla = "CLI";
-        } else if (tipoPessoa.equals("Gerente")) {
+        } else if (tipoPessoa.equals(TipoPessoa.GERENTE)) {
             sigla = "GER";
         }
 

@@ -36,11 +36,10 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         botEfetuarTransferência = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(500, 300));
 
         jPanel1.setPreferredSize(new java.awt.Dimension(500, 300));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(null));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -62,6 +61,16 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         jLabel3.setText("R$0000,00");
 
         botEfetuarDepósito.setText("Efetuar Depósito");
+        botEfetuarDepósito.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botEfetuarDepósitoMouseClicked(evt);
+            }
+        });
+        botEfetuarDepósito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botEfetuarDepósitoActionPerformed(evt);
+            }
+        });
 
         botEfetuarSaque.setText("Efetuar Saque");
 
@@ -138,6 +147,18 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_botEfetuarTransferênciaActionPerformed
 
+    private void botEfetuarDepósitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEfetuarDepósitoActionPerformed
+        efetuarDeposito();
+    }//GEN-LAST:event_botEfetuarDepósitoActionPerformed
+
+    private void botEfetuarDepósitoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEfetuarDepósitoMouseClicked
+        efetuarDeposito();
+    }//GEN-LAST:event_botEfetuarDepósitoMouseClicked
+
+    private void efetuarDeposito() {
+        
+    }
+    
     /**
      * @param args the command line arguments
      */

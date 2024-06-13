@@ -6,9 +6,7 @@ CREATE TABLE IF NOT EXISTS tbl_Pessoa(
 	cpf VARCHAR(11)PRIMARY KEY NOT NULL ,
 	dataNascimento DATE,
 	idade INT,
-	email VARCHAR(40) NOT NULL,
-	login VARCHAR(20) NOT NULL,
-	senha VARCHAR(6) NOT NULL
+	email VARCHAR(40) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS tbl_ContaBancaria(
@@ -20,6 +18,8 @@ CREATE TABLE IF NOT EXISTS tbl_Cliente(
 	idCliente INT PRIMARY KEY NOT NULL ,
 	statusCliente BOOLEAN NOT NULL,
 	cpf VARCHAR(11) NOT NULL,
+	login VARCHAR(20) NOT NULL,
+	senha VARCHAR(6) NOT NULL,
 	idConta INT NOT NULL,
 	CONSTRAINT FK_C_Pessoa FOREIGN KEY (cpf) REFERENCES tbl_Pessoa (cpf),
 	CONSTRAINT FK_Conta FOREIGN KEY (idConta) REFERENCES tbl_ContaBancaria(idConta)
@@ -28,6 +28,8 @@ CREATE TABLE IF NOT EXISTS tbl_Cliente(
 CREATE TABLE IF NOT EXISTS tbl_Gerente(
 	idGerente INT PRIMARY KEY NOT NULL ,
 	cpf VARCHAR(11) NOT NULL,
+	login VARCHAR(20) NOT NULL,
+	senha VARCHAR(6) NOT NULL,
 	CONSTRAINT FK_G_Pessoa FOREIGN KEY (cpf) REFERENCES tbl_Pessoa (cpf)
 );
 

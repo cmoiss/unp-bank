@@ -1,16 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package View;
 
+import Control.DAO.LoginDAO;
 import Control.TipoPessoa;
 
 public class TelaLogin extends javax.swing.JFrame {
-
     private String login = null;
     private String senha = null;
-
     private TipoPessoa tipoPessoa = null;
 
     public TelaLogin(TipoPessoa tipoPessoa) {
@@ -49,6 +44,16 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel2.setText("Login:");
 
         botEfetuarLogin.setText("Efetuar Login");
+        botEfetuarLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botEfetuarLoginMouseClicked(evt);
+            }
+        });
+        botEfetuarLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botEfetuarLoginActionPerformed(evt);
+            }
+        });
 
         caixaTextoSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,6 +126,22 @@ public class TelaLogin extends javax.swing.JFrame {
         this.login = caixaTextoLogin.getText();
     }//GEN-LAST:event_caixaTextoLoginActionPerformed
 
+    private void botEfetuarLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEfetuarLoginActionPerformed
+        efetuarLogin();
+    }//GEN-LAST:event_botEfetuarLoginActionPerformed
+
+    private void botEfetuarLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEfetuarLoginMouseClicked
+        efetuarLogin();
+    }//GEN-LAST:event_botEfetuarLoginMouseClicked
+
+    private void efetuarLogin() {
+        boolean auxiliar= false;
+        LoginDAO loginDAO = new LoginDAO();
+        if (login.equals(loginDAO.LoginCheck(login, senha))) {
+            
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -152,7 +173,7 @@ public class TelaLogin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaLogin(tipoPessoa).setVisible(true);
+                new TelaLogin(TipoPessoa.CLIENTE).setVisible(true);
             }
         });
     }
