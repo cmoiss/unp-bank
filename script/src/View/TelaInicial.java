@@ -1,5 +1,7 @@
 package View;
 
+import Control.TipoPessoa;
+
 public class TelaInicial extends javax.swing.JFrame {
 
     public TelaInicial() {
@@ -107,24 +109,24 @@ public class TelaInicial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botSouGerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botSouGerenteActionPerformed
-
+        chamarTelaLogin(TipoPessoa.GERENTE);
     }//GEN-LAST:event_botSouGerenteActionPerformed
 
     private void botSouClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botSouClienteActionPerformed
-
+        chamarTelaLogin(TipoPessoa.CLIENTE);
     }//GEN-LAST:event_botSouClienteActionPerformed
 
     private void botSouClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botSouClienteMouseClicked
-        chamarTelaLogin();
+        chamarTelaLogin(TipoPessoa.CLIENTE);
     }//GEN-LAST:event_botSouClienteMouseClicked
 
     private void botSouGerenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botSouGerenteMouseClicked
-        chamarTelaLogin();
+        chamarTelaLogin(TipoPessoa.GERENTE);
     }//GEN-LAST:event_botSouGerenteMouseClicked
 
-    private void chamarTelaLogin() {
+    private void chamarTelaLogin(TipoPessoa tipoPessoa) {
         this.dispose(); //fecha tela atual
-        new TelaLogin().setVisible(true); //abre tela de login
+        new TelaLogin(tipoPessoa).setVisible(true); //abre tela de login
     }
 
     /**
