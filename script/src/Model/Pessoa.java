@@ -1,5 +1,11 @@
 package Model;
 
+import java.util.Date;
+import Control.Idade;
+import Control.ValidarCPF;
+
+import java.util.Date;
+
 import Control.Idade;
 import Control.ValidarCPF;
 import java.util.Date;
@@ -18,6 +24,17 @@ public class Pessoa {
 
     public Pessoa(String tipoPessoa, String nome, String CPF, Date dataNascimento, String email, String login, String senha) {
         this.id = gerarID(tipoPessoa);
+
+    private String nome;
+    private String CPF = null;
+    private String email;
+    private String login;
+    private String senha;
+
+    Idade idade = new Idade();
+
+    public Pessoa(String nome, String CPF, Date dataNascimento, String email, String login, String senha) {
+
         this.nome = nome;
         this.CPF = CPF;
         this.idade.setDataNascimento(dataNascimento);
@@ -25,7 +42,7 @@ public class Pessoa {
         this.login = login;
         this.senha = senha;
     }
-    
+
     private String gerarID(String tipoPessoa) {
         //Gera ID de Cliente
         String sigla = null;
@@ -51,13 +68,12 @@ public class Pessoa {
         } else if (tipoPessoa.equals("Gerente")) {
             sigla = "GER";
         }
-        
-        
+
         idCliente = sigla + numeroAleatorioString;
 
         return idCliente;
     }
-    
+
     public String getNome() {
         return nome;
     }
