@@ -8,13 +8,16 @@ import Control.TipoPessoa;
 
 public class TelaLogin extends javax.swing.JFrame {
 
+    private String login = null;
+    private String senha = null;
+
     private TipoPessoa tipoPessoa = null;
-    
+
     public TelaLogin(TipoPessoa tipoPessoa) {
         this.tipoPessoa = tipoPessoa;
         initComponents();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -25,10 +28,12 @@ public class TelaLogin extends javax.swing.JFrame {
         logotipoUNPBANK = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         botEfetuarLogin = new javax.swing.JButton();
-        caixaTexteSenha = new javax.swing.JPasswordField();
+        caixaTextoSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+
+        painelTelaLogin.setBorder(javax.swing.BorderFactory.createTitledBorder("LOGIN DE " + tipoPessoa));
 
         jLabel3.setText("Senha:");
 
@@ -45,9 +50,9 @@ public class TelaLogin extends javax.swing.JFrame {
 
         botEfetuarLogin.setText("Efetuar Login");
 
-        caixaTexteSenha.addActionListener(new java.awt.event.ActionListener() {
+        caixaTextoSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                caixaTexteSenhaActionPerformed(evt);
+                caixaTextoSenhaActionPerformed(evt);
             }
         });
 
@@ -65,7 +70,7 @@ public class TelaLogin extends javax.swing.JFrame {
                     .addGroup(painelTelaLoginLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(19, 19, 19)
-                        .addComponent(caixaTexteSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(caixaTextoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(botEfetuarLogin)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTelaLoginLayout.createSequentialGroup()
                         .addComponent(logotipoUNPBANK, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -84,7 +89,7 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(painelTelaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(caixaTexteSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(caixaTextoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addComponent(botEfetuarLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -108,12 +113,12 @@ public class TelaLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void caixaTexteSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaTexteSenhaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_caixaTexteSenhaActionPerformed
+    private void caixaTextoSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaTextoSenhaActionPerformed
+        this.senha = caixaTextoSenha.getText();
+    }//GEN-LAST:event_caixaTextoSenhaActionPerformed
 
     private void caixaTextoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaTextoLoginActionPerformed
-        // TODO add your handling code here:
+        this.login = caixaTextoLogin.getText();
     }//GEN-LAST:event_caixaTextoLoginActionPerformed
 
     /**
@@ -154,8 +159,8 @@ public class TelaLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botEfetuarLogin;
-    private javax.swing.JPasswordField caixaTexteSenha;
     private javax.swing.JTextField caixaTextoLogin;
+    private javax.swing.JPasswordField caixaTextoSenha;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel logotipoUNPBANK;
