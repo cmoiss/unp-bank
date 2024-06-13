@@ -148,7 +148,7 @@ public class TelaLogin extends javax.swing.JFrame {
         }
         } else {
             JOptionPane.showMessageDialog(null, "Usuário/senha não identificados! Por favor, tente novamente", "Erro no login!", JOptionPane.ERROR_MESSAGE);
-        }
+        } 
     }
     
     /**
