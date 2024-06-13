@@ -45,6 +45,11 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
 
         botEditarItem.setText("Editar");
         botEditarItem.setPreferredSize(new java.awt.Dimension(88, 25));
+        botEditarItem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botEditarItemMouseClicked(evt);
+            }
+        });
         botEditarItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botEditarItemActionPerformed(evt);
@@ -146,7 +151,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
                     .addComponent(botEditarItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botExcluirItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botCadastrarNovoItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -164,7 +169,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botEditarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEditarItemActionPerformed
-        // TODO add your handling code here:
+        editar();
     }//GEN-LAST:event_botEditarItemActionPerformed
 
     private void botCadastrarNovoItemNovoItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botCadastrarNovoItemNovoItemMouseClicked
@@ -233,6 +238,16 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botExcluirItemMouseClicked
 
+    private void botEditarItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEditarItemMouseClicked
+       editar();
+    }//GEN-LAST:event_botEditarItemMouseClicked
+
+    private void editar(){
+    // botão editar 
+    }
+    
+    
+    
     private void chamarTelaCadastro(String tipoUsuario) {
         this.dispose();
         new TelaCadastro(tipoUsuario).setVisible(true);
