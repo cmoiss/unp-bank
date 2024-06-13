@@ -53,7 +53,7 @@ public class CRUD_DAO {
     public void pesquisarTblCliente(String CPF){
          PreparedStatement comandoSQL=null;
        try{
-            comandoSQL=conexao.prepareStatement("SELECT WHERE CPF=? FROM tblCliente");
+            comandoSQL=conexao.prepareStatement("select*from tbl_Cliente where cpf=?;");
             comandoSQL.setString(1, CPF);
             comandoSQL.execute();
             comandoSQL.close();
