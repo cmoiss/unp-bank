@@ -14,14 +14,12 @@ public class TelaInicial extends javax.swing.JFrame {
 
         painelTelaInicial = new javax.swing.JPanel();
         botSouCliente = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         botSouGerente = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        painelTelaInicial.setName("tela login"); // NOI18N
-        painelTelaInicial.setPreferredSize(new java.awt.Dimension(500, 300));
+        painelTelaInicial.setPreferredSize(new java.awt.Dimension(300, 210));
 
         botSouCliente.setText("Sou cliente");
         botSouCliente.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -35,19 +33,6 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 35, Short.MAX_VALUE)
-        );
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/media/unp banco.png"))); // NOI18N
-
         botSouGerente.setText("Sou gerente");
         botSouGerente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -60,47 +45,44 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/media/unp banco.png"))); // NOI18N
+
         javax.swing.GroupLayout painelTelaInicialLayout = new javax.swing.GroupLayout(painelTelaInicial);
         painelTelaInicial.setLayout(painelTelaInicialLayout);
         painelTelaInicialLayout.setHorizontalGroup(
             painelTelaInicialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelTelaInicialLayout.createSequentialGroup()
-                .addGap(95, 95, 95)
+                .addGap(22, 22, 22)
                 .addGroup(painelTelaInicialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel1)
+                    .addComponent(botSouGerente)
                     .addComponent(botSouCliente)
-                    .addComponent(botSouGerente))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(108, 108, 108))
+                    .addComponent(jLabel1))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
+
+        painelTelaInicialLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botSouCliente, botSouGerente});
+
         painelTelaInicialLayout.setVerticalGroup(
             painelTelaInicialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelTelaInicialLayout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addGroup(painelTelaInicialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(painelTelaInicialLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(46, 46, 46)
-                        .addComponent(botSouCliente)
-                        .addGap(25, 25, 25)
-                        .addComponent(botSouGerente))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(29, 29, 29)
+                .addComponent(botSouCliente)
+                .addGap(25, 25, 25)
+                .addComponent(botSouGerente)
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(painelTelaInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(painelTelaInicial, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelTelaInicial, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(painelTelaInicial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -167,7 +149,6 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JButton botSouCliente;
     private javax.swing.JButton botSouGerente;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel painelTelaInicial;
     // End of variables declaration//GEN-END:variables
 }
