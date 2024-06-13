@@ -1,36 +1,63 @@
 package Model;
-<<<<<<< HEAD
-import java.util.Date;
-=======
+
 import Control.Idade;
 import Control.ValidarCPF;
->>>>>>> CRUD
-
 import java.util.Date;
-
-
+import java.util.Random;
 
 /* Classe Pai de Cliente e Gerente*/
 public class Pessoa {
-    private String nome;
-    private String CPF=null;
-    private String email;
-<<<<<<< HEAD
-    private String login;
-    private String senha;
-=======
-    
+
+    protected String id = null;
+    private String nome = null;
+    private String CPF = null;
+    private String email = null;
+    private String login = null;
+    private String senha = null;
     Idade idade = new Idade();
->>>>>>> CRUD
 
-
-    public Pessoa(String nome, String CPF, Date dataNascimento, String email, String login, String senha) {
+    public Pessoa(String tipoPessoa, String nome, String CPF, Date dataNascimento, String email, String login, String senha) {
+        this.id = gerarID(tipoPessoa);
         this.nome = nome;
         this.CPF = CPF;
         this.idade.setDataNascimento(dataNascimento);
         this.email = email;
+        this.login = login;
+        this.senha = senha;
     }
+    
+    private String gerarID(String tipoPessoa) {
+        //Gera ID de Cliente
+        String sigla = null;
+        String idCliente;
+        String numeroAleatorioString;
+        int auxiliar;
+        Random geradorID = new Random(); //Importa classe Random
 
+        auxiliar = geradorID.nextInt(999999) + 1;
+        numeroAleatorioString = "" + auxiliar;
+
+        if (auxiliar < 100000) { //Se o número gerado tiver menos de 6 dígitos
+            //Armazena a quantidade de dígitos gerados
+            int digitosZeroRestantes = 6 - numeroAleatorioString.length();
+
+            for (int i = 0; i < digitosZeroRestantes; i++) {
+                numeroAleatorioString = "0" + numeroAleatorioString;
+            }
+        }
+
+        if (tipoPessoa.equals("Cliente")) {
+            sigla = "CLI";
+        } else if (tipoPessoa.equals("Gerente")) {
+            sigla = "GER";
+        }
+        
+        
+        idCliente = sigla + numeroAleatorioString;
+
+        return idCliente;
+    }
+    
     public String getNome() {
         return nome;
     }
@@ -71,8 +98,24 @@ public class Pessoa {
         this.email = email;
     }
 
-    public void verificarDados(String CPF){
-    ValidarCPF validador = new ValidarCPF();
-    validador.getValidarCPF(CPF);
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    protected void verificarDados(String CPF) {
+        ValidarCPF validador = new ValidarCPF();
+        validador.getValidarCPF(CPF);
     }
 }

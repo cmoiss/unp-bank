@@ -250,31 +250,6 @@ public class CRUD {
         return email;
     }
 
-    private String gerarIDCliente() {
-        //Gera ID de Cliente
-
-        String idCliente;
-        String numeroAleatorioString;
-        int auxiliar;
-        Random geradorID = new Random(); //Importa classe Random
-
-        auxiliar = geradorID.nextInt(999999) + 1;
-        numeroAleatorioString = "" + auxiliar;
-
-        if (auxiliar < 100000) { //Se o número gerado tiver menos de 6 dígitos
-            //Armazena a quantidade de dígitos gerados
-            int digitosZeroRestantes = 6 - numeroAleatorioString.length();
-
-            for (int i = 0; i < digitosZeroRestantes; i++) {
-                numeroAleatorioString = "0" + numeroAleatorioString;
-            }
-        }
-
-        idCliente = "CLI-" + numeroAleatorioString;
-
-        return idCliente;
-    }
-
     private void verificarIDExiste(Cliente clienteAuxiliar) {
         //Verifica se IDCLiente já existe na lista
         do {

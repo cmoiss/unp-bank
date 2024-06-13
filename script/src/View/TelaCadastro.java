@@ -1,5 +1,8 @@
 package View;
 
+import Control.DAO.CadastroDAO;
+import Model.Gerente;
+
 public class TelaCadastro extends javax.swing.JFrame {
     private String tipoUsuario = null;
     
@@ -275,13 +278,17 @@ public class TelaCadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_caixaTextoCelularActionPerformed
 
     private void botEfetuarCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEfetuarCadastroActionPerformed
-        // TODO add your handling code here:
+        efetuarCadastro();
     }//GEN-LAST:event_botEfetuarCadastroActionPerformed
 
     private void botEfetuarCadastroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEfetuarCadastroMouseClicked
-                
+        efetuarCadastro();
     }//GEN-LAST:event_botEfetuarCadastroMouseClicked
 
+    private void efetuarCadastro() {
+        Gerente cadastro = new Gerente(tipoUsuario, tipoUsuario, tipoUsuario, dataNascimento, tipoUsuario, tipoUsuario, tipoUsuario);
+    }
+    
     /**
      * @param args the command line arguments
      */

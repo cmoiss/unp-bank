@@ -5,14 +5,13 @@ import java.util.Date;
 
 /* idConta comentado pois acredito que não ficara na classe cliente */
 public class Cliente extends Pessoa{
-    private String idCliente;
+    private String idCliente = null;
     //private String idConta;
     private boolean statusConta;
 
-    public Cliente(String idCliente, /*String idConta,*/ boolean statusConta, String nome, String CPF, Date dataNascimento, String email) {
-        super(nome, CPF, dataNascimento, email);
-        this.idCliente = idCliente;
-        //this.idConta = idConta;
+    public Cliente(String tipoPessoa, String nome, String CPF, Date dataNascimento, String email, String login,String senha,boolean statusConta) {
+        super(tipoPessoa, nome, CPF, dataNascimento, email, login, senha);
+        this.idCliente = super.id;
         this.statusConta = statusConta;
     }
 
