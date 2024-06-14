@@ -2,18 +2,17 @@ package Model;
 
 import Control.DAO.CRUD_DAO;
 import Control.DAO.CadastroDAO;
+import Control.TipoPessoa;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class Gerente extends Pessoa {
     private String idGerente;
     CRUD_DAO funcao=new CRUD_DAO();
 
-    private String idGerente;
-    CRUD_DAO funcao = new CRUD_DAO();
-
-    public Gerente(String tipoPessoa, String nome, String CPF, Date dataNascimento, String email, String login, String senha) {
+    public Gerente(String idGerente, TipoPessoa tipoPessoa, String nome, String CPF, Date dataNascimento, String email, String login, String senha) {
         super(tipoPessoa, nome, CPF, dataNascimento, email, login, senha);
-        this.idGerente = super.id;
+        this.idGerente = idGerente;
     }
 
     public String getIdGerente() {
@@ -40,7 +39,7 @@ public class Gerente extends Pessoa {
     public void checarDadosDaConta(){
     funcao.checkDadosTblContas(null);
     }
-    public void verListaDeClientes(){
+    public void verListaDeClientes() throws SQLException{
     funcao.verifcarTblCliente();
     }
     public void excluirClientes(){
@@ -48,5 +47,11 @@ public class Gerente extends Pessoa {
     }
     public void pesquisarCliente(){
     funcao.pesquisarTblCliente(null);
+    }
+    public static void main (String args[]) throws SQLException{
+        Gerente grt=new Gerente("1000",TipoPessoa.GERENTE,"Gerente","12345678912",null,"sefnsghrbsdh","adm","");
+        grt.verListaDeClientes();
+        
+        
     }
 }
