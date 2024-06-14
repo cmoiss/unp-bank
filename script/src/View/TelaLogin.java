@@ -147,44 +147,25 @@ public class TelaLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botEfetuarLoginMouseClicked
 
-    /*private void efetuarLogin() {
-        String user = null;
-        String pass = null;
-        if (tipoPessoa.equals(TipoPessoa.CLIENTE)) {
-            user = "hobbit";
-            pass = "123456";
-        } else if (tipoPessoa.equals(TipoPessoa.GERENTE)) {
-            user = "admin";
-            pass = "adm123";
-        }
+    private void efetuarLogin() throws SQLException {
 
         LoginDAO loginDAO = new LoginDAO(tipoPessoa);
-
-        if (loginDAO.getLoginCheck(user, pass)) {*/
-
-    private void efetuarLogin()throws SQLException {
-        
-        LoginDAO loginDAO = new LoginDAO();
         this.senha = caixaTextoSenha.getText();
         this.login = caixaTextoLogin.getText();
-        if (loginDAO.loginCheck(login, senha)) {    
 
+        if (loginDAO.loginCheck(login, senha)) {
             this.dispose();
-            new TelaPesquisaPessoa().setVisible(true);
-            /*if (tipoPessoa.equals(TipoPessoa.CLIENTE)) {
+            if (tipoPessoa.equals(TipoPessoa.CLIENTE)) {
                 new TelaLadoCliente().setVisible(true);
             } else if (tipoPessoa.equals(TipoPessoa.GERENTE)) {
                 new TelaPesquisaPessoa().setVisible(true);
-            }*/
+            }
 
         } else {
             JOptionPane.showMessageDialog(null, "Usuário/senha não identificados! Por favor, tente novamente", "Erro no login!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
