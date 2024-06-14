@@ -5,6 +5,7 @@ import Control.TipoPessoa;
 import javax.swing.JOptionPane;
 
 public class TelaLogin extends javax.swing.JFrame {
+
     private String login = null;
     private String senha = null;
     private TipoPessoa tipoPessoa = null;
@@ -138,16 +139,16 @@ public class TelaLogin extends javax.swing.JFrame {
     private void efetuarLogin() {
         
         LoginDAO loginDAO = new LoginDAO();
-        
-        if (loginDAO.LoginCheck(login, senha)) {    
+
+        if (loginDAO.LoginCheck()) {
             this.dispose();
             new TelaPesquisaPessoa().setVisible(true);
-         
+
         } else {
             JOptionPane.showMessageDialog(null, "Usuário/senha não identificados! Por favor, tente novamente", "Erro no login!", JOptionPane.ERROR_MESSAGE);
-        } 
+        }
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -175,7 +176,7 @@ public class TelaLogin extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

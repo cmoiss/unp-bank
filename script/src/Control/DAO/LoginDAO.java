@@ -8,38 +8,46 @@ import java.sql.ResultSet;
 
 public class LoginDAO {
 
+    String usuario = "admin";
+    String senha = "adm123";
     private Connection conexao;
 
-    private String solicitarLoginBD() {
-
-    }
-
-    public boolean LoginCheck(String login, String senha) {
+    public boolean LoginCheck() {
         conexao = (Connection) new dbConnect().getConnection();
         boolean Check = false;
         PreparedStatement comandoSQL;
-        ResultSet result;
+        ResultSet resultadoQuerry;
 
         try {
-            comandoSQL = conexao.prepareStatement("SELECT*FROM tbl_Gerente WHERE login= ? and senha= ? ");
-            comandoSQL.setString(1, login);
+            //Configura o comando de seleção
+            comandoSQL = conexao.prepareStatement("SELECT*FROM tbl_gerente WHERE login = ? and senha = ?");
+            comandoSQL.setString(1, usuario);
             comandoSQL.setString(2, senha);
-            result = comandoSQL.executeQuery();
+
+            //Armazena o resultado da querry (solicitação)
+            resultadoQuerry = comandoSQL.executeQuery();
 
             // Navegação do resultado
-            if (result.next()) {
-                String loginBD = result.getString("login");
-                String senhaBD = result.getString("senha");
-
-                if (login.equals(loginBD) && senha.equals(senhaBD)) {
-                    Check = true;
-                }
+            if (resultadoQuerry.next()) {
+                Check = true;
             }
+
+            verificarResultadoQuerry(comandoSQL, resultadoQuerry, usuario, senha);
 
         } catch (SQLException execao) {
             throw new RuntimeException(execao);
         }
         return Check;
 
+    }
+
+    public void verificarResultadoQuerry(PreparedStatement comandoSQL, ResultSet resultadoQuerry, String usuario, String senha) throws SQLException {
+        comandoSQL = conexao.prepareStatement("SELECT * FROM tbl_gerente WHERE login = ? and senha = ?");
+        comandoSQL.setString(1, usuario);
+        comandoSQL.setString(2, senha);
+        System.out.println("Consulta SQL: " + comandoSQL.toString());
+
+        resultadoQuerry = comandoSQL.executeQuery();
+        System.out.println("Resultado da consulta: " + resultadoQuerry.next());
     }
 }
