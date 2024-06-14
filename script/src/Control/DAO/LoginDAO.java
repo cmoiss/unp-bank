@@ -23,16 +23,16 @@ public class LoginDAO {
 
     private Connection conexao;
 
-    public boolean LoginCheck(String Login, String Senha) {
+    public boolean LoginCheck(String login, String senha) {
         conexao = (Connection) new dbConnect().getConnection();
         boolean Check = false;
         PreparedStatement comandoSQL = null;
         ResultSet result = null;
 
         try {
-            comandoSQL = conexao.prepareStatement("SELECT*FROM " + auxiliar + " WHERE Login=? and Senha=?");
-            comandoSQL.setString(1, Login);
-            comandoSQL.setString(2, Senha);
+            comandoSQL = conexao.prepareStatement("SELECT*FROM tbl_Gerente WHERE login= '?' and senha= '?' ");
+            comandoSQL.setString(1, login);
+            comandoSQL.setString(2, senha);
             result = comandoSQL.executeQuery();
             if (result.next()) {
                 Check = true;

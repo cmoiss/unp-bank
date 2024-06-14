@@ -139,13 +139,11 @@ public class TelaLogin extends javax.swing.JFrame {
         LoginDAO loginDAO = new LoginDAO(tipoPessoa);
         
         if (loginDAO.LoginCheck(login, senha) == true) {
-            if (tipoPessoa == TipoPessoa.CLIENTE) {
+            if (tipoPessoa == TipoPessoa.GERENTE) {
             this.dispose();
             new TelaPesquisaPessoa().setVisible(true);
-        } else if (tipoPessoa == TipoPessoa.GERENTE) {
-            this.dispose();
-            new TelaLadoCliente().setVisible(true);
-        }
+        } 
+        
         } else {
             JOptionPane.showMessageDialog(null, "Usuário/senha não identificados! Por favor, tente novamente", "Erro no login!", JOptionPane.ERROR_MESSAGE);
         } 
