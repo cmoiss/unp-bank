@@ -36,13 +36,13 @@ public class Gerente extends Pessoa {
     public void checarListaDeContas(){
     funcao.verificarTblContas();
     }
-    public void checarDadosDaConta(){
+    public void checarDadosConta(){
     funcao.checkDadosTblContas(null);
     }
-    public void verListaDeClientes() throws SQLException{
+    public void verListaDeCliente() throws SQLException{
     funcao.verifcarTblCliente();
     }
-    public void excluirClientes(){
+    public void excluirCliente(){
     funcao.excluiirTblCliente(null);
     }
     public void pesquisarCliente(){
@@ -50,7 +50,7 @@ public class Gerente extends Pessoa {
     }
     public static void main (String args[]) throws SQLException{
         Gerente grt=new Gerente("1000",TipoPessoa.GERENTE,"Gerente","12345678912",null,"sefnsghrbsdh","adm","");
-        grt.verListaDeClientes();
+        grt.checarListaDeContas();
         
         
     }

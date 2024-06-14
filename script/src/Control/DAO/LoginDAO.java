@@ -25,6 +25,7 @@ public class LoginDAO {
             comandoSQL = conexao.prepareStatement(selectTipoPessoa(tipoPessoa));
             comandoSQL.setString(1, usuario);
             comandoSQL.setString(2, senha);
+<<<<<<< Updated upstream
 
             //Armazena o resultado da querry (solicitação)
             resultadoQuerry = comandoSQL.executeQuery();
@@ -33,6 +34,22 @@ public class LoginDAO {
             if (resultadoQuerry.next()) {
                 Check = true;
             }
+=======
+            result = comandoSQL.executeQuery();
+            
+            if(result.next()){
+            Check=true;
+            }
+            // Navegação do resultado
+            /*if (result.next()) {
+                String loginBD = result.getString("login");
+                String senhaBD = result.getString("senha");
+
+                if (login.equals(loginBD) && senha.equals(senhaBD)) {
+                    Check = true;
+                }
+            }*/
+>>>>>>> Stashed changes
 
             verificarResultadoQuerry(comandoSQL, resultadoQuerry, usuario, senha);
 

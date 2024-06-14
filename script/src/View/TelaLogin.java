@@ -2,6 +2,9 @@ package View;
 
 import Control.DAO.LoginDAO;
 import Control.TipoPessoa;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class TelaLogin extends javax.swing.JFrame {
@@ -121,21 +124,30 @@ public class TelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void caixaTextoSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaTextoSenhaActionPerformed
-        this.senha = caixaTextoSenha.getText();
+        //this.senha = caixaTextoSenha.getText();
     }//GEN-LAST:event_caixaTextoSenhaActionPerformed
 
     private void caixaTextoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaTextoLoginActionPerformed
-        this.login = caixaTextoLogin.getText();
+        //this.login = caixaTextoLogin.getText();
     }//GEN-LAST:event_caixaTextoLoginActionPerformed
 
     private void botEfetuarLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEfetuarLoginActionPerformed
-        efetuarLogin();
+        try {
+            efetuarLogin();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botEfetuarLoginActionPerformed
 
     private void botEfetuarLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEfetuarLoginMouseClicked
-        efetuarLogin();
+        try {
+            efetuarLogin();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botEfetuarLoginMouseClicked
 
+<<<<<<< Updated upstream
     private void efetuarLogin() {
         String user = null;
         String pass = null;
@@ -150,6 +162,14 @@ public class TelaLogin extends javax.swing.JFrame {
         LoginDAO loginDAO = new LoginDAO(tipoPessoa);
 
         if (loginDAO.getLoginCheck(user, pass)) {
+=======
+    private void efetuarLogin()throws SQLException {
+        
+        LoginDAO loginDAO = new LoginDAO();
+        this.senha = caixaTextoSenha.getText();
+        this.login = caixaTextoLogin.getText();
+        if (loginDAO.LoginCheck(login, senha)) {    
+>>>>>>> Stashed changes
             this.dispose();
             if (tipoPessoa.equals(TipoPessoa.CLIENTE)) {
                 new TelaLadoCliente().setVisible(true);
