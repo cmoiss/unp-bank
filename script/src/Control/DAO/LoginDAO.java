@@ -7,27 +7,27 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 
 public class LoginDAO {
-
-    String auxiliar = null;
-    TipoPessoa tipoPessoa = null;
-
-    public LoginDAO(TipoPessoa tipoPessoa) {
-        this.tipoPessoa = tipoPessoa;
+    
+   /* String auxiliar = null;
+    TipoPessoa tipoPessoa = null;*/
+                                 
+  
+        /*this.tipoPessoa = tipoPessoa;
 
         if (tipoPessoa.equals(tipoPessoa.CLIENTE)) {
             auxiliar = "tbl_cliente";
         } else if (tipoPessoa.equals(tipoPessoa.GERENTE)) {
             auxiliar = "tbl_gerente";
-        }
-    }
+        }*/
+    
 
     private Connection conexao;
 
     public boolean LoginCheck(String login, String senha) {
         conexao = (Connection) new dbConnect().getConnection();
         boolean Check = false;
-        PreparedStatement comandoSQL = null;
-        ResultSet result = null;
+        PreparedStatement comandoSQL;
+        ResultSet result ;
 
         try {
             comandoSQL = conexao.prepareStatement("SELECT*FROM tbl_Gerente WHERE login= '?' and senha= '?' ");
@@ -37,8 +37,8 @@ public class LoginDAO {
             if (result.next()) {
                 Check = true;
             }
-        } catch (SQLException u) {
-            throw new RuntimeException(u);
+        } catch (SQLException execao) {
+            throw new RuntimeException(execao);
         }
         return Check;
 

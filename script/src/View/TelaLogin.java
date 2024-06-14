@@ -136,14 +136,14 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_botEfetuarLoginMouseClicked
 
     private void efetuarLogin() {
-        LoginDAO loginDAO = new LoginDAO(tipoPessoa);
+        
+        LoginDAO loginDAO = new LoginDAO();
         
         if (loginDAO.LoginCheck(login, senha) == true) {
-            if (tipoPessoa == TipoPessoa.GERENTE) {
+            
             this.dispose();
             new TelaPesquisaPessoa().setVisible(true);
-        } 
-        
+         
         } else {
             JOptionPane.showMessageDialog(null, "Usuário/senha não identificados! Por favor, tente novamente", "Erro no login!", JOptionPane.ERROR_MESSAGE);
         } 
@@ -176,7 +176,7 @@ public class TelaLogin extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

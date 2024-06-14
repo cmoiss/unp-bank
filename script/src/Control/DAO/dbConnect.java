@@ -8,9 +8,11 @@ public class dbConnect {
 
     public Connection getConnection() {
         try {          //"jdbc:mysql://localhost:3306/db_ubank: COLOQUE O DB CORRETO","SEU USER","SUA SENHA"
-            return DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ubank?zeroDateTimeBehavior=CONVERT_TO_NULL", "root", "admin");
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ubank?zeroDateTimeBehavior=CONVERT_TO_NULL", "root", "pirulito");
         } catch (SQLException excecao) {
-            throw new RuntimeException(excecao);
+           
+            /*throw new RuntimeException(excecao);*/
         }
+        return null;
     }
 }
