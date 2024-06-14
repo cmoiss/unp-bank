@@ -10,22 +10,24 @@ public class LoginDAO {
     private TipoPessoa tipoPessoa;
     private Connection conexao;
 
-    public LoginDAO (TipoPessoa tipoPessoa) {
+    public LoginDAO () {
         this.tipoPessoa = tipoPessoa;
     }
     
-    private boolean loginCheck(String usuario, String senha) {
+    
+    public boolean loginCheck(String login, String senha) throws SQLException {
         conexao = (Connection) new dbConnect().getConnection();
         boolean Check = false;
         PreparedStatement comandoSQL;
         ResultSet resultadoQuerry;
 
-        try {
+        try{
             //Configura o comando de seleção
-            comandoSQL = conexao.prepareStatement(selectTipoPessoa(tipoPessoa));
-            comandoSQL.setString(1, usuario);
+            conexao = (Connection) new dbConnect().getConnection();
+            comandoSQL = conexao.prepareStatement("SELECT*FROM tbl_Gerente WHERE login=? and senha=?");
+            comandoSQL.setString(1, login);
             comandoSQL.setString(2, senha);
-<<<<<<< Updated upstream
+
 
             //Armazena o resultado da querry (solicitação)
             resultadoQuerry = comandoSQL.executeQuery();
@@ -34,12 +36,9 @@ public class LoginDAO {
             if (resultadoQuerry.next()) {
                 Check = true;
             }
-=======
-            result = comandoSQL.executeQuery();
+
             
-            if(result.next()){
-            Check=true;
-            }
+
             // Navegação do resultado
             /*if (result.next()) {
                 String loginBD = result.getString("login");
@@ -49,14 +48,11 @@ public class LoginDAO {
                     Check = true;
                 }
             }*/
->>>>>>> Stashed changes
 
-            verificarResultadoQuerry(comandoSQL, resultadoQuerry, usuario, senha);
 
-        } catch (SQLException execao) {
-            throw new RuntimeException(execao);
-        }
-        return Check;
+            /*verificarResultadoQuerry(comandoSQL, resultadoQuerry, usuario, senha);
+
+       
 
     }
 
@@ -85,5 +81,12 @@ public class LoginDAO {
         boolean check = loginCheck(usuario, senha);
         
         return check;
+    }*/
+ } catch (SQLException execao) {
+            throw new RuntimeException(execao);
+        }
+        return Check;
+
+   
     }
 }
