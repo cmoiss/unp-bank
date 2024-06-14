@@ -21,7 +21,7 @@ public class LoginDAO {
         ResultSet result;
 
         try {
-            comandoSQL = conexao.prepareStatement("SELECT*FROM tbl_Gerente WHERE login= '?' and senha= '?' ");
+            comandoSQL = conexao.prepareStatement("SELECT*FROM tbl_Gerente WHERE login= ? and senha= ? ");
             comandoSQL.setString(1, login);
             comandoSQL.setString(2, senha);
             result = comandoSQL.executeQuery();

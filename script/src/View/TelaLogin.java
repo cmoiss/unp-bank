@@ -139,8 +139,7 @@ public class TelaLogin extends javax.swing.JFrame {
         
         LoginDAO loginDAO = new LoginDAO();
         
-        if (loginDAO.LoginCheck(login, senha) == true) {
-            
+        if (loginDAO.LoginCheck(login, senha)) {    
             this.dispose();
             new TelaPesquisaPessoa().setVisible(true);
          
