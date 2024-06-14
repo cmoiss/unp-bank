@@ -193,10 +193,6 @@ public class TelaLadoCliente extends javax.swing.JFrame {
     private void botEfetuarDepósitoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEfetuarDepósitoMouseClicked
         efetuarDeposito();
     }//GEN-LAST:event_botEfetuarDepósitoMouseClicked
-
-    private void efetuarDeposito() {
-        
-    }
     
     private void botEfetuarDepósitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEfetuarDepósitoActionPerformed
         efetuarDeposito();

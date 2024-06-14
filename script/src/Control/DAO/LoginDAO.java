@@ -7,12 +7,14 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 
 public class LoginDAO {
-
-    String usuario = "admin";
-    String senha = "adm123";
+    private TipoPessoa tipoPessoa;
     private Connection conexao;
 
-    public boolean LoginCheck() {
+    public LoginDAO (TipoPessoa tipoPessoa) {
+        this.tipoPessoa = tipoPessoa;
+    }
+    
+    private boolean loginCheck(String usuario, String senha) {
         conexao = (Connection) new dbConnect().getConnection();
         boolean Check = false;
         PreparedStatement comandoSQL;
@@ -20,7 +22,7 @@ public class LoginDAO {
 
         try {
             //Configura o comando de seleção
-            comandoSQL = conexao.prepareStatement("SELECT*FROM tbl_gerente WHERE login = ? and senha = ?");
+            comandoSQL = conexao.prepareStatement(selectTipoPessoa(tipoPessoa));
             comandoSQL.setString(1, usuario);
             comandoSQL.setString(2, senha);
 
@@ -41,13 +43,30 @@ public class LoginDAO {
 
     }
 
-    public void verificarResultadoQuerry(PreparedStatement comandoSQL, ResultSet resultadoQuerry, String usuario, String senha) throws SQLException {
-        comandoSQL = conexao.prepareStatement("SELECT * FROM tbl_gerente WHERE login = ? and senha = ?");
+    private void verificarResultadoQuerry(PreparedStatement comandoSQL, ResultSet resultadoQuerry, String usuario, String senha) throws SQLException {
+        comandoSQL = conexao.prepareStatement(selectTipoPessoa(tipoPessoa));
         comandoSQL.setString(1, usuario);
         comandoSQL.setString(2, senha);
         System.out.println("Consulta SQL: " + comandoSQL.toString());
 
         resultadoQuerry = comandoSQL.executeQuery();
         System.out.println("Resultado da consulta: " + resultadoQuerry.next());
+    }
+
+    private String selectTipoPessoa(TipoPessoa tipoPessoa) {
+        String select = null;
+        if (tipoPessoa.equals(TipoPessoa.CLIENTE)) {
+            select = "SELECT*FROM tbl_cliente WHERE login = ? and senha = ?";
+        } else if (tipoPessoa.equals(TipoPessoa.GERENTE)) {
+            select = "SELECT*FROM tbl_gerente WHERE login = ? and senha = ?";
+        }
+        
+        return select;
+    }
+    
+    public boolean getLoginCheck(String usuario, String senha) {
+        boolean check = loginCheck(usuario, senha);
+        
+        return check;
     }
 }
