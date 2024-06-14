@@ -1,5 +1,4 @@
-
-INSERT INTO tbl_Pessoa (nome, cpf, dataNascimento, idade, email, )
+INSERT INTO tbl_Pessoa (nome, cpf, dataNascimento, idade, email)
 VALUES
     ('Gerente Aux', '12345678901', '1990-05-15', 31, 'gerente.auxiliar@email.com' ),
     ('Cliente Aux', '98765432109', '1985-08-20', 36, 'cliente.auxiliar@email.com' );
