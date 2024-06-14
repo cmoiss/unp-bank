@@ -10,9 +10,7 @@ public class LoginDAO {
 
     private Connection conexao;
 
-    private String solicitarLoginBD() {
 
-    }
 
     public boolean LoginCheck(String login, String senha) {
         conexao = (Connection) new dbConnect().getConnection();
@@ -21,6 +19,7 @@ public class LoginDAO {
         ResultSet result;
 
         try {
+            conexao = (Connection) new dbConnect().getConnection();
             comandoSQL = conexao.prepareStatement("SELECT*FROM tbl_Gerente WHERE login= ? and senha= ? ");
             comandoSQL.setString(1, login);
             comandoSQL.setString(2, senha);

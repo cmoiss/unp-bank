@@ -1,17 +1,15 @@
 
 package Model;
 
+import Control.TipoPessoa;
 import java.util.Date;
 
-/* idConta comentado pois acredito que não ficara na classe cliente */
 public class Cliente extends Pessoa{
     private String idCliente = null;
-    //private String idConta;
     private boolean statusConta;
 
-    public Cliente(String tipoPessoa, String nome, String CPF, Date dataNascimento, String email, String login,String senha,boolean statusConta) {
+    public Cliente(boolean statusConta, TipoPessoa tipoPessoa, String nome, String CPF, Date dataNascimento, String email, String login, String senha) {
         super(tipoPessoa, nome, CPF, dataNascimento, email, login, senha);
-        this.idCliente = super.id;
         this.statusConta = statusConta;
     }
 
@@ -23,13 +21,7 @@ public class Cliente extends Pessoa{
         this.idCliente = idCliente;
     }
 
-   /* public String getIdConta() {
-        return idConta;
-    }
 
-    public void setIdConta(String idConta) {
-        this.idConta = idConta;
-    } */
 
     public boolean isStatusConta() {
         return statusConta;
