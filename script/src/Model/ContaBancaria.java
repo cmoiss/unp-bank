@@ -1,10 +1,13 @@
 
 package Model;
 
+import Control.DAO.CRUD_DAO;
+
 
 public class ContaBancaria {
 private String idConta;
 private int saldoAtual;
+CRUD_DAO funcao = new CRUD_DAO();
 
     public ContaBancaria(String idConta, int saldoAtual) {
         this.idConta = idConta;
@@ -27,12 +30,18 @@ private int saldoAtual;
         this.saldoAtual = saldoAtual;
     }
     
-    public void  verificarSaldo() {
-    /* Verifica se existe saldo disponivel */
+     public double verificarSaldo() {
+         double aux;
+         aux=funcao.verificarSaldo(idConta);
+         return aux;
+    }
+    
+    public double getverificarSaldo() {
+        return verificarSaldo();
     }
     
     public void  verificarSaque() {
-    /* Verifica se o saque pode ocorrer*/
+   
     }
     
     public void verificarDeposito() {

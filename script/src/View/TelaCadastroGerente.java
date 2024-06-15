@@ -4,6 +4,7 @@ import Control.DAO.CadastroDAO;
 import Control.Idade;
 import Control.TipoPessoa;
 import Control.ValidarCPF;
+import Control.TipoPessoa;
 import Model.Gerente;
 import java.sql.SQLException;
 import java.text.ParseException;
