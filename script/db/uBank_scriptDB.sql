@@ -1,0 +1,36 @@
+CREATE DATABASE IF NOT EXISTS db_uBank;
+USE db_uBank;
+
+CREATE TABLE IF NOT EXISTS tbl_Pessoa(
+    nome VARCHAR(50),
+	cpf VARCHAR(11)PRIMARY KEY NOT NULL ,
+	dataNascimento DATE,
+	idade INT,
+	email VARCHAR(40) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS tbl_ContaBancaria(
+	idConta VARCHAR(6) PRIMARY KEY NOT NULL ,
+	saldoAtual DECIMAL(10,2)
+);
+
+CREATE TABLE IF NOT EXISTS tbl_Cliente(
+	idCliente VARCHAR(6) PRIMARY KEY NOT NULL ,
+	statusCliente BOOLEAN NOT NULL,
+	cpf VARCHAR(11) NOT NULL,
+	login VARCHAR(20) NOT NULL,
+	senha VARCHAR(6) NOT NULL,
+	idConta VARCHAR(6) NOT NULL,
+	CONSTRAINT FK_C_Pessoa FOREIGN KEY (cpf) REFERENCES tbl_Pessoa (cpf),
+	CONSTRAINT FK_Conta FOREIGN KEY (idConta) REFERENCES tbl_ContaBancaria(idConta)
+);
+
+CREATE TABLE IF NOT EXISTS tbl_Gerente(
+	idGerente VARCHAR(6) PRIMARY KEY NOT NULL ,
+	cpf VARCHAR(11) NOT NULL,
+	login VARCHAR(20) NOT NULL,
+	senha VARCHAR(6) NOT NULL,
+	CONSTRAINT FK_G_Pessoa FOREIGN KEY (cpf) REFERENCES tbl_Pessoa (cpf)
+);
+
+
