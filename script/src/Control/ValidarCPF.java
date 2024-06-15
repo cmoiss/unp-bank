@@ -4,7 +4,11 @@ import java.util.Scanner;
 
 public class ValidarCPF {
 
+<<<<<<< HEAD
     private boolean validarCPF(String CPF) {
+=======
+    private static boolean validarCPF(String CPF) {
+>>>>>>> origin/working-on-code
         boolean validador = false;
 
         // Armazena resultado do passo 03
@@ -25,6 +29,11 @@ public class ValidarCPF {
         // int[] numerosDecrescentes = new int[9];
 
         // Passo 01: Ler CPF
+<<<<<<< HEAD
+=======
+        System.out.print("Digite seu CPF: ");
+        CPF = ler.nextLine();
+>>>>>>> origin/working-on-code
 
         // Passo 02: Preencher os dígitos do CPF no vetor digitosCPF
         for (int i = 0; i < 11; i++) {

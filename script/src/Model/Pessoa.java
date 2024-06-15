@@ -1,13 +1,24 @@
 package Model;
+<<<<<<< HEAD
 
 import Control.GerarID;
 import Control.Idade;
 import Control.ValidarCPF;
 import Control.TipoPessoa;
+=======
+<<<<<<< HEAD
+import java.util.Date;
+=======
+import Control.Idade;
+import Control.ValidarCPF;
+>>>>>>> CRUD
+
+>>>>>>> origin/working-on-code
 import java.util.Date;
 
 /* Classe Pai de Cliente e Gerente*/
 public class Pessoa {
+<<<<<<< HEAD
 
     protected String id = null;
     private String nome = null;
@@ -20,6 +31,25 @@ public class Pessoa {
     public Pessoa(TipoPessoa tipoPessoa, String nome, String CPF, Date dataNascimento, String email, String login, String senha) {
         GerarID gerarID = new GerarID();
         this.id = gerarID.getGerarID(); 
+=======
+    private String nome;
+    private String CPF=null;
+    private String email;
+<<<<<<< HEAD
+    private String login;
+    private String senha;
+=======
+    
+    Idade idade = new Idade();
+>>>>>>> CRUD
+
+
+    public Pessoa(String nome, String CPF, Date dataNascimento, String email, String login, String senha) {
+        this.nome = nome;
+        this.CPF = CPF;
+        this.idade.setDataNascimento(dataNascimento);
+        this.email = email;
+>>>>>>> origin/working-on-code
     }
     
     public String getNome() {
@@ -62,6 +92,7 @@ public class Pessoa {
         this.email = email;
     }
 
+<<<<<<< HEAD
     public String getLogin() {
         return login;
     }
@@ -81,5 +112,10 @@ public class Pessoa {
     protected void verificarDados(String CPF) {
         ValidarCPF validador = new ValidarCPF();
         validador.getValidarCPF(CPF);
+=======
+    public void verificarDados(String CPF){
+    ValidarCPF validador = new ValidarCPF();
+    validador.getValidarCPF(CPF);
+>>>>>>> origin/working-on-code
     }
 }

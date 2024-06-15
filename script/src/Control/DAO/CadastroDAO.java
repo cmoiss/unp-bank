@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package Control.DAO;
 
 import Control.GerarID;
@@ -126,3 +127,33 @@ public class CadastroDAO {
         return existente;
     }
 }
+=======
+
+package Control.DAO;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class CadastroDAO {
+    private Connection conexao;
+        public void CadstroCheck (String nome,String CPF, String email,int Idade){
+            conexao=(Connection)new dbConnect(). getConnection();    
+        PreparedStatement comandoSQL=null;        
+        
+        try{
+            comandoSQL=conexao.prepareStatement(" INSERT INTO tbl_Pessoa (nome,cpf,dataNascimento,idPessoa)VALUES(?,?,?,?)");
+            comandoSQL.setString(1,nome);
+            comandoSQL.setString(2,CPF);
+            comandoSQL.setString(3,email);
+            comandoSQL.setInt(4,Idade);
+            comandoSQL.execute();
+            comandoSQL.close();
+        }catch(SQLException u){
+            throw new RuntimeException(u);
+        }
+  
+       
+        }             
+ }
+
+>>>>>>> origin/working-on-code

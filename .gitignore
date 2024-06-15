@@ -1,2 +1,20 @@
+<<<<<<< HEAD
 /script/build/
 *.properties
+=======
+
+script/nbproject/private/private.properties
+/script/build/
+script/nbproject/project.properties
+script/nbproject/genfiles.properties
+script/nbproject/build-impl.xml
+script/nbproject/project.properties
+script/nbproject/private/private.properties
+script/nbproject/private/private.xml
+script/nbproject/project.properties
+script/nbproject/project.properties
+script/nbproject/project.xml
+script/nbproject/private/private.xml
+script/nbproject/private/private.properties
+script/nbproject/project.properties
+>>>>>>> origin/working-on-code
