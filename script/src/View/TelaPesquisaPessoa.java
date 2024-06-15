@@ -5,6 +5,7 @@
 package View;
 
 import Control.DAO.CRUD_DAO;
+import Control.TipoPessoa;
 import Control.ValidarCPF;
 import javax.swing.JOptionPane;
 
@@ -14,10 +15,11 @@ import javax.swing.JOptionPane;
  */
 public class TelaPesquisaPessoa extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TelaPesquisaPessoa
-     */
-    public TelaPesquisaPessoa() {
+    private TipoPessoa tipoPessoa = null;
+
+    public TelaPesquisaPessoa(TipoPessoa tipoPessoa) {
+        this.tipoPessoa = tipoPessoa;
+
         initComponents();
     }
 
@@ -181,12 +183,12 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         switch (opçao) {
             case JOptionPane.YES_OPTION -> {
                 // Cadastrar cliente
-                chamarTelaCadastro("Cliente");
+                chamarTelaCadastro(TipoPessoa.CLIENTE);
             }
 
             case JOptionPane.NO_OPTION -> {
                 // Cadastrar gerente
-                chamarTelaCadastro("Gerente");
+                chamarTelaCadastro(TipoPessoa.GERENTE);
             }
 
             default ->
@@ -201,14 +203,14 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void botCadastrarNovoItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botCadastrarNovoItemActionPerformed
-       
+
     }//GEN-LAST:event_botCadastrarNovoItemActionPerformed
 
     private void caixaPesquisaUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaPesquisaUsuarioActionPerformed
         // Recebe o CPF digitado na caixa de pesquisa
         String cpf = caixaPesquisaUsuario.getText();
         ValidarCPF validador = new ValidarCPF();
-        
+
         if (validador.getValidarCPF(cpf) == false) {
             JOptionPane.showMessageDialog(null, "CPF inválido! Por favor, digite novamente.", "Validador de CPF", JOptionPane.ERROR_MESSAGE);
         } else {
@@ -223,40 +225,44 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
 
     private void botExcluirItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botExcluirItemMouseClicked
         int opçao = JOptionPane.showConfirmDialog(null, "Realmente deseja excluir esse usuário?", "Excluir usuário", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-        
+
         switch (opçao) {
             case JOptionPane.YES_OPTION -> {
                 //Excluir item
                 //Confirmação de exclusão
             }
-            
+
             case JOptionPane.NO_OPTION -> {
                 //Não excluir
             }
-            
-            default -> throw new AssertionError();
+
+            default ->
+                throw new AssertionError();
         }
     }//GEN-LAST:event_botExcluirItemMouseClicked
 
     private void botEditarItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEditarItemMouseClicked
-       editar();
+        editar();
     }//GEN-LAST:event_botEditarItemMouseClicked
 
-    private void editar(){
-    // botão editar 
+    private void editar() {
+        // botão editar 
     }
-    
-    
-    
-    private void chamarTelaCadastro(String tipoUsuario) {
+
+    private void chamarTelaCadastro(TipoPessoa tipoPessoa) {
         this.dispose();
-        new TelaCadastro(tipoUsuario).setVisible(true);
+
+        if (tipoPessoa.equals(TipoPessoa.CLIENTE)) {
+            new TelaCadastroCliente(tipoPessoa).setVisible(true);
+        } else if (tipoPessoa.equals(TipoPessoa.GERENTE)) {
+            new TelaCadastroGerente(tipoPessoa).setVisible(true);
+        }
     }
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaPesquisaPessoa().setVisible(true);
+                new TelaPesquisaPessoa(TipoPessoa.CLIENTE).setVisible(true);
             }
         });
     }

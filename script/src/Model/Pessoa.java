@@ -1,10 +1,10 @@
 package Model;
 
+import Control.GerarID;
 import Control.Idade;
 import Control.ValidarCPF;
 import Control.TipoPessoa;
 import java.util.Date;
-import java.util.Random;
 
 /* Classe Pai de Cliente e Gerente*/
 public class Pessoa {
@@ -18,40 +18,10 @@ public class Pessoa {
     Idade idade = new Idade();
 
     public Pessoa(TipoPessoa tipoPessoa, String nome, String CPF, Date dataNascimento, String email, String login, String senha) {
-        this.id = gerarID(tipoPessoa);
+        GerarID gerarID = new GerarID();
+        this.id = gerarID.getGerarID(); 
     }
-
-    private String gerarID(TipoPessoa tipoPessoa) {
-        //Gera ID de Cliente
-        String sigla = null;
-        String idCliente;
-        String numeroAleatorioString;
-        int auxiliar;
-        Random geradorID = new Random(); //Importa classe Random
-
-        auxiliar = geradorID.nextInt(999999) + 1;
-        numeroAleatorioString = "" + auxiliar;
-
-        if (auxiliar < 100000) { //Se o número gerado tiver menos de 6 dígitos
-            //Armazena a quantidade de dígitos gerados
-            int digitosZeroRestantes = 6 - numeroAleatorioString.length();
-
-            for (int i = 0; i < digitosZeroRestantes; i++) {
-                numeroAleatorioString = "0" + numeroAleatorioString;
-            }
-        }
-
-        if (tipoPessoa.equals(TipoPessoa.CLIENTE)) {
-            sigla = "CLI";
-        } else if (tipoPessoa.equals(TipoPessoa.GERENTE)) {
-            sigla = "GER";
-        }
-
-        idCliente = sigla + numeroAleatorioString;
-
-        return idCliente;
-    }
-
+    
     public String getNome() {
         return nome;
     }

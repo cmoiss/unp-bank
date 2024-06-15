@@ -59,6 +59,11 @@ public class TelaLogin extends javax.swing.JFrame {
                 botEfetuarLoginActionPerformed(evt);
             }
         });
+        botEfetuarLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botEfetuarLoginKeyPressed(evt);
+            }
+        });
 
         caixaTextoSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,11 +137,7 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_caixaTextoLoginActionPerformed
 
     private void botEfetuarLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEfetuarLoginActionPerformed
-        try {
-            efetuarLogin();
-        } catch (SQLException ex) {
-            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }//GEN-LAST:event_botEfetuarLoginActionPerformed
 
     private void botEfetuarLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEfetuarLoginMouseClicked
@@ -147,6 +148,14 @@ public class TelaLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botEfetuarLoginMouseClicked
 
+    private void botEfetuarLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botEfetuarLoginKeyPressed
+        try {
+            efetuarLogin();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botEfetuarLoginKeyPressed
+
     private void efetuarLogin() throws SQLException {
 
         LoginDAO loginDAO = new LoginDAO(tipoPessoa);
@@ -156,9 +165,9 @@ public class TelaLogin extends javax.swing.JFrame {
         if (loginDAO.loginCheck(login, senha)) {
             this.dispose();
             if (tipoPessoa.equals(TipoPessoa.CLIENTE)) {
-                new TelaLadoCliente().setVisible(true);
+                new TelaLadoCliente(TipoPessoa.CLIENTE).setVisible(true);
             } else if (tipoPessoa.equals(TipoPessoa.GERENTE)) {
-                new TelaPesquisaPessoa().setVisible(true);
+                new TelaPesquisaPessoa(TipoPessoa.GERENTE).setVisible(true);
             }
 
         } else {
