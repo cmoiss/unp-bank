@@ -32,6 +32,11 @@ public class TelaInicial extends javax.swing.JFrame {
                 botSouClienteActionPerformed(evt);
             }
         });
+        botSouCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botSouClienteKeyPressed(evt);
+            }
+        });
 
         botSouGerente.setText("Sou gerente");
         botSouGerente.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -42,6 +47,11 @@ public class TelaInicial extends javax.swing.JFrame {
         botSouGerente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botSouGerenteActionPerformed(evt);
+            }
+        });
+        botSouGerente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botSouGerenteKeyPressed(evt);
             }
         });
 
@@ -103,6 +113,14 @@ public class TelaInicial extends javax.swing.JFrame {
     private void botSouGerenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botSouGerenteMouseClicked
         chamarTelaLogin(TipoPessoa.GERENTE);
     }//GEN-LAST:event_botSouGerenteMouseClicked
+
+    private void botSouClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botSouClienteKeyPressed
+        chamarTelaLogin(TipoPessoa.CLIENTE);
+    }//GEN-LAST:event_botSouClienteKeyPressed
+
+    private void botSouGerenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botSouGerenteKeyPressed
+        chamarTelaLogin(TipoPessoa.GERENTE);
+    }//GEN-LAST:event_botSouGerenteKeyPressed
 
     private void chamarTelaLogin(TipoPessoa tipoPessoa) {
         this.dispose(); //fecha tela atual
