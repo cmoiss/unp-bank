@@ -4,17 +4,16 @@
  */
 package View;
 
-import Control.TipoPessoa;
-
 /**
  *
  * @author caio
  */
 public class TelaLadoCliente extends javax.swing.JFrame {
-    TipoPessoa tipoPessoa = null;
-    
-    public TelaLadoCliente(TipoPessoa tipoPessoa) {
-        this.tipoPessoa = tipoPessoa;
+
+    /**
+     * Creates new form TelaLadoCliente
+     */
+    public TelaLadoCliente() {
         initComponents();
     }
 
@@ -63,16 +62,6 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         jLabel3.setText("R$0000,00");
 
         botEfetuarDepósito.setText("Efetuar Depósito");
-        botEfetuarDepósito.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                botEfetuarDepósitoMouseClicked(evt);
-            }
-        });
-        botEfetuarDepósito.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botEfetuarDepósitoActionPerformed(evt);
-            }
-        });
 
         botEfetuarSaque.setText("Efetuar Saque");
         botEfetuarSaque.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -179,45 +168,10 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botEfetuarTransferênciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEfetuarTransferênciaMouseClicked
+    private void botEfetuarTransferênciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEfetuarTransferênciaActionPerformed
          efetuarTransferencia();
-    }//GEN-LAST:event_botEfetuarTransferênciaMouseClicked
+    }//GEN-LAST:event_botEfetuarTransferênciaActionPerformed
 
-    private void botEfetuarSaqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEfetuarSaqueMouseClicked
-        efetuarSaque();
-    }//GEN-LAST:event_botEfetuarSaqueMouseClicked
-
-    private void botEfetuarSaqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEfetuarSaqueActionPerformed
-        efetuarSaque();
-    }//GEN-LAST:event_botEfetuarSaqueActionPerformed
-
-    private void botEfetuarDepósitoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEfetuarDepósitoMouseClicked
-        efetuarDeposito();
-    }//GEN-LAST:event_botEfetuarDepósitoMouseClicked
-    
-    private void botEfetuarDepósitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEfetuarDepósitoActionPerformed
-        efetuarDeposito();
-    }//GEN-LAST:event_botEfetuarDepósitoActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void efetuarDeposito(){
-    // botão efetuar deposito 
-    }
-    
-    
-    private void efetuarSaque(){
-    // efetuar saque    
-    }
-    
-    
-    private void efetuarTransferencia () {
-    // botão tranferencia 
-    }
-    
-    
     /**
      * @param args the command line arguments
      */
