@@ -6,7 +6,7 @@ package View;
 
 import Control.DAO.CRUD_DAO;
 import Control.TipoPessoa;
-import Control.ValidarCPF;
+import Control.CPF;
 import javax.swing.JOptionPane;
 
 /**
@@ -192,7 +192,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     private void caixaPesquisaUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaPesquisaUsuarioActionPerformed
         // Recebe o CPF digitado na caixa de pesquisa
         String cpf = caixaPesquisaUsuario.getText();
-        ValidarCPF validador = new ValidarCPF();
+        CPF validador = new CPF();
 
         if (validador.getValidarCPF(cpf) == false) {
             JOptionPane.showMessageDialog(null, "CPF inválido! Por favor, digite novamente.", "Validador de CPF", JOptionPane.ERROR_MESSAGE);

@@ -2,7 +2,7 @@ package Model;
 
 import Control.GerarID;
 import Control.Idade;
-import Control.ValidarCPF;
+import Control.CPF;
 import Control.TipoPessoa;
 import java.util.Date;
 
@@ -79,7 +79,7 @@ public class Pessoa {
     }
 
     protected void verificarDados(String CPF) {
-        ValidarCPF validador = new ValidarCPF();
+        CPF validador = new CPF();
         validador.getValidarCPF(CPF);
     }
 }
