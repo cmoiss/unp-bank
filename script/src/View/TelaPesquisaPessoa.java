@@ -3,6 +3,7 @@ package View;
 import Control.DAO.CRUD_DAO;
 import Control.TipoPessoa;
 import Control.CPF;
+import Model.Gerente;
 import javax.swing.JOptionPane;
 import java.sql.SQLException;
 import java.sql.ResultSet;
@@ -255,41 +256,44 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     }
 
     private void pesquisarTblCliente(String cpf) {
-        CRUD_DAO pesquisa = new CRUD_DAO();
-        ResultSet resultado = pesquisa.getPesquisarTblCliente(cpf);
-        try {
-            if (resultado.next()) {
-                String nome = resultado.getString("nome");
-                String cpfBD = resultado.getString("cpf");
-                int idade = resultado.getInt("idade");
-                int idCliente = resultado.getInt("idCliente");
-                int idConta = resultado.getInt("idConta");
-                double saldoAtual = resultado.getDouble("saldoAtual");
-                int statusConta = resultado.getInt("statusCliente");
-                String statusContaStr = statusConta == 1 ? "Ativo" : "Inativo";
+        if (!validarCPFPesquisado(cpf)) {
+        } else {
+            Gerente pesquisa = new Gerente(null, null, null, null, null, null, null, null);
+            ResultSet resultado = pesquisa.getPesquisarCliente(cpf);
+            try {
+                if (resultado.next()) {
+                    String nome = resultado.getString("nome");
+                    String cpfBD = resultado.getString("cpf");
+                    int idade = resultado.getInt("idade");
+                    int idCliente = resultado.getInt("idCliente");
+                    int idConta = resultado.getInt("idConta");
+                    double saldoAtual = resultado.getDouble("saldoAtual");
+                    int statusConta = resultado.getInt("statusCliente");
+                    String statusContaStr = statusConta == 1 ? "Ativo" : "Inativo";
 
-                String mensagem = "Nome: " + nome + "\n"
-                        + "CPF: " + cpfBD + "\n"
-                        + "Idade: " + idade + "\n"
-                        + "ID Cliente: " + idCliente + "\n"
-                        + "ID Conta: " + idConta + "\n"
-                        + "Saldo Atual: " + saldoAtual + "\n"
-                        + "Status da Conta: " + statusContaStr;
+                    String mensagem = "Nome: " + nome + "\n"
+                            + "CPF: " + cpfBD + "\n"
+                            + "Idade: " + idade + "\n"
+                            + "ID Cliente: " + idCliente + "\n"
+                            + "ID Conta: " + idConta + "\n"
+                            + "Saldo Atual: " + saldoAtual + "\n"
+                            + "Status da Conta: " + statusContaStr;
 
-                JOptionPane.showMessageDialog(null, mensagem, "Dados do Cliente", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "Cliente não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, mensagem, "Dados do Cliente", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Cliente não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao buscar dados do cliente", "Erro", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao buscar dados do cliente", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void pesquisarTblGerente(String cpf) {
         if (!validarCPFPesquisado(cpf)) {
         } else {
-            CRUD_DAO pesquisa = new CRUD_DAO();
-            ResultSet resultado = pesquisa.getPesquisarTblGerente(cpf);
+            Gerente pesquisa = new Gerente(null, null, null, null, null, null, null, null);
+            ResultSet resultado = pesquisa.getPesquisarGerente(cpf);
             try {
                 if (resultado.next()) {
                     String nome = resultado.getString("nome");

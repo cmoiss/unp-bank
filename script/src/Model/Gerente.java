@@ -3,8 +3,9 @@ package Model;
 import Control.DAO.CRUD_DAO;
 import Control.DAO.CadastroDAO;
 import Control.TipoPessoa;
-import java.sql.SQLException;
 import java.util.Date;
+import java.sql.SQLException;
+import java.sql.ResultSet;
 
 public class Gerente extends Pessoa {
 
@@ -49,10 +50,14 @@ public class Gerente extends Pessoa {
         funcao.excluiirTblCliente(null);
     }
 
-    private void pesquisarCliente() {
-        funcao.pesquisarTblCliente(null);
+    private ResultSet pesquisarCliente(String cpf) {
+        return funcao.getPesquisarTblCliente(cpf);
     }
 
+    private ResultSet pesquisarGerente(String cpf) {
+        return funcao.getPesquisarTblGerente(cpf);
+    }
+    
     public String getIdGerente() {
         return idGerente;
     }
@@ -91,8 +96,12 @@ public class Gerente extends Pessoa {
         excluirCliente();
     }
 
-    public void getPesquisarCliente() {
-        pesquisarCliente();
+    public ResultSet getPesquisarCliente(String cpf) {
+        return pesquisarCliente(cpf);
+    }
+    
+    public ResultSet getPesquisarGerente(String cpf) {
+        return pesquisarGerente(cpf);
     }
 
 }

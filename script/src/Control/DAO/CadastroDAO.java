@@ -20,9 +20,7 @@ public class CadastroDAO {
 
         insertTBLPessoa(comandoSQL, nome, cpf, data, idade, email, genero);
         insertTBLConta(comandoSQL, this.gerarId.getGerarID(), saldoAtual);
-        insertTBLCliente(comandoSQL, this.gerarId.getGerarID(), true, cpf, login, senha, this.gerarId.getGerarID());
-
-        
+        insertTBLCliente(comandoSQL, this.gerarId.getGerarID(), true, cpf, login, senha, this.gerarId.getGerarID());        
     }
 
     private void cadastrarGerente(String nome, String cpf, Date data, int idade, String email, String login, String senha, String genero) throws SQLException {
