@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS tbl_Pessoa(
 	dataNascimento DATE,
 	idade INT,
 	email VARCHAR(40) NOT NULL,
-    genero ENUM('Masculino', 'Feminino', 'Outro') NOT NULL
+    genero VARCHAR(10) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS tbl_ContaBancaria(

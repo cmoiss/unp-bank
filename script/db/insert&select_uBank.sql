@@ -20,13 +20,14 @@ select*from tbl_Gerente;
 select*from tbl_ContaBancaria;
 select * from tbl_pessoa;
 
-SELECT p.*
+SELECT p.nome, p.cpf, p.dataNascimento, p.idade, p.email, p.genero, g.idGerente, g.login, g.senha
 FROM tbl_Pessoa p
-JOIN tbl_Cliente c ON p.cpf = c.cpf;
+INNER JOIN tbl_Gerente g ON p.cpf = g.cpf;
 
-SELECT p.*
+SELECT p.nome, p.cpf, p.dataNascimento, p.idade, p.email, p.genero, c.login, c.senha, c.idCliente, c.idConta, c.statusCliente
 FROM tbl_Pessoa p
-JOIN tbl_Gerente g ON p.cpf = g.cpf
+INNER JOIN tbl_Cliente c ON p.cpf = c.cpf;
+
 
 --===================================================================
 --NÃO RODAR OS COMANDOS A BAIXO SÓ DEVE SER USADO COMO COMANDO NO JAVA 
