@@ -494,7 +494,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
 
     private void voltarMenuPesquisa() {
         this.dispose();
-        new TelaPesquisaPessoa(tipoPessoa).setVisible(true);
+        new TelaPesquisaPessoa().setVisible(true);
     }
 
     private void limparDados() {
