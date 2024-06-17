@@ -13,30 +13,13 @@ public class TelaInicial extends javax.swing.JFrame {
     private void initComponents() {
 
         painelTelaInicial = new javax.swing.JPanel();
-        botSouCliente = new javax.swing.JButton();
         botSouGerente = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        botSouCliente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         painelTelaInicial.setPreferredSize(new java.awt.Dimension(300, 210));
-
-        botSouCliente.setText("Sou cliente");
-        botSouCliente.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                botSouClienteMouseClicked(evt);
-            }
-        });
-        botSouCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botSouClienteActionPerformed(evt);
-            }
-        });
-        botSouCliente.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                botSouClienteKeyPressed(evt);
-            }
-        });
 
         botSouGerente.setText("Sou gerente");
         botSouGerente.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -57,6 +40,23 @@ public class TelaInicial extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/media/unp banco.png"))); // NOI18N
 
+        botSouCliente.setText("Sou cliente");
+        botSouCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botSouClienteMouseClicked(evt);
+            }
+        });
+        botSouCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botSouClienteActionPerformed(evt);
+            }
+        });
+        botSouCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botSouClienteKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelTelaInicialLayout = new javax.swing.GroupLayout(painelTelaInicial);
         painelTelaInicial.setLayout(painelTelaInicialLayout);
         painelTelaInicialLayout.setHorizontalGroup(
@@ -65,8 +65,8 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addGroup(painelTelaInicialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(botSouGerente)
-                    .addComponent(botSouCliente)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(botSouCliente))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
@@ -77,12 +77,14 @@ public class TelaInicial extends javax.swing.JFrame {
             .addGroup(painelTelaInicialLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(29, 29, 29)
+                .addGap(18, 18, 18)
                 .addComponent(botSouCliente)
-                .addGap(25, 25, 25)
+                .addGap(26, 26, 26)
                 .addComponent(botSouGerente)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
+
+        painelTelaInicialLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botSouCliente, botSouGerente});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,25 +104,25 @@ public class TelaInicial extends javax.swing.JFrame {
         chamarTelaLogin(TipoPessoa.GERENTE);
     }//GEN-LAST:event_botSouGerenteActionPerformed
 
-    private void botSouClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botSouClienteActionPerformed
-        chamarTelaLogin(TipoPessoa.CLIENTE);
-    }//GEN-LAST:event_botSouClienteActionPerformed
-
-    private void botSouClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botSouClienteMouseClicked
-        chamarTelaLogin(TipoPessoa.CLIENTE);
-    }//GEN-LAST:event_botSouClienteMouseClicked
-
     private void botSouGerenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botSouGerenteMouseClicked
         chamarTelaLogin(TipoPessoa.GERENTE);
     }//GEN-LAST:event_botSouGerenteMouseClicked
+
+    private void botSouGerenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botSouGerenteKeyPressed
+        chamarTelaLogin(TipoPessoa.GERENTE);
+    }//GEN-LAST:event_botSouGerenteKeyPressed
+
+    private void botSouClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botSouClienteActionPerformed
+        chamarTelaLogin(TipoPessoa.CLIENTE);
+    }//GEN-LAST:event_botSouClienteActionPerformed
 
     private void botSouClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botSouClienteKeyPressed
         chamarTelaLogin(TipoPessoa.CLIENTE);
     }//GEN-LAST:event_botSouClienteKeyPressed
 
-    private void botSouGerenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botSouGerenteKeyPressed
-        chamarTelaLogin(TipoPessoa.GERENTE);
-    }//GEN-LAST:event_botSouGerenteKeyPressed
+    private void botSouClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botSouClienteMouseClicked
+        chamarTelaLogin(TipoPessoa.CLIENTE);
+    }//GEN-LAST:event_botSouClienteMouseClicked
 
     private void chamarTelaLogin(TipoPessoa tipoPessoa) {
         this.dispose(); //fecha tela atual

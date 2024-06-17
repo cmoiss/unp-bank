@@ -81,6 +81,11 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
                 botCadastrarNovoItemActionPerformed(evt);
             }
         });
+        botCadastrarNovoItem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botCadastrarNovoItemKeyPressed(evt);
+            }
+        });
 
         caixaPesquisaUsuario.setFont(new java.awt.Font("Liberation Sans", 2, 13)); // NOI18N
         caixaPesquisaUsuario.setForeground(new java.awt.Color(204, 204, 204));
@@ -173,27 +178,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     }//GEN-LAST:event_botEditarItemActionPerformed
 
     private void botCadastrarNovoItemNovoItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botCadastrarNovoItemNovoItemMouseClicked
-        int opçao = JOptionPane.showConfirmDialog(null,
-                "Deseja cadastrar um cliente ou gerente?",
-                "Selecionar tipo de cadastro",
-                JOptionPane.YES_NO_OPTION);
-
-        switch (opçao) {
-            case JOptionPane.YES_OPTION -> {
-                // Cadastrar cliente
-                chamarTelaCadastro(TipoPessoa.CLIENTE);
-            }
-
-            case JOptionPane.NO_OPTION -> {
-                // Cadastrar gerente
-                chamarTelaCadastro(TipoPessoa.GERENTE);
-            }
-
-            default ->
-                throw new AssertionError();
-        }
-
-
+        chamarTelaCadastro();
     }//GEN-LAST:event_botCadastrarNovoItemNovoItemMouseClicked
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -201,7 +186,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void botCadastrarNovoItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botCadastrarNovoItemActionPerformed
-
+        chamarTelaCadastro();
     }//GEN-LAST:event_botCadastrarNovoItemActionPerformed
 
     private void caixaPesquisaUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaPesquisaUsuarioActionPerformed
@@ -243,24 +228,51 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         editar();
     }//GEN-LAST:event_botEditarItemMouseClicked
 
+    private void botCadastrarNovoItemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botCadastrarNovoItemKeyPressed
+        chamarTelaCadastro();
+    }//GEN-LAST:event_botCadastrarNovoItemKeyPressed
+
     private void editar() {
         // botão editar 
     }
 
-    private void chamarTelaCadastro(TipoPessoa tipoPessoa) {
+    private void chamarTelaCadastro() {
+        TipoPessoa pessoa = null;
+
+        // Pergunta quem quer cadastrar
+        int opçao = JOptionPane.showConfirmDialog(null,
+                "Deseja cadastrar um cliente ou gerente?",
+                "Selecionar tipo de cadastro",
+                JOptionPane.YES_NO_OPTION);
+
+        switch (opçao) {
+            case JOptionPane.YES_OPTION -> {
+                // Cadastrar cliente
+                pessoa = TipoPessoa.CLIENTE;
+            }
+
+            case JOptionPane.NO_OPTION -> {
+                // Cadastrar gerente
+                pessoa = TipoPessoa.GERENTE;
+            }
+
+            default ->
+                throw new AssertionError();
+        }
+
         this.dispose();
 
-        if (tipoPessoa.equals(TipoPessoa.CLIENTE)) {
-            new TelaCadastroCliente(tipoPessoa).setVisible(true);
-        } else if (tipoPessoa.equals(TipoPessoa.GERENTE)) {
-            new TelaCadastroGerente(tipoPessoa).setVisible(true);
+        if (pessoa.equals(TipoPessoa.CLIENTE)) {
+            new TelaCadastroCliente(pessoa).setVisible(true);
+        } else if (pessoa.equals(TipoPessoa.GERENTE)) {
+            new TelaCadastroGerente(pessoa).setVisible(true);
         }
     }
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaPesquisaPessoa(TipoPessoa.CLIENTE).setVisible(true);
+                new TelaPesquisaPessoa().setVisible(true);
             }
         });
     }
