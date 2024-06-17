@@ -103,7 +103,7 @@
                       <EmptySpace pref="154" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="labelSexo" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="comboBoxSexo" alignment="0" max="32767" attributes="0"/>
+                          <Component id="comboBoxSexo" alignment="0" pref="92" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -195,10 +195,11 @@
             <Component class="javax.swing.JComboBox" name="comboBoxSexo">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="3">
+                  <StringArray count="4">
                     <StringItem index="0" value="Selecione"/>
-                    <StringItem index="1" value="Masculino "/>
+                    <StringItem index="1" value="Masculino"/>
                     <StringItem index="2" value="Feminino"/>
+                    <StringItem index="3" value="Outro"/>
                   </StringArray>
                 </Property>
               </Properties>
