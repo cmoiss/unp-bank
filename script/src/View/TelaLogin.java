@@ -158,7 +158,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void efetuarLogin() throws SQLException {
 
-        LoginDAO loginDAO = new LoginDAO();
+        LoginDAO loginDAO = new LoginDAO(tipoPessoa);
         this.login = caixaTextoLogin.getText();
         this.senha = caixaTextoSenha.getText();
 
@@ -203,7 +203,8 @@ public class TelaLogin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaLogin(TipoPessoa.CLIENTE).setVisible(true);
+                
+                
             }
         });
     }

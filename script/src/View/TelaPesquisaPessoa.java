@@ -202,7 +202,22 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     }//GEN-LAST:event_caixaPesquisaUsuarioActionPerformed
 
     private void botExcluirItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botExcluirItemActionPerformed
-        // TODO add your handling code here:
+        int opçao = JOptionPane.showConfirmDialog(null, "Realmente deseja excluir esse usuário?", "Excluir usuário", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        switch (opçao) {
+            case JOptionPane.YES_OPTION -> {
+                String cpf = caixaPesquisaUsuario.getText();
+                Gerente ger=new Gerente(null, null, null, null, null, null, null, null);
+                ger.getExcluirCliente(cpf);
+            }
+
+            case JOptionPane.NO_OPTION -> {
+                //Não excluir
+            }
+
+            default ->
+                throw new AssertionError();
+        }
     }//GEN-LAST:event_botExcluirItemActionPerformed
 
     private void botExcluirItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botExcluirItemMouseClicked
@@ -250,7 +265,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         chamarTelaEditarDados();
     }//GEN-LAST:event_botEditarItem1KeyPressed
 
-    public void pesquisar() {
+   /* public void pesquisar() {
         // Recebe o CPF digitado na caixa de pesquisa
         String cpf = caixaPesquisaUsuario.getText();
 
@@ -264,11 +279,13 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
             }
 
         }
-    }
+    }*/
 
-    private void pesquisarTblCliente(String cpf) {
-        if (!validarCPFPesquisado(cpf)) {
-        } else {
+    private void pesquisar() {
+        String cpf = caixaPesquisaUsuario.getText();
+        CPF validador = new CPF();
+        boolean validarCPF = validador.getValidarCPF(cpf);
+           if (true==validarCPF) {
             Gerente pesquisa = new Gerente(null, null, null, null, null, null, null, null);
             ResultSet resultado = pesquisa.getPesquisarCliente(cpf);
             try {
@@ -297,10 +314,12 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Erro ao buscar dados do cliente", "Erro", JOptionPane.ERROR_MESSAGE);
             }
+        } else {
+               JOptionPane.showMessageDialog(null, "CPF inválido! Por favor, digite novamente.", "Validador de CPF", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void pesquisarTblGerente(String cpf) {
+    /*private void pesquisarTblGerente(String cpf) {
         if (!validarCPFPesquisado(cpf)) {
         } else {
             Gerente pesquisa = new Gerente(null, null, null, null, null, null, null, null);
@@ -325,7 +344,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Erro ao buscar dados do gerente", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         }
-    }
+    }*/
 
     private void chamarTelaCadastro() {
         TipoPessoa pessoa = null;
@@ -389,12 +408,13 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         }
     }
 
-    private boolean validarCPFPesquisado(String cpf) {
-        CPF validar = new CPF();
+   /* private boolean validarCPFPesquisado(String cpf) {
+        CPF validador = new CPF();
+        boolean validarCPF = validador.getValidarCPF(cpf);
 
-        boolean valido = false;
+        boolean valido = validarCPF;
 
-        if (!validar.getValidarCPF(cpf)) {
+        if (!validarCPF) {
             JOptionPane.showMessageDialog(null, "CPF inválido! Por favor, digite novamente.", "Validador de CPF", JOptionPane.ERROR_MESSAGE);
             valido = false;
         } else {
@@ -402,13 +422,11 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         }
 
         return valido;
-    }
+    }*/
 
     public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaPesquisaPessoa().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new TelaPesquisaPessoa().setVisible(true);
         });
     }
 

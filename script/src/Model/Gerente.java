@@ -105,10 +105,6 @@ public class Gerente extends Pessoa {
         editarDados(cpf, email, login, senha);
     }
     
-    public void getExcluirCliente() {
-        excluirCliente();
-    }
-
     public ResultSet getPesquisarCliente(String cpf) {
         return pesquisarCliente(cpf);
     }

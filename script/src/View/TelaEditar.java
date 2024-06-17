@@ -139,6 +139,11 @@ public class TelaEditar extends javax.swing.JFrame {
                 botEditarMouseClicked(evt);
             }
         });
+        botEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botEditarActionPerformed(evt);
+            }
+        });
         botEditar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 botEditarKeyPressed(evt);
@@ -223,6 +228,10 @@ public class TelaEditar extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botEditarMouseClicked
 
+    private void botEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEditarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botEditarActionPerformed
+
     private void editarDados() throws SQLException {
         String email = caixaTextoEmail.getText();
         String login = caixaTextoNovoUsuario.getText();
@@ -258,11 +267,9 @@ public class TelaEditar extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                TelaEditar tela = new TelaEditar(null);
-                new TelaEditar(tela.cpf).setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            TelaEditar tela = new TelaEditar(null);
+            new TelaEditar(tela.cpf).setVisible(true);
         });
     }
 
