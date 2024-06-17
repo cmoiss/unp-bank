@@ -442,7 +442,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_botLimparDadosKeyPressed
 
     private void efetuarCadastro() throws SQLException, ParseException {
-        String nome = caixaTextoCelular.getText();
+        String nome = caixaTextoNome.getText();
         String cpf = caixaTextoCPF.getText();
         String dataNascimentoString = caixaTextoDataNascimento.getText();
         String email = caixaTextoEmail.getText();
