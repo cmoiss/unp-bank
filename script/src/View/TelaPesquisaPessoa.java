@@ -1,6 +1,5 @@
 package View;
 
-import Control.DAO.CRUD_DAO;
 import Control.TipoPessoa;
 import Control.CPF;
 import Model.Gerente;
@@ -233,11 +232,11 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     }//GEN-LAST:event_botCadastrarNovoItemKeyPressed
 
     private void botEditarItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEditarItem1MouseClicked
-        chamarTelaCadastro();
+        chamarTelaEditarDados();
     }//GEN-LAST:event_botEditarItem1MouseClicked
-        
+
     private void botEditarItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEditarItem1ActionPerformed
-        chamarTelaCadastro();
+        chamarTelaEditarDados();
     }//GEN-LAST:event_botEditarItem1ActionPerformed
 
     private void botPesquisarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botPesquisarKeyPressed
@@ -359,42 +358,32 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     }
 
     private void chamarTelaEditarDados() {
-        TipoPessoa pessoa = TipoPessoa.CLIENTE;
+        boolean auxiliar = false;
+        String cpf = caixaPesquisaUsuario.getText();
 
         // Pergunta quem quer cadastrar
         int opçao = JOptionPane.showConfirmDialog(null,
-                "Deseja editar um cliente ou gerente?",
+                "Deseja editar esse cliente?",
                 "Selecionar tipo de cadastro",
                 JOptionPane.YES_NO_OPTION);
 
         switch (opçao) {
             case JOptionPane.YES_OPTION -> {
-                // Cadastrar cliente
-                pessoa = TipoPessoa.CLIENTE;
+                auxiliar = true;
             }
 
             case JOptionPane.NO_OPTION -> {
-                // Cadastrar gerente
-                pessoa = TipoPessoa.GERENTE;
+                auxiliar = false;
             }
 
             default ->
                 throw new AssertionError();
         }
 
-        this.dispose();
-
-        if (pessoa.equals(TipoPessoa.CLIENTE)) {
-            new TelaEditar(pessoa).setVisible(true);
-        } else if (pessoa.equals(TipoPessoa.GERENTE)) {
-            new TelaEditar(pessoa).setVisible(true);
+        if (auxiliar == true) {
+            this.dispose();
+            new TelaEditar(cpf).setVisible(true);
         }
-    }
-    
-    private void editar() {
-
-        Gerente editar = new Gerente(null, null, null, null, null, null, null, null);
-        editar.getEditarDados();
     }
 
     private boolean validarCPFPesquisado(String cpf) {

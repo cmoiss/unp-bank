@@ -48,47 +48,55 @@ public class CRUD_DAO {
         }
     }
 
-    private void editarDados(String cpf, String email, String celular, String login, String senha) throws SQLException {
+    private void editarDados(String cpf, String email, String login, String senha) throws SQLException {
         editarEmail(cpf, email);
-        editarCelular(cpf, celular);
         editarLogin(cpf, login);
         editarSenha(cpf, senha);
     }
-    
-    private void editarEmail(String cpf, String email) throws SQLException {
-        String sql = "UPDATE tbl_Pessoa SET email=? WHERE cpf=?;";
-        PreparedStatement statement = conexao.prepareStatement(sql);
-        statement.setString(1, email);
-        statement.setString(2, cpf);
-        statement.executeUpdate();
-        statement.close();
-    }
 
-    private void editarCelular(String cpf, String celular) throws SQLException {
-        String sql = "UPDATE tbl_Pessoa SET celular=? WHERE cpf=?;";
-        PreparedStatement statement = conexao.prepareStatement(sql);
-        statement.setString(1, celular);
-        statement.setString(2, cpf);
-        statement.executeUpdate();
-        statement.close();
+    private void editarEmail(String cpf, String email) throws SQLException {
+        PreparedStatement comandoSQL;
+
+        try {
+            conexao = (Connection) new dbConnect().getConnection();
+            comandoSQL = conexao.prepareStatement("UPDATE tbl_Pessoa SET email=? WHERE cpf=?;");
+            comandoSQL.setString(1, email);
+            comandoSQL.setString(2, cpf);
+            comandoSQL.executeUpdate();
+            conexao.close();
+        } catch (SQLException u) {
+            throw new RuntimeException(u);
+        }
     }
 
     private void editarLogin(String cpf, String login) throws SQLException {
-        String sql = "UPDATE tbl_Gerente SET login=? WHERE cpf=?;";
-        PreparedStatement statement = conexao.prepareStatement(sql);
-        statement.setString(1, login);
-        statement.setString(2, cpf);
-        statement.executeUpdate();
-        statement.close();
+        PreparedStatement comandoSQL;
+
+        try {
+            conexao = (Connection) new dbConnect().getConnection();
+            comandoSQL = conexao.prepareStatement("UPDATE tbl_Gerente SET login=? WHERE cpf=?;");
+            comandoSQL.setString(1, login);
+            comandoSQL.setString(2, cpf);
+            comandoSQL.executeUpdate();
+            conexao.close();
+        } catch (SQLException u) {
+            throw new RuntimeException(u);
+        }
     }
 
     private void editarSenha(String cpf, String senha) throws SQLException {
-        String sql = "UPDATE tbl_Gerente SET senha=? WHERE cpf=?;";
-        PreparedStatement statement = conexao.prepareStatement(sql);
-        statement.setString(1, senha);
-        statement.setString(2, cpf);
-        statement.executeUpdate();
-        statement.close();
+        PreparedStatement comandoSQL;
+
+        try {
+            conexao = (Connection) new dbConnect().getConnection();
+            comandoSQL = conexao.prepareStatement("UPDATE tbl_Gerente SET senha=? WHERE cpf=?;");
+            comandoSQL.setString(1, senha);
+            comandoSQL.setString(2, cpf);
+            comandoSQL.executeUpdate();
+            conexao.close();
+        } catch (SQLException u) {
+            throw new RuntimeException(u);
+        }
     }
 
     public void verificarTblContas() {
@@ -200,7 +208,7 @@ public class CRUD_DAO {
         return 0;
     }
 
-    public void getEditarDados(String cpf, String email, String celular, String login, String senha) throws SQLException {
-        editarDados(cpf, email, celular, login, senha);
+    public void getEditarDados(String cpf, String email, String login, String senha) throws SQLException {
+        editarDados(cpf, email, login, senha);
     }
 }

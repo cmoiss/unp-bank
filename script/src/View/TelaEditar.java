@@ -1,17 +1,16 @@
 package View;
 
-import Control.TipoPessoa;
 import Model.Gerente;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class TelaEditar extends javax.swing.JFrame {
-
-    TipoPessoa tipoPessoa = TipoPessoa.CLIENTE;
     
-    public TelaEditar(TipoPessoa tipoPessoa) {
-        this.tipoPessoa = tipoPessoa;
+    String cpf = null;
+    
+    public TelaEditar(String cpf) {
+        this.cpf = cpf;
         
         initComponents();
     }
@@ -34,7 +33,7 @@ public class TelaEditar extends javax.swing.JFrame {
         botEditar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("EDITAR " + this.tipoPessoa);
+        setTitle("EDITAR CLIENTE");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "DadosPessoais"), "Editar dados pessoais"));
         jPanel1.setPreferredSize(new java.awt.Dimension(560, 350));
@@ -152,16 +151,13 @@ public class TelaEditar extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(237, 237, 237)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(botEditar)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(237, 237, 237))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,7 +168,7 @@ public class TelaEditar extends javax.swing.JFrame {
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(botEditar)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -187,9 +183,8 @@ public class TelaEditar extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -229,12 +224,11 @@ public class TelaEditar extends javax.swing.JFrame {
 
     private void editarDados() throws SQLException {
         String email = caixaTextoEmail.getText();
-        String celular = caixaTextoCelular.getText();
         String login = caixaTextoNovoUsuario.getText();
         String senha = caixaTextoNovaSenha.getText();
         
         Gerente editar = new Gerente(null, null, null, null, null, null, null, null);
-        editar.getEditarDados(senha, email, celular, login, senha);
+        editar.getEditarDados(this.cpf, email, login, senha);
     }
     
     public static void main(String args[]) {
@@ -264,7 +258,8 @@ public class TelaEditar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaEditar(TipoPessoa.CLIENTE).setVisible(true);
+                TelaEditar tela = new TelaEditar(null);
+                new TelaEditar(tela.cpf).setVisible(true);
             }
         });
     }

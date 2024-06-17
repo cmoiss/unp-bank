@@ -29,12 +29,12 @@ public class Gerente extends Pessoa {
         cadastrar.getCloseConnction();
     }
 
-    private void editarDados(String cpf, String email, String celular, String login, String senha) throws SQLException {
+    private void editarDados(String cpf, String email, String login, String senha) throws SQLException {
         CRUD_DAO editar = new CRUD_DAO();
-        editar.getEditarDados(cpf, email, celular, login, senha);
+        editar.getEditarDados(cpf, email, login, senha);
     }
     
-    private boolean verificarCPFExistente(String cpf) throws SQLException {
+    private boolean verificarCPFExistenteBD(String cpf) throws SQLException {
         boolean existe;
         CadastroDAO verificar = new CadastroDAO();
         existe = verificar.getVerificarCPFExistente(cpf);
@@ -82,9 +82,7 @@ public class Gerente extends Pessoa {
     }
 
     public boolean getVerificarCPFEXistente(String cpf) throws SQLException {
-        boolean existe;
-        existe = verificarCPFExistente(cpf);
-        return existe;
+        return verificarCPFExistenteBD(cpf);
     }
 
     public void getChecarListaDeContas() {
@@ -99,8 +97,8 @@ public class Gerente extends Pessoa {
         verListaDeCliente();
     }
 
-    public void getEditarDados(String cpf, String email, String celular, String login, String senha) throws SQLException {
-        editarDados(cpf, email, celular, login, senha);
+    public void getEditarDados(String cpf, String email, String login, String senha) throws SQLException {
+        editarDados(cpf, email, login, senha);
     }
     
     public void getExcluirCliente() {
