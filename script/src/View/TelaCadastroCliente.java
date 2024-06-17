@@ -440,7 +440,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
     private void botLimparDadosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botLimparDadosKeyPressed
         limparDados();
     }//GEN-LAST:event_botLimparDadosKeyPressed
-     
+
     private void efetuarCadastro() throws SQLException, ParseException {
         String nome = caixaTextoNome.getText();
         String cpf = caixaTextoCPF.getText();
@@ -448,9 +448,10 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         String email = caixaTextoEmail.getText();
         String login = caixaTextoLogin.getText();
         String senha = caixaTextoSenha.getText();
+        String saldoInicialString = caixaTextoSaldoInicial.getText();
         String genero = (String) comboBoxSexo.getSelectedItem();
-        
-        double saldoAtual = Double.parseDouble(caixaTextoSaldoInicial.getText());
+
+        double saldoInicial = Double.parseDouble(saldoInicialString);
 
         Idade idade = new Idade();
 
@@ -483,9 +484,15 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
                         if (!idade.getVerificarIdade()) {
                             JOptionPane.showMessageDialog(null, "Idade inválida! Por favor, digite novamente", "Idade inválida", JOptionPane.ERROR_MESSAGE);
                         } else {
-                            cadastro.getCadastrarCliente(nome, cpf, idade.getDataNascimento(), idade.getIdade(), email, login, senha, saldoAtual, genero);
-                            mensagemCadastroConcluido();
-                            limparDados();
+
+                            // "saldo inicial" pode ser apenas números
+                            if (!saldoInicialString.matches("\\d+")) {
+                                JOptionPane.showMessageDialog(null, "Saldo inicial inválido! Digite apenas números.", "Saldo inválido", JOptionPane.ERROR_MESSAGE);
+                            } else {
+                                cadastro.getCadastrarCliente(nome, cpf, idade.getDataNascimento(), idade.getIdade(), email, login, senha, saldoInicial, genero);
+                                mensagemCadastroConcluido();
+                                limparDados();
+                            }
                         }
                     }
                 }
