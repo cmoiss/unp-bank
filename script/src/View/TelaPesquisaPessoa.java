@@ -210,8 +210,9 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
 
         switch (opçao) {
             case JOptionPane.YES_OPTION -> {
-                //Excluir item
-                //Confirmação de exclusão
+                String cpf = caixaPesquisaUsuario.getText();
+                Gerente ger=new Gerente(null, null, null, null, null, null, null, null);
+                ger.getExcluirCliente(cpf);
             }
 
             case JOptionPane.NO_OPTION -> {
@@ -223,6 +224,8 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botExcluirItemMouseClicked
 
+
+    
     private void botPesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botPesquisarMouseClicked
         pesquisar();
     }//GEN-LAST:event_botPesquisarMouseClicked

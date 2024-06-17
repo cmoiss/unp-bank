@@ -139,18 +139,25 @@ public class CRUD_DAO {
         }
     }
 
-    public void excluiirTblCliente(String idCliente) {
+    private ResultSet excluirTblCliente(String cpf) {
         PreparedStatement comandoSQL;
+        ResultSet resultado;
         try {
             conexao = (Connection) new dbConnect().getConnection();
-            comandoSQL = conexao.prepareStatement("DELETE FROM tbl_Cliente WHERE idCliente=?");
-            comandoSQL.setString(1, idCliente);
+            comandoSQL = conexao.prepareStatement("DELETE FROM tbl_Cliente WHERE cpf=?");
+            comandoSQL.setString(1, cpf);
             System.out.println("feito");
             comandoSQL.execute();
             comandoSQL.close();
+            resultado = comandoSQL.executeQuery();
+            return resultado;
         } catch (SQLException u) {
             throw new RuntimeException(u);
         }
+    }
+
+    public ResultSet getexcluirTblCliente(String cpf){
+        return excluirTblCliente(cpf);
     }
 
     public ResultSet getPesquisarTblCliente(String cpf) {
@@ -191,6 +198,8 @@ public class CRUD_DAO {
         }
         return 0;
     }
+    
+
 
     public double efetuarDeposito(String idConta, double saldoAtual) {
         PreparedStatement comandoSQL;

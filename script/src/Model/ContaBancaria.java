@@ -9,9 +9,9 @@ private String idConta;
 private int saldoAtual;
 CRUD_DAO funcao = new CRUD_DAO();
 
-    public ContaBancaria(String idConta, int saldoAtual) {
+    public ContaBancaria(String idConta, double saldoAtual) {
         this.idConta = idConta;
-        this.saldoAtual = saldoAtual;
+        this.saldoAtual = (int) saldoAtual;
     }
 
     public String getIdConta() {
@@ -34,18 +34,24 @@ CRUD_DAO funcao = new CRUD_DAO();
          double aux;
          aux=funcao.verificarSaldo(idConta);
          return aux;
+         /*if(aux){
+         funcao.efetuarSaque(idConta, aux);
+         }*/
     }
+     
     
     public double getverificarSaldo() {
         return verificarSaldo();
     }
     
-    public void  verificarSaque() {
-   
-    }
+
     
-    public void verificarDeposito() {
-    /* Checa se valor depositado pode ser depositado e soma ao saldo atual */
+    public double verificarDeposito() {
+    funcao.efetuarDeposito(idConta, saldoAtual);
+    return 0;
+    }
+    public double getDeposito(){
+    return verificarDeposito();
     }
     
    /* O metodo de transferir dinheiro deve ser discutido

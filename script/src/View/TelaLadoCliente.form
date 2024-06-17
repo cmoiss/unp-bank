@@ -59,9 +59,9 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="botEfetuarDepósito" min="-2" pref="150" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
-                  <Component id="botEfetuarSaque" min="-2" pref="150" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                  <Component id="butSaque" min="-2" pref="123" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
               </Group>
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -105,9 +105,9 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="44" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="botEfetuarSaque" max="32767" attributes="0"/>
-                      <Component id="botEfetuarDepósito" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="botEfetuarDepósito" alignment="3" max="32767" attributes="0"/>
+                      <Component id="butSaque" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   <Component id="botEfetuarTransferência" min="-2" max="-2" attributes="0"/>
@@ -167,15 +167,6 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botEfetuarDep&#xf3;sitoActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="botEfetuarSaque">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Efetuar Saque"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="botEfetuarSaqueMouseClicked"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botEfetuarSaqueActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="botEfetuarTransfer&#xea;ncia">
           <Properties>
             <Property name="text" type="java.lang.String" value="Transfer&#xea;ncia banc&#xe1;ria"/>
@@ -191,6 +182,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="butSaque">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Efetuar Saque"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="butSaqueActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

@@ -158,11 +158,11 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void efetuarLogin() throws SQLException {
 
-        LoginDAO loginDAO = new LoginDAO(tipoPessoa);
+        LoginDAO loginDAO = new LoginDAO();
         this.login = caixaTextoLogin.getText();
         this.senha = caixaTextoSenha.getText();
 
-        if (loginDAO.loginCheck(login, senha)) {
+        if (loginDAO.LoginCheck(login, senha)) {
             this.dispose();
             if (tipoPessoa.equals(TipoPessoa.CLIENTE)) {
                 new TelaLadoCliente().setVisible(true);
