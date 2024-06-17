@@ -14,7 +14,7 @@ import java.sql.ResultSet;
  */
 public class TelaPesquisaPessoa extends javax.swing.JFrame {
 
-    private TipoPessoa tipoPessoa = null;
+    private TipoPessoa tipoPessoa = TipoPessoa.CLIENTE;
 
     public TelaPesquisaPessoa() {
         initComponents();
