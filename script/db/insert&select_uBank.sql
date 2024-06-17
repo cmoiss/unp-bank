@@ -20,13 +20,18 @@ select*from tbl_Gerente;
 select*from tbl_ContaBancaria;
 select * from tbl_pessoa;
 
+
+-- Gerente
 SELECT p.nome, p.cpf, p.dataNascimento, p.idade, p.email, p.genero, g.idGerente, g.login, g.senha
 FROM tbl_Pessoa p
 INNER JOIN tbl_Gerente g ON p.cpf = g.cpf;
 
-SELECT p.nome, p.cpf, p.dataNascimento, p.idade, p.email, p.genero, c.login, c.senha, c.idCliente, c.idConta, c.statusCliente
+
+-- Cliente
+SELECT p.nome, P.cpf, p.dataNascimento, p.idade, p.email, p.genero, c.idCliente, c.statusCliente, c.idConta, cb.saldoAtual, c.login, c.senha
 FROM tbl_Pessoa p
-INNER JOIN tbl_Cliente c ON p.cpf = c.cpf;
+INNER JOIN tbl_Cliente c ON p.cpf = c.cpf
+INNER JOIN tbl_ContaBancaria cb ON c.idConta = cb.idConta;
 
 
 --===================================================================

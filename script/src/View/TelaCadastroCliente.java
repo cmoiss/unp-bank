@@ -465,15 +465,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
             //CPF inválido
             JOptionPane.showMessageDialog(null, "CPF Inválido! Digite novamente", "CPF Inválido", JOptionPane.ERROR_MESSAGE);
         } else {
-            cadastro.getCadastrarCliente(nome, cpf, idade.getDataNascimento(), idade.getIdade(), email, login, senha, saldoInicial, genero);
-            mensagemCadastroConcluido();
-            limparDados();
-        }
-    }
-    
-    /*
-
-    //Verifica se o CPF já existe no BD
+            //Verifica se o CPF já existe no BD
             if (cadastro.getVerificarCPFEXistente(cpf) == true) {
                 mensagemCPFExistente();
             } else {
@@ -497,8 +489,18 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
                             if (!saldoInicialString.matches(
                                     "\\d+")) {
                                 JOptionPane.showMessageDialog(null, "Saldo inicial inválido! Digite apenas números.", "Saldo inválido", JOptionPane.ERROR_MESSAGE);
-                            } else {*/
-    
+                            } else {
+                                cadastro.getCadastrarCliente(nome, cpf, idade.getDataNascimento(), idade.getIdade(), email, login, senha, saldoInicial, genero);
+                                mensagemCadastroConcluido();
+                                limparDados();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private void mensagemCadastroConcluido() {
         JOptionPane.showMessageDialog(null, "Cadastro concluído com sucesso!", "Cadastro concluído", JOptionPane.INFORMATION_MESSAGE);
     }
