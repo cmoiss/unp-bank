@@ -48,6 +48,57 @@ public class CRUD_DAO {
         }
     }
 
+    private void editarDados(String cpf, String email, String login, String senha) throws SQLException {
+        editarEmail(cpf, email);
+        editarLogin(cpf, login);
+        editarSenha(cpf, senha);
+    }
+
+    private void editarEmail(String cpf, String email) throws SQLException {
+        PreparedStatement comandoSQL;
+
+        try {
+            conexao = (Connection) new dbConnect().getConnection();
+            comandoSQL = conexao.prepareStatement("UPDATE tbl_Pessoa SET email=? WHERE cpf=?;");
+            comandoSQL.setString(1, email);
+            comandoSQL.setString(2, cpf);
+            comandoSQL.executeUpdate();
+            conexao.close();
+        } catch (SQLException u) {
+            throw new RuntimeException(u);
+        }
+    }
+
+    private void editarLogin(String cpf, String login) throws SQLException {
+        PreparedStatement comandoSQL;
+
+        try {
+            conexao = (Connection) new dbConnect().getConnection();
+            comandoSQL = conexao.prepareStatement("UPDATE tbl_Gerente SET login=? WHERE cpf=?;");
+            comandoSQL.setString(1, login);
+            comandoSQL.setString(2, cpf);
+            comandoSQL.executeUpdate();
+            conexao.close();
+        } catch (SQLException u) {
+            throw new RuntimeException(u);
+        }
+    }
+
+    private void editarSenha(String cpf, String senha) throws SQLException {
+        PreparedStatement comandoSQL;
+
+        try {
+            conexao = (Connection) new dbConnect().getConnection();
+            comandoSQL = conexao.prepareStatement("UPDATE tbl_Gerente SET senha=? WHERE cpf=?;");
+            comandoSQL.setString(1, senha);
+            comandoSQL.setString(2, cpf);
+            comandoSQL.executeUpdate();
+            conexao.close();
+        } catch (SQLException u) {
+            throw new RuntimeException(u);
+        }
+    }
+
     public void verificarTblContas() {
         PreparedStatement comandoSQL;
         try {
@@ -88,18 +139,25 @@ public class CRUD_DAO {
         }
     }
 
-    public void excluiirTblCliente(String idCliente) {
+    private ResultSet excluirTblCliente(String cpf) {
         PreparedStatement comandoSQL;
+        ResultSet resultado;
         try {
             conexao = (Connection) new dbConnect().getConnection();
-            comandoSQL = conexao.prepareStatement("DELETE FROM tbl_Cliente WHERE idCliente=?");
-            comandoSQL.setString(1, idCliente);
+            comandoSQL = conexao.prepareStatement("DELETE FROM tbl_Cliente WHERE cpf=?");
+            comandoSQL.setString(1, cpf);
             System.out.println("feito");
             comandoSQL.execute();
             comandoSQL.close();
+            resultado = comandoSQL.executeQuery();
+            return resultado;
         } catch (SQLException u) {
             throw new RuntimeException(u);
         }
+    }
+
+    public ResultSet getexcluirTblCliente(String cpf){
+        return excluirTblCliente(cpf);
     }
 
     public ResultSet getPesquisarTblCliente(String cpf) {
@@ -140,6 +198,8 @@ public class CRUD_DAO {
         }
         return 0;
     }
+    
+
 
     public double efetuarDeposito(String idConta, double saldoAtual) {
         PreparedStatement comandoSQL;
@@ -155,5 +215,9 @@ public class CRUD_DAO {
             throw new RuntimeException(u);
         }
         return 0;
+    }
+
+    public void getEditarDados(String cpf, String email, String login, String senha) throws SQLException {
+        editarDados(cpf, email, login, senha);
     }
 }

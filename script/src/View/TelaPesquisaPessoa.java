@@ -1,6 +1,5 @@
 package View;
 
-import Control.DAO.CRUD_DAO;
 import Control.TipoPessoa;
 import Control.CPF;
 import Model.Gerente;
@@ -117,6 +116,11 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
                 botEditarItem1ActionPerformed(evt);
             }
         });
+        botEditarItem1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botEditarItem1KeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -206,8 +210,9 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
 
         switch (opçao) {
             case JOptionPane.YES_OPTION -> {
-                //Excluir item
-                //Confirmação de exclusão
+                String cpf = caixaPesquisaUsuario.getText();
+                Gerente ger=new Gerente(null, null, null, null, null, null, null, null);
+                ger.getExcluirCliente(cpf);
             }
 
             case JOptionPane.NO_OPTION -> {
@@ -219,6 +224,8 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botExcluirItemMouseClicked
 
+
+    
     private void botPesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botPesquisarMouseClicked
         pesquisar();
     }//GEN-LAST:event_botPesquisarMouseClicked
@@ -228,16 +235,20 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     }//GEN-LAST:event_botCadastrarNovoItemKeyPressed
 
     private void botEditarItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEditarItem1MouseClicked
-        // TODO add your handling code here:
+        chamarTelaEditarDados();
     }//GEN-LAST:event_botEditarItem1MouseClicked
 
     private void botEditarItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEditarItem1ActionPerformed
-        // TODO add your handling code here:
+        chamarTelaEditarDados();
     }//GEN-LAST:event_botEditarItem1ActionPerformed
 
     private void botPesquisarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botPesquisarKeyPressed
         pesquisar();
     }//GEN-LAST:event_botPesquisarKeyPressed
+
+    private void botEditarItem1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botEditarItem1KeyPressed
+        chamarTelaEditarDados();
+    }//GEN-LAST:event_botEditarItem1KeyPressed
 
     public void pesquisar() {
         // Recebe o CPF digitado na caixa de pesquisa
@@ -349,8 +360,33 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         }
     }
 
-    private void editar() {
-        // botão editar 
+    private void chamarTelaEditarDados() {
+        boolean auxiliar = false;
+        String cpf = caixaPesquisaUsuario.getText();
+
+        // Pergunta quem quer cadastrar
+        int opçao = JOptionPane.showConfirmDialog(null,
+                "Deseja editar esse cliente?",
+                "Selecionar tipo de cadastro",
+                JOptionPane.YES_NO_OPTION);
+
+        switch (opçao) {
+            case JOptionPane.YES_OPTION -> {
+                auxiliar = true;
+            }
+
+            case JOptionPane.NO_OPTION -> {
+                auxiliar = false;
+            }
+
+            default ->
+                throw new AssertionError();
+        }
+
+        if (auxiliar == true) {
+            this.dispose();
+            new TelaEditar(cpf).setVisible(true);
+        }
     }
 
     private boolean validarCPFPesquisado(String cpf) {

@@ -5,6 +5,7 @@
 package View;
 
 import Control.TipoPessoa;
+import java.awt.event.ActionEvent;
 
 /**
  *
@@ -32,15 +33,15 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         botEfetuarDepósito = new javax.swing.JButton();
-        botEfetuarSaque = new javax.swing.JButton();
         botEfetuarTransferência = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        butSaque = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setPreferredSize(new java.awt.Dimension(500, 300));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(null));
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -62,16 +63,14 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         jLabel3.setText("R$0000,00");
 
         botEfetuarDepósito.setText("Efetuar Depósito");
-
-        botEfetuarSaque.setText("Efetuar Saque");
-        botEfetuarSaque.addMouseListener(new java.awt.event.MouseAdapter() {
+        botEfetuarDepósito.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                botEfetuarSaqueMouseClicked(evt);
+                botEfetuarDepósitoMouseClicked(evt);
             }
         });
-        botEfetuarSaque.addActionListener(new java.awt.event.ActionListener() {
+        botEfetuarDepósito.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botEfetuarSaqueActionPerformed(evt);
+                botEfetuarDepósitoActionPerformed(evt);
             }
         });
 
@@ -94,6 +93,13 @@ public class TelaLadoCliente extends javax.swing.JFrame {
             }
         });
 
+        butSaque.setText("Efetuar Saque");
+        butSaque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butSaqueActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -105,9 +111,9 @@ public class TelaLadoCliente extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(botEfetuarDepósito, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(66, 66, 66)
-                .addComponent(botEfetuarSaque, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56))
+                .addGap(67, 67, 67)
+                .addComponent(butSaque, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(75, 75, 75))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -140,9 +146,9 @@ public class TelaLadoCliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(botEfetuarSaque, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(botEfetuarDepósito, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botEfetuarDepósito, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(butSaque))
                 .addGap(26, 26, 26)
                 .addComponent(botEfetuarTransferência)
                 .addGap(15, 15, 15))
@@ -169,8 +175,12 @@ public class TelaLadoCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botEfetuarTransferênciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEfetuarTransferênciaActionPerformed
-         efetuarTransferencia();
+         
     }//GEN-LAST:event_botEfetuarTransferênciaActionPerformed
+
+    private void butSaqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butSaqueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_butSaqueActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,8 +219,8 @@ public class TelaLadoCliente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botEfetuarDepósito;
-    private javax.swing.JButton botEfetuarSaque;
     private javax.swing.JButton botEfetuarTransferência;
+    private javax.swing.JButton butSaque;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

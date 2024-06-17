@@ -131,11 +131,7 @@ public class CadastroDAO {
     }
 
     public boolean getVerificarCPFExistente(String cpf) throws SQLException {
-        boolean existente;
-
-        existente = verificarCPFExistente(cpf);
-
-        return existente;
+        return verificarCPFExistente(cpf);
     }
 
     public void getCloseConnction() {
