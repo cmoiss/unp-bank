@@ -29,6 +29,10 @@ public class Gerente extends Pessoa {
         cadastrar.getCloseConnction();
     }
 
+    private void editarDados() {
+        
+    }
+    
     private boolean verificarCPFExistente(String cpf) throws SQLException {
         boolean existe;
         CadastroDAO verificar = new CadastroDAO();
@@ -94,6 +98,10 @@ public class Gerente extends Pessoa {
         verListaDeCliente();
     }
 
+    public void getEditarDados() {
+        editarDados();
+    }
+    
     public void getExcluirCliente() {
         excluirCliente();
     }

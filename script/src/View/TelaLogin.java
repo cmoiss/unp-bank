@@ -165,9 +165,9 @@ public class TelaLogin extends javax.swing.JFrame {
         if (loginDAO.loginCheck(login, senha)) {
             this.dispose();
             if (tipoPessoa.equals(TipoPessoa.CLIENTE)) {
-                new TelaLadoCliente(TipoPessoa.CLIENTE).setVisible(true);
+                new TelaLadoCliente().setVisible(true);
             } else if (tipoPessoa.equals(TipoPessoa.GERENTE)) {
-                new TelaPesquisaPessoa(TipoPessoa.GERENTE).setVisible(true);
+                new TelaPesquisaPessoa().setVisible(true);
             }
 
         } else {

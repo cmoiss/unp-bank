@@ -48,6 +48,10 @@ public class CRUD_DAO {
         }
     }
 
+    private void editarDados() {
+        
+    }
+    
     public void verificarTblContas() {
         PreparedStatement comandoSQL;
         try {
@@ -155,5 +159,9 @@ public class CRUD_DAO {
             throw new RuntimeException(u);
         }
         return 0;
+    }
+    
+    public void getEditarDados() {
+        editarDados();
     }
 }

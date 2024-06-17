@@ -117,6 +117,11 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
                 botEditarItem1ActionPerformed(evt);
             }
         });
+        botEditarItem1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botEditarItem1KeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -228,16 +233,20 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     }//GEN-LAST:event_botCadastrarNovoItemKeyPressed
 
     private void botEditarItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEditarItem1MouseClicked
-        // TODO add your handling code here:
+        chamarTelaCadastro();
     }//GEN-LAST:event_botEditarItem1MouseClicked
-
+        
     private void botEditarItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEditarItem1ActionPerformed
-        // TODO add your handling code here:
+        chamarTelaCadastro();
     }//GEN-LAST:event_botEditarItem1ActionPerformed
 
     private void botPesquisarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botPesquisarKeyPressed
         pesquisar();
     }//GEN-LAST:event_botPesquisarKeyPressed
+
+    private void botEditarItem1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botEditarItem1KeyPressed
+        chamarTelaEditarDados();
+    }//GEN-LAST:event_botEditarItem1KeyPressed
 
     public void pesquisar() {
         // Recebe o CPF digitado na caixa de pesquisa
@@ -349,8 +358,43 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         }
     }
 
+    private void chamarTelaEditarDados() {
+        TipoPessoa pessoa = TipoPessoa.CLIENTE;
+
+        // Pergunta quem quer cadastrar
+        int opçao = JOptionPane.showConfirmDialog(null,
+                "Deseja editar um cliente ou gerente?",
+                "Selecionar tipo de cadastro",
+                JOptionPane.YES_NO_OPTION);
+
+        switch (opçao) {
+            case JOptionPane.YES_OPTION -> {
+                // Cadastrar cliente
+                pessoa = TipoPessoa.CLIENTE;
+            }
+
+            case JOptionPane.NO_OPTION -> {
+                // Cadastrar gerente
+                pessoa = TipoPessoa.GERENTE;
+            }
+
+            default ->
+                throw new AssertionError();
+        }
+
+        this.dispose();
+
+        if (pessoa.equals(TipoPessoa.CLIENTE)) {
+            new TelaEditar(pessoa).setVisible(true);
+        } else if (pessoa.equals(TipoPessoa.GERENTE)) {
+            new TelaEditar(pessoa).setVisible(true);
+        }
+    }
+    
     private void editar() {
-        // botão editar 
+
+        Gerente editar = new Gerente(null, null, null, null, null, null, null, null);
+        editar.getEditarDados();
     }
 
     private boolean validarCPFPesquisado(String cpf) {
