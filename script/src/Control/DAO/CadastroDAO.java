@@ -8,6 +8,7 @@ import java.util.Date;
 import java.sql.ResultSet;
 
 public class CadastroDAO {
+
     private GerarID gerarId = new GerarID();
     private Connection conexao;
 
@@ -17,10 +18,11 @@ public class CadastroDAO {
 
     private void cadastrarCliente(String nome, String cpf, Date data, int idade, String email, String login, String senha, double saldoAtual, String genero) throws SQLException {
         PreparedStatement comandoSQL = null;
-
+        String idConta = this.gerarId.getGerarID();
         insertTBLPessoa(comandoSQL, nome, cpf, data, idade, email, genero);
-        insertTBLConta(comandoSQL, this.gerarId.getGerarID(), saldoAtual);
-        insertTBLCliente(comandoSQL, this.gerarId.getGerarID(), true, cpf, login, senha, this.gerarId.getGerarID());        
+        insertTBLConta(comandoSQL, idConta, saldoAtual);
+        insertTBLCliente(comandoSQL, this.gerarId.getGerarID(), true, cpf, login, senha, idConta);
+        closeConnection();
     }
 
     private void cadastrarGerente(String nome, String cpf, Date data, int idade, String email, String login, String senha, String genero) throws SQLException {
@@ -28,20 +30,21 @@ public class CadastroDAO {
 
         insertTBLPessoa(comandoSQL, nome, cpf, data, idade, email, genero);
         insertTBLGerente(comandoSQL, this.gerarId.getGerarID(), cpf, login, senha);
+        closeConnection();
     }
 
     private boolean verificarCPFExistente(String cpf) throws SQLException {
         boolean existe = false;
-        
+
         PreparedStatement pesquisarCPF = conexao.prepareStatement("SELECT * FROM tbl_pessoa WHERE cpf =?");
         pesquisarCPF.setString(1, cpf);
 
         ResultSet resultadoVerificaçaoCPF = pesquisarCPF.executeQuery();
 
         if (resultadoVerificaçaoCPF.next()) {
-            existe = true;   
+            existe = true;
         }
-        
+
         return existe;
     }
 
@@ -57,7 +60,7 @@ public class CadastroDAO {
             comandoSQL.setString(5, email);
             comandoSQL.setString(6, genero);
             comandoSQL.execute();
-            
+
             comandoSQL.close();
         } catch (SQLException u) {
             throw new RuntimeException(u);
@@ -66,11 +69,11 @@ public class CadastroDAO {
 
     private void insertTBLConta(PreparedStatement comandoSQL, String idConta, double saldoAtual) {
         try {
-            comandoSQL = conexao.prepareStatement("INSERT INTO tbl_contabancaria (idConta, saldoAtual)VALUES(?,?)");
+            comandoSQL = conexao.prepareStatement("INSERT INTO tbl_ContaBancaria (idConta,saldoAtual)VALUES(?,?)");
             comandoSQL.setString(1, idConta);
             comandoSQL.setDouble(2, saldoAtual);
             comandoSQL.execute();
-            
+
             comandoSQL.close();
         } catch (SQLException u) {
             throw new RuntimeException(u);
@@ -79,7 +82,7 @@ public class CadastroDAO {
 
     private void insertTBLCliente(PreparedStatement comandoSQL, String idCliente, boolean statusCliente, String cpf, String login, String senha, String idConta) {
         try {
-            comandoSQL = conexao.prepareStatement("INSERT INTO tbl_cliente (idCliente, statusCliente, cpf,login,senha, idConta) VALUES(?,?,?,?,?,?)");
+            comandoSQL = conexao.prepareStatement("INSERT INTO tbl_Cliente (idCliente, statusCliente, cpf,login,senha, idConta)VALUES(?,?,?,?,?,?);");
             comandoSQL.setString(1, idCliente);
             comandoSQL.setBoolean(2, statusCliente);
             comandoSQL.setString(3, cpf);
@@ -87,7 +90,7 @@ public class CadastroDAO {
             comandoSQL.setString(5, senha);
             comandoSQL.setString(6, idConta);
             comandoSQL.execute();
-            
+
             comandoSQL.close();
         } catch (SQLException u) {
             throw new RuntimeException(u);
@@ -102,7 +105,7 @@ public class CadastroDAO {
             comandoSQL.setString(3, login);
             comandoSQL.setString(4, senha);
             comandoSQL.execute();
-            
+
             comandoSQL.close();
         } catch (SQLException u) {
             throw new RuntimeException(u);
@@ -116,7 +119,7 @@ public class CadastroDAO {
             throw new RuntimeException(e);
         }
     }
-    
+
     public void getCadastrarCliente(String nome, String cpf, Date data, int idade, String email, String login, String senha, double saldoAtual, String genero) throws SQLException {
         cadastrarCliente(nome, cpf, data, idade, email, login, senha, saldoAtual, genero);
         closeConnection();
@@ -129,9 +132,13 @@ public class CadastroDAO {
 
     public boolean getVerificarCPFExistente(String cpf) throws SQLException {
         boolean existente;
-        
+
         existente = verificarCPFExistente(cpf);
-        
+
         return existente;
+    }
+
+    public void getCloseConnction() {
+        closeConnection();
     }
 }

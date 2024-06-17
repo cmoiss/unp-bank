@@ -20,11 +20,13 @@ public class Gerente extends Pessoa {
     private void cadastrarCliente(String nome, String cpf, Date data, int idade, String email, String login, String senha, double saldoAtual, String genero) throws SQLException {
         CadastroDAO cadastrar = new CadastroDAO();
         cadastrar.getCadastrarCliente(nome, cpf, data, idade, email, login, senha, saldoAtual, genero);
+        cadastrar.getCloseConnction();
     }
 
     private void cadastrarGerente(String nome, String cpf, Date dataNascimento, int idade, String email, String login, String senha, String genero) throws SQLException {
         CadastroDAO cadastrar = new CadastroDAO();
         cadastrar.getCadastrarGerente(nome, cpf, dataNascimento, idade, email, login, senha, genero);
+        cadastrar.getCloseConnction();
     }
 
     private boolean verificarCPFExistente(String cpf) throws SQLException {

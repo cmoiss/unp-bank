@@ -445,15 +445,16 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         String nome = caixaTextoNome.getText();
         String cpf = caixaTextoCPF.getText();
         String dataNascimentoString = caixaTextoDataNascimento.getText();
+        String saldoInicialString = caixaTextoSaldoInicial.getText();
         String email = caixaTextoEmail.getText();
         String login = caixaTextoLogin.getText();
         String senha = caixaTextoSenha.getText();
-        String saldoInicialString = caixaTextoSaldoInicial.getText();
         String genero = (String) comboBoxSexo.getSelectedItem();
 
         double saldoInicial = Double.parseDouble(saldoInicialString);
 
         Idade idade = new Idade();
+        idade.getFormatarDataNascimento(dataNascimentoString);
 
         Gerente cadastro = new Gerente(null, null, null, null, null, null, null, null);
 
@@ -464,7 +465,15 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
             //CPF inválido
             JOptionPane.showMessageDialog(null, "CPF Inválido! Digite novamente", "CPF Inválido", JOptionPane.ERROR_MESSAGE);
         } else {
-            //Verifica se o CPF já existe no BD
+            cadastro.getCadastrarCliente(nome, cpf, idade.getDataNascimento(), idade.getIdade(), email, login, senha, saldoInicial, genero);
+            mensagemCadastroConcluido();
+            limparDados();
+        }
+    }
+    
+    /*
+
+    //Verifica se o CPF já existe no BD
             if (cadastro.getVerificarCPFEXistente(cpf) == true) {
                 mensagemCPFExistente();
             } else {
@@ -484,22 +493,12 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
                         if (!idade.getVerificarIdade()) {
                             JOptionPane.showMessageDialog(null, "Idade inválida! Por favor, digite novamente", "Idade inválida", JOptionPane.ERROR_MESSAGE);
                         } else {
-
                             // "saldo inicial" pode ser apenas números
-                            if (!saldoInicialString.matches("\\d+")) {
+                            if (!saldoInicialString.matches(
+                                    "\\d+")) {
                                 JOptionPane.showMessageDialog(null, "Saldo inicial inválido! Digite apenas números.", "Saldo inválido", JOptionPane.ERROR_MESSAGE);
-                            } else {
-                                cadastro.getCadastrarCliente(nome, cpf, idade.getDataNascimento(), idade.getIdade(), email, login, senha, saldoInicial, genero);
-                                mensagemCadastroConcluido();
-                                limparDados();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
+                            } else {*/
+    
     private void mensagemCadastroConcluido() {
         JOptionPane.showMessageDialog(null, "Cadastro concluído com sucesso!", "Cadastro concluído", JOptionPane.INFORMATION_MESSAGE);
     }
