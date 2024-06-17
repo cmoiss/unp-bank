@@ -125,8 +125,8 @@ public class Idade {
         imprimirIdade();
     }
 
-    public void getVerificarIdade() {
-        verificarIdade();
+    public boolean getVerificarIdade() {
+        return verificarIdade();
     }
 
     public void getEspaçoVazio() {

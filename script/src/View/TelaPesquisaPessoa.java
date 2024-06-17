@@ -1,12 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package View;
 
 import Control.DAO.CRUD_DAO;
-import Control.ValidarCPF;
+import Control.TipoPessoa;
+import Control.CPF;
+import Model.Gerente;
 import javax.swing.JOptionPane;
+import java.sql.SQLException;
+import java.sql.ResultSet;
 
 /**
  *
@@ -14,9 +14,8 @@ import javax.swing.JOptionPane;
  */
 public class TelaPesquisaPessoa extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TelaPesquisaPessoa
-     */
+    private TipoPessoa tipoPessoa = TipoPessoa.CLIENTE;
+
     public TelaPesquisaPessoa() {
         initComponents();
     }
@@ -31,28 +30,32 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        botEditarItem = new javax.swing.JButton();
+        botPesquisar = new javax.swing.JButton();
         botExcluirItem = new javax.swing.JButton();
         botCadastrarNovoItem = new javax.swing.JButton();
         caixaPesquisaUsuario = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        comboBoxTipoPessoa = new javax.swing.JComboBox<>();
+        botEditarItem1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setPreferredSize(new java.awt.Dimension(500, 300));
 
-        botEditarItem.setText("Editar");
-        botEditarItem.setPreferredSize(new java.awt.Dimension(88, 25));
-        botEditarItem.addMouseListener(new java.awt.event.MouseAdapter() {
+        botPesquisar.setText("Pesquisar");
+        botPesquisar.setPreferredSize(new java.awt.Dimension(88, 25));
+        botPesquisar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                botEditarItemMouseClicked(evt);
+                botPesquisarMouseClicked(evt);
             }
         });
-        botEditarItem.addActionListener(new java.awt.event.ActionListener() {
+        botPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botEditarItemActionPerformed(evt);
+                botPesquisarActionPerformed(evt);
+            }
+        });
+        botPesquisar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botPesquisarKeyPressed(evt);
             }
         });
 
@@ -81,9 +84,13 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
                 botCadastrarNovoItemActionPerformed(evt);
             }
         });
+        botCadastrarNovoItem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botCadastrarNovoItemKeyPressed(evt);
+            }
+        });
 
         caixaPesquisaUsuario.setFont(new java.awt.Font("Liberation Sans", 2, 13)); // NOI18N
-        caixaPesquisaUsuario.setForeground(new java.awt.Color(204, 204, 204));
         caixaPesquisaUsuario.setText("Digite o CPF...");
         caixaPesquisaUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,29 +98,25 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Gerente" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        comboBoxTipoPessoa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Gerente" }));
+        comboBoxTipoPessoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                comboBoxTipoPessoaActionPerformed(evt);
             }
         });
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(55, 266));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"", null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "ID", "Nome"
+        botEditarItem1.setText("Editar");
+        botEditarItem1.setPreferredSize(new java.awt.Dimension(88, 25));
+        botEditarItem1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botEditarItem1MouseClicked(evt);
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        });
+        botEditarItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botEditarItem1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -122,20 +125,21 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(caixaPesquisaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(botCadastrarNovoItem, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(botEditarItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botEditarItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(botExcluirItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22))))
+                        .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(caixaPesquisaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboBoxTipoPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,15 +147,14 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(caixaPesquisaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(comboBoxTipoPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botEditarItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botExcluirItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botCadastrarNovoItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                    .addComponent(botCadastrarNovoItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botEditarItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -162,59 +165,36 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botEditarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEditarItemActionPerformed
-        editar();
-    }//GEN-LAST:event_botEditarItemActionPerformed
+    private void botPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botPesquisarActionPerformed
+        pesquisar();
+    }//GEN-LAST:event_botPesquisarActionPerformed
 
     private void botCadastrarNovoItemNovoItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botCadastrarNovoItemNovoItemMouseClicked
-        int opçao = JOptionPane.showConfirmDialog(null,
-                "Deseja cadastrar um cliente ou gerente?",
-                "Selecionar tipo de cadastro",
-                JOptionPane.YES_NO_OPTION);
-
-        switch (opçao) {
-            case JOptionPane.YES_OPTION -> {
-                // Cadastrar cliente
-                chamarTelaCadastro("Cliente");
-            }
-
-            case JOptionPane.NO_OPTION -> {
-                // Cadastrar gerente
-                chamarTelaCadastro("Gerente");
-            }
-
-            default ->
-                throw new AssertionError();
-        }
-
-
+        chamarTelaCadastro();
     }//GEN-LAST:event_botCadastrarNovoItemNovoItemMouseClicked
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    private void comboBoxTipoPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxTipoPessoaActionPerformed
+        String itemSelecionado = (String) comboBoxTipoPessoa.getSelectedItem();
+
+        if (itemSelecionado.equals("Cliente")) {
+            this.tipoPessoa = TipoPessoa.CLIENTE;
+        } else if (itemSelecionado.equals("Gerente")) {
+            this.tipoPessoa = TipoPessoa.GERENTE;
+        }
+    }//GEN-LAST:event_comboBoxTipoPessoaActionPerformed
 
     private void botCadastrarNovoItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botCadastrarNovoItemActionPerformed
-       
+        chamarTelaCadastro();
     }//GEN-LAST:event_botCadastrarNovoItemActionPerformed
 
     private void caixaPesquisaUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaPesquisaUsuarioActionPerformed
-        // Recebe o CPF digitado na caixa de pesquisa
-        String cpf = caixaPesquisaUsuario.getText();
-        ValidarCPF validador = new ValidarCPF();
-        
-        if (validador.getValidarCPF(cpf) == false) {
-            JOptionPane.showMessageDialog(null, "CPF inválido! Por favor, digite novamente.", "Validador de CPF", JOptionPane.ERROR_MESSAGE);
-        } else {
-            CRUD_DAO crud = new CRUD_DAO();
-            crud.pesquisarTblCliente(cpf);
-        }
+        pesquisar();
     }//GEN-LAST:event_caixaPesquisaUsuarioActionPerformed
 
     private void botExcluirItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botExcluirItemActionPerformed
@@ -223,34 +203,169 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
 
     private void botExcluirItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botExcluirItemMouseClicked
         int opçao = JOptionPane.showConfirmDialog(null, "Realmente deseja excluir esse usuário?", "Excluir usuário", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-        
+
         switch (opçao) {
             case JOptionPane.YES_OPTION -> {
                 //Excluir item
                 //Confirmação de exclusão
             }
-            
+
             case JOptionPane.NO_OPTION -> {
                 //Não excluir
             }
-            
-            default -> throw new AssertionError();
+
+            default ->
+                throw new AssertionError();
         }
     }//GEN-LAST:event_botExcluirItemMouseClicked
 
-    private void botEditarItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEditarItemMouseClicked
-       editar();
-    }//GEN-LAST:event_botEditarItemMouseClicked
+    private void botPesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botPesquisarMouseClicked
+        pesquisar();
+    }//GEN-LAST:event_botPesquisarMouseClicked
 
-    private void editar(){
-    // botão editar 
+    private void botCadastrarNovoItemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botCadastrarNovoItemKeyPressed
+        chamarTelaCadastro();
+    }//GEN-LAST:event_botCadastrarNovoItemKeyPressed
+
+    private void botEditarItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEditarItem1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botEditarItem1MouseClicked
+
+    private void botEditarItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEditarItem1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botEditarItem1ActionPerformed
+
+    private void botPesquisarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botPesquisarKeyPressed
+        pesquisar();
+    }//GEN-LAST:event_botPesquisarKeyPressed
+
+    public void pesquisar() {
+        // Recebe o CPF digitado na caixa de pesquisa
+        String cpf = caixaPesquisaUsuario.getText();
+
+        if (!validarCPFPesquisado(cpf)) {
+        } else {
+
+            if (this.tipoPessoa.equals(TipoPessoa.CLIENTE)) {
+                pesquisarTblCliente(cpf);
+            } else if (this.tipoPessoa.equals(TipoPessoa.GERENTE)) {
+                pesquisarTblGerente(cpf);
+            }
+
+        }
     }
-    
-    
-    
-    private void chamarTelaCadastro(String tipoUsuario) {
+
+    private void pesquisarTblCliente(String cpf) {
+        if (!validarCPFPesquisado(cpf)) {
+        } else {
+            Gerente pesquisa = new Gerente(null, null, null, null, null, null, null, null);
+            ResultSet resultado = pesquisa.getPesquisarCliente(cpf);
+            try {
+                if (resultado.next()) {
+                    String nome = resultado.getString("nome");
+                    String cpfBD = resultado.getString("cpf");
+                    int idade = resultado.getInt("idade");
+                    int idCliente = resultado.getInt("idCliente");
+                    int idConta = resultado.getInt("idConta");
+                    double saldoAtual = resultado.getDouble("saldoAtual");
+                    int statusConta = resultado.getInt("statusCliente");
+                    String statusContaStr = statusConta == 1 ? "Ativo" : "Inativo";
+
+                    String mensagem = "Nome: " + nome + "\n"
+                            + "CPF: " + cpfBD + "\n"
+                            + "Idade: " + idade + "\n"
+                            + "ID Cliente: " + idCliente + "\n"
+                            + "ID Conta: " + idConta + "\n"
+                            + "Saldo Atual: " + saldoAtual + "\n"
+                            + "Status da Conta: " + statusContaStr;
+
+                    JOptionPane.showMessageDialog(null, mensagem, "Dados do Cliente", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Cliente não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao buscar dados do cliente", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void pesquisarTblGerente(String cpf) {
+        if (!validarCPFPesquisado(cpf)) {
+        } else {
+            Gerente pesquisa = new Gerente(null, null, null, null, null, null, null, null);
+            ResultSet resultado = pesquisa.getPesquisarGerente(cpf);
+            try {
+                if (resultado.next()) {
+                    String nome = resultado.getString("nome");
+                    String cpfBD = resultado.getString("cpf");
+                    int idade = resultado.getInt("idade");
+                    int idGerente = resultado.getInt("idGerente");
+
+                    String mensagem = "Nome: " + nome + "\n"
+                            + "CPF: " + cpfBD + "\n"
+                            + "Idade: " + idade + "\n"
+                            + "ID Gerente: " + idGerente;
+
+                    JOptionPane.showMessageDialog(null, mensagem, "Dados do Gerente", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Gerente não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao buscar dados do gerente", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void chamarTelaCadastro() {
+        TipoPessoa pessoa = null;
+
+        // Pergunta quem quer cadastrar
+        int opçao = JOptionPane.showConfirmDialog(null,
+                "Deseja cadastrar um cliente ou gerente?",
+                "Selecionar tipo de cadastro",
+                JOptionPane.YES_NO_OPTION);
+
+        switch (opçao) {
+            case JOptionPane.YES_OPTION -> {
+                // Cadastrar cliente
+                pessoa = TipoPessoa.CLIENTE;
+            }
+
+            case JOptionPane.NO_OPTION -> {
+                // Cadastrar gerente
+                pessoa = TipoPessoa.GERENTE;
+            }
+
+            default ->
+                throw new AssertionError();
+        }
+
         this.dispose();
-        new TelaCadastro(tipoUsuario).setVisible(true);
+
+        if (pessoa.equals(TipoPessoa.CLIENTE)) {
+            new TelaCadastroCliente(pessoa).setVisible(true);
+        } else if (pessoa.equals(TipoPessoa.GERENTE)) {
+            new TelaCadastroGerente(pessoa).setVisible(true);
+        }
+    }
+
+    private void editar() {
+        // botão editar 
+    }
+
+    private boolean validarCPFPesquisado(String cpf) {
+        CPF validar = new CPF();
+
+        boolean valido = false;
+
+        if (!validar.getValidarCPF(cpf)) {
+            JOptionPane.showMessageDialog(null, "CPF inválido! Por favor, digite novamente.", "Validador de CPF", JOptionPane.ERROR_MESSAGE);
+            valido = false;
+        } else {
+            valido = true;
+        }
+
+        return valido;
     }
 
     public static void main(String args[]) {
@@ -263,12 +378,11 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botCadastrarNovoItem;
-    private javax.swing.JButton botEditarItem;
+    private javax.swing.JButton botEditarItem1;
     private javax.swing.JButton botExcluirItem;
+    private javax.swing.JButton botPesquisar;
     private javax.swing.JTextField caixaPesquisaUsuario;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> comboBoxTipoPessoa;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

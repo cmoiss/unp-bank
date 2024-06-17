@@ -6,7 +6,8 @@ CREATE TABLE IF NOT EXISTS tbl_Pessoa(
 	cpf VARCHAR(11)PRIMARY KEY NOT NULL ,
 	dataNascimento DATE,
 	idade INT,
-	email VARCHAR(40) NOT NULL
+	email VARCHAR(40) NOT NULL,
+    genero VARCHAR(10) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS tbl_ContaBancaria(
@@ -32,5 +33,4 @@ CREATE TABLE IF NOT EXISTS tbl_Gerente(
 	senha VARCHAR(6) NOT NULL,
 	CONSTRAINT FK_G_Pessoa FOREIGN KEY (cpf) REFERENCES tbl_Pessoa (cpf)
 );
-
 

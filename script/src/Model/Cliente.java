@@ -9,8 +9,8 @@ public class Cliente extends Pessoa{
     private String idCliente = null;
     private boolean statusConta;
     CRUD_DAO funcao = new CRUD_DAO();
-    public Cliente(boolean statusConta, TipoPessoa tipoPessoa, String nome, String CPF, Date dataNascimento, String email, String login, String senha) {
-        super(tipoPessoa, nome, CPF, dataNascimento, email, login, senha);
+    public Cliente(boolean statusConta, TipoPessoa tipoPessoa, String nome, String CPF, Date dataNascimento, String email, String login, String senha, String genero) {
+        super(tipoPessoa, nome, CPF, dataNascimento, email, login, senha, genero);
         this.statusConta = statusConta;
     }
 
@@ -21,8 +21,6 @@ public class Cliente extends Pessoa{
     public void setIdCliente(String idCliente) {
         this.idCliente = idCliente;
     }
-
-
 
     public boolean isStatusConta() {
         return statusConta;

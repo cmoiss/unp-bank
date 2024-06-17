@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package Control.DAO;
 
 import Control.GerarID;
@@ -13,53 +12,55 @@ public class CadastroDAO {
     private GerarID gerarId = new GerarID();
     private Connection conexao;
 
-    private void cadastrarCliente(String nome, String cpf, Date data, int idade, String email, String login, String senha, double saldoAtual) throws SQLException {
+    public CadastroDAO() {
         conexao = (Connection) new dbConnect().getConnection();
-        PreparedStatement comandoSQL = null;
-
-        insertTBLPessoa(comandoSQL, nome, cpf, data, idade, email);
-        insertTBLConta(comandoSQL, this.gerarId.getGerarID(), saldoAtual);
-        insertTBLCliente(comandoSQL, this.gerarId.getGerarID(), true, cpf, login, senha, this.gerarId.getGerarID());
-
-        
     }
 
-    private void cadastrarGerente(String nome, String cpf, Date data, int idade, String email, String login, String senha) throws SQLException {
-        conexao = (Connection) new dbConnect().getConnection();
+    private void cadastrarCliente(String nome, String cpf, Date data, int idade, String email, String login, String senha, double saldoAtual, String genero) throws SQLException {
+        PreparedStatement comandoSQL = null;
+        String idConta = this.gerarId.getGerarID();
+        insertTBLPessoa(comandoSQL, nome, cpf, data, idade, email, genero);
+        insertTBLConta(comandoSQL, idConta, saldoAtual);
+        insertTBLCliente(comandoSQL, this.gerarId.getGerarID(), true, cpf, login, senha, idConta);
+        closeConnection();
+    }
+
+    private void cadastrarGerente(String nome, String cpf, Date data, int idade, String email, String login, String senha, String genero) throws SQLException {
         PreparedStatement comandoSQL = null;
 
-        insertTBLPessoa(comandoSQL, nome, cpf, data, idade, email);
+        insertTBLPessoa(comandoSQL, nome, cpf, data, idade, email, genero);
         insertTBLGerente(comandoSQL, this.gerarId.getGerarID(), cpf, login, senha);
+        closeConnection();
     }
 
     private boolean verificarCPFExistente(String cpf) throws SQLException {
         boolean existe = false;
-        conexao = (Connection) new dbConnect().getConnection();
-        
+
         PreparedStatement pesquisarCPF = conexao.prepareStatement("SELECT * FROM tbl_pessoa WHERE cpf =?");
         pesquisarCPF.setString(1, cpf);
 
         ResultSet resultadoVerificaçaoCPF = pesquisarCPF.executeQuery();
 
         if (resultadoVerificaçaoCPF.next()) {
-            existe = true;   
+            existe = true;
         }
-        
+
         return existe;
     }
 
-    private void insertTBLPessoa(PreparedStatement comandoSQL, String nome, String cpf, Date dataNascimentoJava, int idade, String email) {
+    private void insertTBLPessoa(PreparedStatement comandoSQL, String nome, String cpf, Date dataNascimentoJava, int idade, String email, String genero) {
         try {
             java.sql.Date dataNascimentoSQL = new java.sql.Date(dataNascimentoJava.getTime());
 
-            comandoSQL = conexao.prepareStatement("INSERT INTO tbl_Pessoa (nome, cpf, dataNascimento, idade, email)VALUES(?,?,?,?,?)");
+            comandoSQL = conexao.prepareStatement("INSERT INTO tbl_Pessoa (nome, cpf, dataNascimento, idade, email, genero)VALUES(?,?,?,?,?,?)");
             comandoSQL.setString(1, nome);
             comandoSQL.setString(2, cpf);
             comandoSQL.setDate(3, dataNascimentoSQL);
             comandoSQL.setInt(4, idade);
             comandoSQL.setString(5, email);
+            comandoSQL.setString(6, genero);
             comandoSQL.execute();
-            
+
             comandoSQL.close();
         } catch (SQLException u) {
             throw new RuntimeException(u);
@@ -68,11 +69,11 @@ public class CadastroDAO {
 
     private void insertTBLConta(PreparedStatement comandoSQL, String idConta, double saldoAtual) {
         try {
-            comandoSQL = conexao.prepareStatement("INSERT INTO tbl_contabancaria (idConta, saldoAtual)VALUES(?,?)");
+            comandoSQL = conexao.prepareStatement("INSERT INTO tbl_ContaBancaria (idConta,saldoAtual)VALUES(?,?)");
             comandoSQL.setString(1, idConta);
             comandoSQL.setDouble(2, saldoAtual);
             comandoSQL.execute();
-            
+
             comandoSQL.close();
         } catch (SQLException u) {
             throw new RuntimeException(u);
@@ -81,7 +82,7 @@ public class CadastroDAO {
 
     private void insertTBLCliente(PreparedStatement comandoSQL, String idCliente, boolean statusCliente, String cpf, String login, String senha, String idConta) {
         try {
-            comandoSQL = conexao.prepareStatement("INSERT INTO tbl_cliente (idCliente, statusCliente, cpf,login,senha, idConta) VALUES(?,?,?,?,?,?)");
+            comandoSQL = conexao.prepareStatement("INSERT INTO tbl_Cliente (idCliente, statusCliente, cpf,login,senha, idConta)VALUES(?,?,?,?,?,?);");
             comandoSQL.setString(1, idCliente);
             comandoSQL.setBoolean(2, statusCliente);
             comandoSQL.setString(3, cpf);
@@ -89,7 +90,7 @@ public class CadastroDAO {
             comandoSQL.setString(5, senha);
             comandoSQL.setString(6, idConta);
             comandoSQL.execute();
-            
+
             comandoSQL.close();
         } catch (SQLException u) {
             throw new RuntimeException(u);
@@ -104,56 +105,40 @@ public class CadastroDAO {
             comandoSQL.setString(3, login);
             comandoSQL.setString(4, senha);
             comandoSQL.execute();
-            
+
             comandoSQL.close();
         } catch (SQLException u) {
             throw new RuntimeException(u);
         }
     }
 
-    public void getCadastrarCliente(String nome, String cpf, Date data, int idade, String email, String login, String senha, double saldoAtual) throws SQLException {
-        cadastrarCliente(nome, cpf, data, idade, email, login, senha, saldoAtual);
+    private void closeConnection() {
+        try {
+            conexao.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void getCadastrarGerente(String nome, String cpf, Date dataNascimento, int idade, String email, String login, String senha) throws SQLException {
-        cadastrarGerente(nome, cpf, dataNascimento, idade, email, login, senha);
+    public void getCadastrarCliente(String nome, String cpf, Date data, int idade, String email, String login, String senha, double saldoAtual, String genero) throws SQLException {
+        cadastrarCliente(nome, cpf, data, idade, email, login, senha, saldoAtual, genero);
+        closeConnection();
+    }
+
+    public void getCadastrarGerente(String nome, String cpf, Date dataNascimento, int idade, String email, String login, String senha, String genero) throws SQLException {
+        cadastrarGerente(nome, cpf, dataNascimento, idade, email, login, senha, genero);
+        closeConnection();
     }
 
     public boolean getVerificarCPFExistente(String cpf) throws SQLException {
         boolean existente;
-        
+
         existente = verificarCPFExistente(cpf);
-        
+
         return existente;
     }
+
+    public void getCloseConnction() {
+        closeConnection();
+    }
 }
-=======
-
-package Control.DAO;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
-public class CadastroDAO {
-    private Connection conexao;
-        public void CadstroCheck (String nome,String CPF, String email,int Idade){
-            conexao=(Connection)new dbConnect(). getConnection();    
-        PreparedStatement comandoSQL=null;        
-        
-        try{
-            comandoSQL=conexao.prepareStatement(" INSERT INTO tbl_Pessoa (nome,cpf,dataNascimento,idPessoa)VALUES(?,?,?,?)");
-            comandoSQL.setString(1,nome);
-            comandoSQL.setString(2,CPF);
-            comandoSQL.setString(3,email);
-            comandoSQL.setInt(4,Idade);
-            comandoSQL.execute();
-            comandoSQL.close();
-        }catch(SQLException u){
-            throw new RuntimeException(u);
-        }
-  
-       
-        }             
- }
-
->>>>>>> origin/working-on-code

@@ -4,15 +4,15 @@
  */
 package View;
 
+import Control.TipoPessoa;
+
 /**
  *
  * @author caio
  */
 public class TelaLadoCliente extends javax.swing.JFrame {
-
-    /**
-     * Creates new form TelaLadoCliente
-     */
+    TipoPessoa tipoPessoa = null;
+    
     public TelaLadoCliente() {
         initComponents();
     }

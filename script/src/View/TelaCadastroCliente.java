@@ -3,7 +3,7 @@ package View;
 import Control.DAO.CadastroDAO;
 import Control.Idade;
 import Control.TipoPessoa;
-import Control.ValidarCPF;
+import Control.CPF;
 import Model.Gerente;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -442,20 +442,25 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_botLimparDadosKeyPressed
 
     private void efetuarCadastro() throws SQLException, ParseException {
-        String nome = caixaTextoCelular.getText();
+        String nome = caixaTextoNome.getText();
         String cpf = caixaTextoCPF.getText();
         String dataNascimentoString = caixaTextoDataNascimento.getText();
+        String saldoInicialString = caixaTextoSaldoInicial.getText();
         String email = caixaTextoEmail.getText();
         String login = caixaTextoLogin.getText();
         String senha = caixaTextoSenha.getText();
-        double saldoAtual = Double.parseDouble(caixaTextoSaldoInicial.getText());
+        String genero = (String) comboBoxSexo.getSelectedItem();
+
+        double saldoInicial = Double.parseDouble(saldoInicialString);
 
         Idade idade = new Idade();
+        idade.getFormatarDataNascimento(dataNascimentoString);
 
-        Gerente cadastro = new Gerente(null, null, null, null, null, null, null);
+        Gerente cadastro = new Gerente(null, null, null, null, null, null, null, null);
 
+        //Tratamentos pré-cadastro
         //Verifica se o cpf é válido
-        ValidarCPF validar = new ValidarCPF();
+        CPF validar = new CPF();
         if (validar.getValidarCPF(cpf) == false) {
             //CPF inválido
             JOptionPane.showMessageDialog(null, "CPF Inválido! Digite novamente", "CPF Inválido", JOptionPane.ERROR_MESSAGE);
@@ -464,16 +469,36 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
             if (cadastro.getVerificarCPFEXistente(cpf) == true) {
                 mensagemCPFExistente();
             } else {
-                //Tratamento da data de nascimento e idade
-                idade.getFormatarDataNascimento(dataNascimentoString);
-                idade.getCalcularIdade();
+                //Verifica se o email é válido
+                if (!email.contains("@")) {
+                    JOptionPane.showMessageDialog(null, "Email Inválido! Digite novamente", "Email Inválido", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    //Verifica se a data de nascimento é válida
+                    if (!dataNascimentoString.matches("^([0-2][0-9]|3[0-1])/([0][1-9]|1[0-2])/([1-2][0-9]{3})$")) {
+                        JOptionPane.showMessageDialog(null, "Formato de data inválido! Digite no formato dd/mm/yyyy", "Data inválida", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        //Tratamento da data de nascimento e idade
+                        idade.getFormatarDataNascimento(dataNascimentoString);
+                        idade.getCalcularIdade();
 
-                cadastro.getCadastrarCliente(nome, cpf, idade.getDataNascimento(), idade.getIdade(), email, login, senha, saldoAtual);
-                mensagemCadastroConcluido();
-                limparDados();
+                        //Verifica se a idade é válida
+                        if (!idade.getVerificarIdade()) {
+                            JOptionPane.showMessageDialog(null, "Idade inválida! Por favor, digite novamente", "Idade inválida", JOptionPane.ERROR_MESSAGE);
+                        } else {
+                            // "saldo inicial" pode ser apenas números
+                            if (!saldoInicialString.matches(
+                                    "\\d+")) {
+                                JOptionPane.showMessageDialog(null, "Saldo inicial inválido! Digite apenas números.", "Saldo inválido", JOptionPane.ERROR_MESSAGE);
+                            } else {
+                                cadastro.getCadastrarCliente(nome, cpf, idade.getDataNascimento(), idade.getIdade(), email, login, senha, saldoInicial, genero);
+                                mensagemCadastroConcluido();
+                                limparDados();
+                            }
+                        }
+                    }
+                }
             }
         }
-
     }
 
     private void mensagemCadastroConcluido() {
@@ -494,7 +519,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
 
     private void voltarMenuPesquisa() {
         this.dispose();
-        new TelaPesquisaPessoa(tipoPessoa).setVisible(true);
+        new TelaPesquisaPessoa().setVisible(true);
     }
 
     private void limparDados() {
