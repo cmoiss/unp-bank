@@ -8,12 +8,14 @@ import java.util.Date;
 import java.sql.ResultSet;
 
 public class CadastroDAO {
-
     private GerarID gerarId = new GerarID();
     private Connection conexao;
 
-    private void cadastrarCliente(String nome, String cpf, Date data, int idade, String email, String login, String senha, double saldoAtual) throws SQLException {
+    public CadastroDAO() {
         conexao = (Connection) new dbConnect().getConnection();
+    }
+
+    private void cadastrarCliente(String nome, String cpf, Date data, int idade, String email, String login, String senha, double saldoAtual) throws SQLException {
         PreparedStatement comandoSQL = null;
 
         insertTBLPessoa(comandoSQL, nome, cpf, data, idade, email);
@@ -24,7 +26,6 @@ public class CadastroDAO {
     }
 
     private void cadastrarGerente(String nome, String cpf, Date data, int idade, String email, String login, String senha) throws SQLException {
-        conexao = (Connection) new dbConnect().getConnection();
         PreparedStatement comandoSQL = null;
 
         insertTBLPessoa(comandoSQL, nome, cpf, data, idade, email);
@@ -33,7 +34,6 @@ public class CadastroDAO {
 
     private boolean verificarCPFExistente(String cpf) throws SQLException {
         boolean existe = false;
-        conexao = (Connection) new dbConnect().getConnection();
         
         PreparedStatement pesquisarCPF = conexao.prepareStatement("SELECT * FROM tbl_pessoa WHERE cpf =?");
         pesquisarCPF.setString(1, cpf);
@@ -110,12 +110,22 @@ public class CadastroDAO {
         }
     }
 
+    private void closeConnection() {
+        try {
+            conexao.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
     public void getCadastrarCliente(String nome, String cpf, Date data, int idade, String email, String login, String senha, double saldoAtual) throws SQLException {
         cadastrarCliente(nome, cpf, data, idade, email, login, senha, saldoAtual);
+        closeConnection();
     }
 
     public void getCadastrarGerente(String nome, String cpf, Date dataNascimento, int idade, String email, String login, String senha) throws SQLException {
         cadastrarGerente(nome, cpf, dataNascimento, idade, email, login, senha);
+        closeConnection();
     }
 
     public boolean getVerificarCPFExistente(String cpf) throws SQLException {

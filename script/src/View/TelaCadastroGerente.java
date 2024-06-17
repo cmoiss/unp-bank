@@ -425,7 +425,6 @@ public class TelaCadastroGerente extends javax.swing.JFrame {
         String email = caixaTextoEmail.getText();
         String login = caixaTextoLogin.getText();
         String senha = caixaTextoSenha.getText();
-        double saldoAtual = Double.parseDouble(caixaTextoSaldoInicial.getText());
 
         Idade idade = new Idade();
 
@@ -458,7 +457,7 @@ public class TelaCadastroGerente extends javax.swing.JFrame {
                         if (!idade.getVerificarIdade()) {
                             JOptionPane.showMessageDialog(null, "Idade inválida! Por favor, digite novamente", "Idade inválida", JOptionPane.ERROR_MESSAGE);
                         } else {
-                            cadastro.getCadastrarCliente(nome, cpf, idade.getDataNascimento(), idade.getIdade(), email, login, senha, saldoAtual);
+                            cadastro.getCadastrarGerente(nome, cpf, idade.getDataNascimento(), idade.getIdade(), email, login, senha);
                             mensagemCadastroConcluido();
                             limparDados();
                         }
