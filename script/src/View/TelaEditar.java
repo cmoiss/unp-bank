@@ -4,6 +4,7 @@ import Model.Gerente;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class TelaEditar extends javax.swing.JFrame {
     
@@ -229,6 +230,7 @@ public class TelaEditar extends javax.swing.JFrame {
         
         Gerente editar = new Gerente(null, null, null, null, null, null, null, null);
         editar.getEditarDados(this.cpf, email, login, senha);
+        JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
     }
     
     public static void main(String args[]) {
