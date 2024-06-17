@@ -53,11 +53,11 @@ public class Gerente extends Pessoa {
         funcao.verifcarTblCliente();
     }
 
-    private ResultSet ExcluirCliente() {
+    private int ExcluirCliente() {
        return funcao.getexcluirTblCliente(null);
     }
     
-    public ResultSet getExcluirCliente(String cpf){
+    public int getExcluirCliente(String cpf){
         return ExcluirCliente();
     }
 

@@ -74,7 +74,7 @@ public class CRUD_DAO {
 
         try {
             conexao = (Connection) new dbConnect().getConnection();
-            comandoSQL = conexao.prepareStatement("UPDATE tbl_Gerente SET login=? WHERE cpf=?;");
+            comandoSQL = conexao.prepareStatement("UPDATE tbl_Cliente SET login=? WHERE cpf=?;");
             comandoSQL.setString(1, login);
             comandoSQL.setString(2, cpf);
             comandoSQL.executeUpdate();
@@ -89,7 +89,7 @@ public class CRUD_DAO {
 
         try {
             conexao = (Connection) new dbConnect().getConnection();
-            comandoSQL = conexao.prepareStatement("UPDATE tbl_Gerente SET senha=? WHERE cpf=?;");
+            comandoSQL = conexao.prepareStatement("UPDATE tbl_Cliente SET senha=? WHERE cpf=?;");
             comandoSQL.setString(1, senha);
             comandoSQL.setString(2, cpf);
             comandoSQL.executeUpdate();
@@ -139,24 +139,23 @@ public class CRUD_DAO {
         }
     }
 
-    private ResultSet excluirTblCliente(String cpf) {
+   
+    private int excluirTblCliente(String cpf) {
         PreparedStatement comandoSQL;
-        ResultSet resultado;
+        int resultado;
         try {
             conexao = (Connection) new dbConnect().getConnection();
-            comandoSQL = conexao.prepareStatement("DELETE FROM tbl_Cliente WHERE cpf=?");
+            comandoSQL = conexao.prepareStatement("DELETE FROM tbl_cliente WHERE cpf=?");
             comandoSQL.setString(1, cpf);
             System.out.println("feito");
-            comandoSQL.execute();
-            comandoSQL.close();
-            resultado = comandoSQL.executeQuery();
+            resultado=comandoSQL.executeUpdate(); 
             return resultado;
         } catch (SQLException u) {
             throw new RuntimeException(u);
         }
     }
 
-    public ResultSet getexcluirTblCliente(String cpf){
+    public int getexcluirTblCliente(String cpf){
         return excluirTblCliente(cpf);
     }
 
