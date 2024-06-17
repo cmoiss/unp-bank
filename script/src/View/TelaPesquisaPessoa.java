@@ -17,9 +17,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
 
     private TipoPessoa tipoPessoa = null;
 
-    public TelaPesquisaPessoa(TipoPessoa tipoPessoa) {
-        this.tipoPessoa = tipoPessoa;
-
+    public TelaPesquisaPessoa() {
         initComponents();
     }
 

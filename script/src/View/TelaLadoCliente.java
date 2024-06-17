@@ -13,8 +13,7 @@ import Control.TipoPessoa;
 public class TelaLadoCliente extends javax.swing.JFrame {
     TipoPessoa tipoPessoa = null;
     
-    public TelaLadoCliente(TipoPessoa tipoPessoa) {
-        this.tipoPessoa = tipoPessoa;
+    public TelaLadoCliente() {
         initComponents();
     }
 

@@ -137,7 +137,11 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_caixaTextoLoginActionPerformed
 
     private void botEfetuarLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEfetuarLoginActionPerformed
-
+        try {
+            efetuarLogin();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botEfetuarLoginActionPerformed
 
     private void botEfetuarLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEfetuarLoginMouseClicked
@@ -159,15 +163,15 @@ public class TelaLogin extends javax.swing.JFrame {
     private void efetuarLogin() throws SQLException {
 
         LoginDAO loginDAO = new LoginDAO(tipoPessoa);
-        this.senha = caixaTextoSenha.getText();
         this.login = caixaTextoLogin.getText();
+        this.senha = caixaTextoSenha.getText();
 
         if (loginDAO.loginCheck(login, senha)) {
             this.dispose();
             if (tipoPessoa.equals(TipoPessoa.CLIENTE)) {
-                new TelaLadoCliente(TipoPessoa.CLIENTE).setVisible(true);
+                new TelaLadoCliente().setVisible(true);
             } else if (tipoPessoa.equals(TipoPessoa.GERENTE)) {
-                new TelaPesquisaPessoa(TipoPessoa.GERENTE).setVisible(true);
+                new TelaPesquisaPessoa().setVisible(true);
             }
 
         } else {
