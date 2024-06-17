@@ -448,11 +448,13 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         String email = caixaTextoEmail.getText();
         String login = caixaTextoLogin.getText();
         String senha = caixaTextoSenha.getText();
+        String genero = (String) comboBoxSexo.getSelectedItem();
+        
         double saldoAtual = Double.parseDouble(caixaTextoSaldoInicial.getText());
 
         Idade idade = new Idade();
 
-        Gerente cadastro = new Gerente(null, null, null, null, null, null, null);
+        Gerente cadastro = new Gerente(null, null, null, null, null, null, null, null);
 
         //Tratamentos pré-cadastro
         //Verifica se o cpf é válido
@@ -481,7 +483,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
                         if (!idade.getVerificarIdade()) {
                             JOptionPane.showMessageDialog(null, "Idade inválida! Por favor, digite novamente", "Idade inválida", JOptionPane.ERROR_MESSAGE);
                         } else {
-                            cadastro.getCadastrarCliente(nome, cpf, idade.getDataNascimento(), idade.getIdade(), email, login, senha, saldoAtual);
+                            cadastro.getCadastrarCliente(nome, cpf, idade.getDataNascimento(), idade.getIdade(), email, login, senha, saldoAtual, genero);
                             mensagemCadastroConcluido();
                             limparDados();
                         }

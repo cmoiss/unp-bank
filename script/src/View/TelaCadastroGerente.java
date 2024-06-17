@@ -74,7 +74,7 @@ public class TelaCadastroGerente extends javax.swing.JFrame {
 
         labelSexo.setText("Sexo");
 
-        comboBoxSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Masculino ", "Feminino" }));
+        comboBoxSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Masculino", "Feminino", "Outro" }));
         comboBoxSexo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboBoxSexoActionPerformed(evt);
@@ -103,7 +103,7 @@ public class TelaCadastroGerente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
                 .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(labelSexo)
-                    .addComponent(comboBoxSexo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(comboBoxSexo, 0, 92, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
@@ -425,10 +425,11 @@ public class TelaCadastroGerente extends javax.swing.JFrame {
         String email = caixaTextoEmail.getText();
         String login = caixaTextoLogin.getText();
         String senha = caixaTextoSenha.getText();
+        String genero = (String) comboBoxSexo.getSelectedItem();
 
         Idade idade = new Idade();
 
-        Gerente cadastro = new Gerente(null, null, null, null, null, null, null);
+        Gerente cadastro = new Gerente(null, null, null, null, null, null, null, null);
 
         //Tratamentos pré-cadastro
         //Verifica se o cpf é válido
@@ -457,7 +458,7 @@ public class TelaCadastroGerente extends javax.swing.JFrame {
                         if (!idade.getVerificarIdade()) {
                             JOptionPane.showMessageDialog(null, "Idade inválida! Por favor, digite novamente", "Idade inválida", JOptionPane.ERROR_MESSAGE);
                         } else {
-                            cadastro.getCadastrarGerente(nome, cpf, idade.getDataNascimento(), idade.getIdade(), email, login, senha);
+                            cadastro.getCadastrarGerente(nome, cpf, idade.getDataNascimento(), idade.getIdade(), email, login, senha, genero);
                             mensagemCadastroConcluido();
                             limparDados();
                         }

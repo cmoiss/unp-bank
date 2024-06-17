@@ -15,20 +15,20 @@ public class CadastroDAO {
         conexao = (Connection) new dbConnect().getConnection();
     }
 
-    private void cadastrarCliente(String nome, String cpf, Date data, int idade, String email, String login, String senha, double saldoAtual) throws SQLException {
+    private void cadastrarCliente(String nome, String cpf, Date data, int idade, String email, String login, String senha, double saldoAtual, String genero) throws SQLException {
         PreparedStatement comandoSQL = null;
 
-        insertTBLPessoa(comandoSQL, nome, cpf, data, idade, email);
+        insertTBLPessoa(comandoSQL, nome, cpf, data, idade, email, genero);
         insertTBLConta(comandoSQL, this.gerarId.getGerarID(), saldoAtual);
         insertTBLCliente(comandoSQL, this.gerarId.getGerarID(), true, cpf, login, senha, this.gerarId.getGerarID());
 
         
     }
 
-    private void cadastrarGerente(String nome, String cpf, Date data, int idade, String email, String login, String senha) throws SQLException {
+    private void cadastrarGerente(String nome, String cpf, Date data, int idade, String email, String login, String senha, String genero) throws SQLException {
         PreparedStatement comandoSQL = null;
 
-        insertTBLPessoa(comandoSQL, nome, cpf, data, idade, email);
+        insertTBLPessoa(comandoSQL, nome, cpf, data, idade, email, genero);
         insertTBLGerente(comandoSQL, this.gerarId.getGerarID(), cpf, login, senha);
     }
 
@@ -47,16 +47,17 @@ public class CadastroDAO {
         return existe;
     }
 
-    private void insertTBLPessoa(PreparedStatement comandoSQL, String nome, String cpf, Date dataNascimentoJava, int idade, String email) {
+    private void insertTBLPessoa(PreparedStatement comandoSQL, String nome, String cpf, Date dataNascimentoJava, int idade, String email, String genero) {
         try {
             java.sql.Date dataNascimentoSQL = new java.sql.Date(dataNascimentoJava.getTime());
 
-            comandoSQL = conexao.prepareStatement("INSERT INTO tbl_Pessoa (nome, cpf, dataNascimento, idade, email)VALUES(?,?,?,?,?)");
+            comandoSQL = conexao.prepareStatement("INSERT INTO tbl_Pessoa (nome, cpf, dataNascimento, idade, email, genero)VALUES(?,?,?,?,?,?)");
             comandoSQL.setString(1, nome);
             comandoSQL.setString(2, cpf);
             comandoSQL.setDate(3, dataNascimentoSQL);
             comandoSQL.setInt(4, idade);
             comandoSQL.setString(5, email);
+            comandoSQL.setString(6, genero);
             comandoSQL.execute();
             
             comandoSQL.close();
@@ -118,13 +119,13 @@ public class CadastroDAO {
         }
     }
     
-    public void getCadastrarCliente(String nome, String cpf, Date data, int idade, String email, String login, String senha, double saldoAtual) throws SQLException {
-        cadastrarCliente(nome, cpf, data, idade, email, login, senha, saldoAtual);
+    public void getCadastrarCliente(String nome, String cpf, Date data, int idade, String email, String login, String senha, double saldoAtual, String genero) throws SQLException {
+        cadastrarCliente(nome, cpf, data, idade, email, login, senha, saldoAtual, genero);
         closeConnection();
     }
 
-    public void getCadastrarGerente(String nome, String cpf, Date dataNascimento, int idade, String email, String login, String senha) throws SQLException {
-        cadastrarGerente(nome, cpf, dataNascimento, idade, email, login, senha);
+    public void getCadastrarGerente(String nome, String cpf, Date dataNascimento, int idade, String email, String login, String senha, String genero) throws SQLException {
+        cadastrarGerente(nome, cpf, dataNascimento, idade, email, login, senha, genero);
         closeConnection();
     }
 

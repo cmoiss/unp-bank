@@ -15,13 +15,14 @@ public class Pessoa {
     private String email = null;
     private String login = null;
     private String senha = null;
+    private String genero = null;
     Idade idade = new Idade();
 
-    public Pessoa(TipoPessoa tipoPessoa, String nome, String CPF, Date dataNascimento, String email, String login, String senha) {
+    public Pessoa(TipoPessoa tipoPessoa, String nome, String CPF, Date dataNascimento, String email, String login, String senha, String genero) {
         GerarID gerarID = new GerarID();
-        this.id = gerarID.getGerarID(); 
+        this.id = gerarID.getGerarID();
     }
-    
+
     public String getNome() {
         return nome;
     }
@@ -76,6 +77,14 @@ public class Pessoa {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 
     protected void verificarDados(String CPF) {

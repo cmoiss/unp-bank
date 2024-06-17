@@ -1,7 +1,7 @@
-INSERT INTO tbl_Pessoa (nome, cpf, dataNascimento, idade, email)
+INSERT INTO tbl_Pessoa (nome, cpf, dataNascimento, idade, email, genero)
 VALUES
-    ('Gerente Aux', '12345678901', '1990-05-15', 31, 'gerente.auxiliar@email.com' ),
-    ('Cliente Aux', '98765432109', '1985-08-20', 36, 'cliente.auxiliar@email.com' );
+    ('Gerente Aux', '12345678901', '1990-05-15', 31, 'gerente.auxiliar@email.com', 'Masculino'),
+    ('Cliente Aux', '98765432109', '1985-08-20', 36, 'cliente.auxiliar@email.com', 'Feminino');
 	
 INSERT INTO tbl_ContaBancaria (idConta,saldoAtual)
 VALUES
@@ -18,7 +18,15 @@ VALUES
 select*from tbl_Cliente;
 select*from tbl_Gerente;
 select*from tbl_ContaBancaria;
-select*from tbl_Pessoa;
+select * from tbl_pessoa;
+
+SELECT p.*
+FROM tbl_Pessoa p
+JOIN tbl_Cliente c ON p.cpf = c.cpf;
+
+SELECT p.*
+FROM tbl_Pessoa p
+JOIN tbl_Gerente g ON p.cpf = g.cpf
 
 --===================================================================
 --NÃO RODAR OS COMANDOS A BAIXO SÓ DEVE SER USADO COMO COMANDO NO JAVA 
