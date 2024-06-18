@@ -2,10 +2,14 @@ package Model;
 
 import Control.DAO.CRUD_DAO;
 import Control.DAO.CadastroDAO;
+import Control.DAO.EditarCliente;
+import Control.DAO.PegarCliente;
+import Control.DAO.RemoverCliente;
 import Control.TipoPessoa;
 import java.util.Date;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class Gerente extends Pessoa {
 
@@ -30,8 +34,8 @@ public class Gerente extends Pessoa {
     }
 
     private void editarDados(String cpf, String email, String login, String senha) throws SQLException {
-        CRUD_DAO editar = new CRUD_DAO();
-        editar.getEditarDados(cpf, email, login, senha);
+        EditarCliente editar = new EditarCliente();
+        editar.getEditarDadosCliente(cpf, email, login, senha);
     }
     
     private boolean verificarCPFExistenteBD(String cpf) throws SQLException {
@@ -53,16 +57,19 @@ public class Gerente extends Pessoa {
         funcao.verifcarTblCliente();
     }
 
-    private int ExcluirCliente() {
-       return funcao.getexcluirTblCliente(null);
+    private void excluirCliente(String cpf) {
+        RemoverCliente remover = new RemoverCliente();
+        remover.getRemoverTblClientes(cpf);
+        remover.getRemoverTblPessoa(cpf);
     }
     
-    public int getExcluirCliente(String cpf){
-        return ExcluirCliente();
+    public void getExcluirCliente(String cpf){
+        excluirCliente(cpf);
     }
 
-    private ResultSet pesquisarCliente(String cpf) {
-        return funcao.getPesquisarTblCliente(cpf);
+    private ArrayList<Object> pesquisarClienteUnico(String cpf) {
+        PegarCliente pesquisa = new PegarCliente();
+        return pesquisa.getPegarClienteUnico(cpf);
     }
 
     private ResultSet pesquisarGerente(String cpf) {
@@ -85,7 +92,7 @@ public class Gerente extends Pessoa {
         cadastrarGerente(nome, cpf, dataNascimento, idade, email, login, senha, genero);
     }
 
-    public boolean getVerificarCPFEXistente(String cpf) throws SQLException {
+    public boolean getVerificarPessoaEXistente(String cpf) throws SQLException {
         return verificarCPFExistenteBD(cpf);
     }
 
@@ -105,12 +112,11 @@ public class Gerente extends Pessoa {
         editarDados(cpf, email, login, senha);
     }
     
-    public ResultSet getPesquisarCliente(String cpf) {
-        return pesquisarCliente(cpf);
+    public ArrayList<Object> getPesquisarCliente(String cpf) {
+        return pesquisarClienteUnico(cpf);
     }
     
     public ResultSet getPesquisarGerente(String cpf) {
         return pesquisarGerente(cpf);
     }
-
 }

@@ -7,12 +7,12 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class TelaEditar extends javax.swing.JFrame {
-    
+
     String cpf = null;
-    
+
     public TelaEditar(String cpf) {
         this.cpf = cpf;
-        
+
         initComponents();
     }
 
@@ -236,12 +236,17 @@ public class TelaEditar extends javax.swing.JFrame {
         String email = caixaTextoEmail.getText();
         String login = caixaTextoNovoUsuario.getText();
         String senha = caixaTextoNovaSenha.getText();
-        
-        Gerente editar = new Gerente(null, null, null, null, null, null, null, null);
-        editar.getEditarDados(this.cpf, email, login, senha);
-        JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+        try {
+            Gerente editar = new Gerente(null, null, null, null, null, null, null, null);
+            editar.getEditarDados(this.cpf, email, login, senha);
+            JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            new TelaPesquisaPessoa().setVisible(true);
+        } catch(SQLException u)  {
+            throw new RuntimeException(u);
+        }
     }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

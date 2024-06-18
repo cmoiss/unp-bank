@@ -33,7 +33,7 @@ public class CadastroDAO {
         closeConnection();
     }
 
-    private boolean verificarCPFExistente(String cpf) throws SQLException {
+    private boolean verificarPessoaExistenteBD(String cpf) throws SQLException {
         boolean existe = false;
 
         PreparedStatement pesquisarCPF = conexao.prepareStatement("SELECT * FROM tbl_pessoa WHERE cpf =?");
@@ -131,7 +131,7 @@ public class CadastroDAO {
     }
 
     public boolean getVerificarCPFExistente(String cpf) throws SQLException {
-        return verificarCPFExistente(cpf);
+        return verificarPessoaExistenteBD(cpf);
     }
 
     public void getCloseConnction() {

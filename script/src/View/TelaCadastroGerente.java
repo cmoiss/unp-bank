@@ -1,8 +1,6 @@
 package View;
 
-import Control.DAO.CadastroDAO;
 import Control.Idade;
-import Control.TipoPessoa;
 import Control.CPF;
 import Control.TipoPessoa;
 import Model.Gerente;
@@ -14,11 +12,7 @@ import javax.swing.JOptionPane;
 
 public class TelaCadastroGerente extends javax.swing.JFrame {
 
-    private TipoPessoa tipoPessoa = null;
-
-    public TelaCadastroGerente(TipoPessoa tipoPessoa) {
-        this.tipoPessoa = tipoPessoa;
-
+    public TelaCadastroGerente() {
         initComponents();
     }
 
@@ -51,7 +45,7 @@ public class TelaCadastroGerente extends javax.swing.JFrame {
         botLimparDados = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("CADASTRO DE " + this.tipoPessoa);
+        setTitle("CADASTRO DE GERENTE");
 
         labelNome.setText("Nome ");
 
@@ -439,7 +433,7 @@ public class TelaCadastroGerente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "CPF Inválido! Digite novamente", "CPF Inválido", JOptionPane.ERROR_MESSAGE);
         } else {
             //Verifica se o CPF já existe no BD
-            if (cadastro.getVerificarCPFEXistente(cpf) == true) {
+            if (cadastro.getVerificarPessoaEXistente(cpf) == true) {
                 mensagemCPFExistente();
             } else {
                 //Verifica se o email é válido
@@ -477,11 +471,7 @@ public class TelaCadastroGerente extends javax.swing.JFrame {
     }
 
     private void erroCadastroNoBD() {
-        if (this.tipoPessoa.equals(TipoPessoa.CLIENTE)) {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar cliente no banco de dados! Tente novamente mais tarde.", "Erro no cadastro com banco de dados", JOptionPane.ERROR_MESSAGE);
-        } else if (this.tipoPessoa.equals(TipoPessoa.GERENTE)) {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar gerente no banco de dados! Tente novamente mais tarde.", "Erro no cadastro com banco de dados", JOptionPane.ERROR_MESSAGE);
-        }
+        JOptionPane.showMessageDialog(null, "Erro ao cadastrar gerente no banco de dados! Tente novamente mais tarde.", "Erro no cadastro com banco de dados", JOptionPane.ERROR_MESSAGE);
     }
 
     private void voltarMenuPesquisa() {
@@ -506,7 +496,7 @@ public class TelaCadastroGerente extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaCadastroGerente(TipoPessoa.CLIENTE).setVisible(true);
+                new TelaCadastroGerente().setVisible(true);
             }
         });
     }

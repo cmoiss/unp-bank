@@ -1,8 +1,6 @@
 package View;
 
-import Control.DAO.CadastroDAO;
 import Control.Idade;
-import Control.TipoPessoa;
 import Control.CPF;
 import Model.Gerente;
 import java.sql.SQLException;
@@ -13,11 +11,7 @@ import javax.swing.JOptionPane;
 
 public class TelaCadastroCliente extends javax.swing.JFrame {
 
-    private TipoPessoa tipoPessoa = null;
-
-    public TelaCadastroCliente(TipoPessoa tipoPessoa) {
-        this.tipoPessoa = tipoPessoa;
-
+    public TelaCadastroCliente() {
         initComponents();
     }
 
@@ -52,7 +46,6 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         botLimparDados = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("CADASTRO DE " + this.tipoPessoa);
 
         labelNome.setText("Nome ");
 
@@ -101,7 +94,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
                 .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelCPF)
                     .addComponent(caixaTextoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
                 .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(labelSexo)
                     .addComponent(comboBoxSexo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -379,15 +372,13 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_caixaTextoCelularActionPerformed
 
-    private void botEfetuarCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEfetuarCadastroActionPerformed
-        try {
-            efetuarCadastro();
-        } catch (SQLException ex) {
-            erroCadastroNoBD();
-        } catch (ParseException ex) {
-            Logger.getLogger(TelaCadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_botEfetuarCadastroActionPerformed
+    private void caixaTextoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaTextoLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_caixaTextoLoginActionPerformed
+
+    private void caixaTextoSaldoInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaTextoSaldoInicialActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_caixaTextoSaldoInicialActionPerformed
 
     private void botEfetuarCadastroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEfetuarCadastroMouseClicked
         try {
@@ -399,13 +390,15 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botEfetuarCadastroMouseClicked
 
-    private void caixaTextoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaTextoLoginActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_caixaTextoLoginActionPerformed
-
-    private void caixaTextoSaldoInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaTextoSaldoInicialActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_caixaTextoSaldoInicialActionPerformed
+    private void botEfetuarCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEfetuarCadastroActionPerformed
+        try {
+            efetuarCadastro();
+        } catch (SQLException ex) {
+            erroCadastroNoBD();
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaCadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botEfetuarCadastroActionPerformed
 
     private void botEfetuarCadastroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botEfetuarCadastroKeyPressed
         try {
@@ -466,7 +459,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "CPF Inválido! Digite novamente", "CPF Inválido", JOptionPane.ERROR_MESSAGE);
         } else {
             //Verifica se o CPF já existe no BD
-            if (cadastro.getVerificarCPFEXistente(cpf) == true) {
+            if (cadastro.getVerificarPessoaEXistente(cpf) == true) {
                 mensagemCPFExistente();
             } else {
                 //Verifica se o email é válido
@@ -510,11 +503,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
     }
 
     private void erroCadastroNoBD() {
-        if (this.tipoPessoa.equals(TipoPessoa.CLIENTE)) {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar cliente no banco de dados! Tente novamente mais tarde.", "Erro no cadastro com banco de dados", JOptionPane.ERROR_MESSAGE);
-        } else if (this.tipoPessoa.equals(TipoPessoa.GERENTE)) {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar gerente no banco de dados! Tente novamente mais tarde.", "Erro no cadastro com banco de dados", JOptionPane.ERROR_MESSAGE);
-        }
+        JOptionPane.showMessageDialog(null, "Erro ao cadastrar cliente no banco de dados! Tente novamente mais tarde.", "Erro no cadastro com banco de dados", JOptionPane.ERROR_MESSAGE);
     }
 
     private void voltarMenuPesquisa() {
@@ -533,14 +522,36 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         comboBoxSexo.setSelectedIndex(-1);
         caixaTextoSaldoInicial.setText("");
     }
-
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(TelaCadastroCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(TelaCadastroCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(TelaCadastroCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(TelaCadastroCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaCadastroCliente(TipoPessoa.CLIENTE).setVisible(true);
+                new TelaCadastroCliente().setVisible(true);
             }
         });
     }
