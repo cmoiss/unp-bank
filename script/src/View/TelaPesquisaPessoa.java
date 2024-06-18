@@ -1,28 +1,27 @@
 package View;
 
 import Control.CPF;
+import Control.DAO.PegarCliente;
 import Model.Gerente;
 import javax.swing.JOptionPane;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 public class TelaPesquisaPessoa extends javax.swing.JFrame {
 
-    public DefaultTableModel modelo;
-    
     public TelaPesquisaPessoa() {
-        //this.modelo = (DefaultTableModel) tabelaPessoa.getModel();
-        
-        initComponents();
-        
         setTitle("Menu de Pesquisa");
         //setIconImage();
         setResizable(false);
         setLocationRelativeTo(null);
+
+        initComponents();
         
+        atualizarTabela();
     }
 
     /**
@@ -39,13 +38,12 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         botExcluirItem = new javax.swing.JButton();
         botCadastrarNovoItem = new javax.swing.JButton();
         caixaPesquisaUsuario = new javax.swing.JTextField();
-        comboBoxTipoPessoa = new javax.swing.JComboBox<>();
         botEditarItem1 = new javax.swing.JButton();
-        botCadastrarNovoItem1 = new javax.swing.JButton();
+        botAtualizarTabela = new javax.swing.JButton();
         botLimparTabela = new javax.swing.JButton();
         numeroLinha = new javax.swing.JLabel();
         tabelaPessoa = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaCliente = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,13 +107,6 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
             }
         });
 
-        comboBoxTipoPessoa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Gerente" }));
-        comboBoxTipoPessoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboBoxTipoPessoaActionPerformed(evt);
-            }
-        });
-
         botEditarItem1.setText("Editar");
         botEditarItem1.setPreferredSize(new java.awt.Dimension(88, 25));
         botEditarItem1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -134,21 +125,21 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
             }
         });
 
-        botCadastrarNovoItem1.setText("Atualizar tabela");
-        botCadastrarNovoItem1.setPreferredSize(new java.awt.Dimension(88, 25));
-        botCadastrarNovoItem1.addMouseListener(new java.awt.event.MouseAdapter() {
+        botAtualizarTabela.setText("Atualizar tabela");
+        botAtualizarTabela.setPreferredSize(new java.awt.Dimension(88, 25));
+        botAtualizarTabela.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                botCadastrarNovoItem1NovoItemMouseClicked(evt);
+                botAtualizarTabelaNovoItemMouseClicked(evt);
             }
         });
-        botCadastrarNovoItem1.addActionListener(new java.awt.event.ActionListener() {
+        botAtualizarTabela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botCadastrarNovoItem1ActionPerformed(evt);
+                botAtualizarTabelaActionPerformed(evt);
             }
         });
-        botCadastrarNovoItem1.addKeyListener(new java.awt.event.KeyAdapter() {
+        botAtualizarTabela.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                botCadastrarNovoItem1KeyPressed(evt);
+                botAtualizarTabelaKeyPressed(evt);
             }
         });
 
@@ -173,20 +164,15 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         numeroLinha.setBackground(new java.awt.Color(255, 255, 255));
         numeroLinha.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        tabelaPessoa.setPreferredSize(new java.awt.Dimension(100, 100));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nome", "CPF", "Idade", "ID Cliente", "ID Conta", "Status da Conta", "Saldo"
             }
         ));
-        tabelaPessoa.setViewportView(jTable1);
+        tabelaPessoa.setViewportView(tabelaCliente);
 
         javax.swing.GroupLayout painelTelaPesquisaLayout = new javax.swing.GroupLayout(painelTelaPesquisa);
         painelTelaPesquisa.setLayout(painelTelaPesquisaLayout);
@@ -195,8 +181,9 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
             .addGroup(painelTelaPesquisaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(painelTelaPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tabelaPessoa)
                     .addGroup(painelTelaPesquisaLayout.createSequentialGroup()
-                        .addComponent(botCadastrarNovoItem1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botAtualizarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(botLimparTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
@@ -207,13 +194,10 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
                         .addComponent(botEditarItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botExcluirItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(tabelaPessoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(painelTelaPesquisaLayout.createSequentialGroup()
                         .addComponent(caixaPesquisaUsuario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboBoxTipoPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(botPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         painelTelaPesquisaLayout.setVerticalGroup(
@@ -222,7 +206,6 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(painelTelaPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(caixaPesquisaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboBoxTipoPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tabelaPessoa, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
@@ -233,7 +216,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
                         .addComponent(botExcluirItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(botCadastrarNovoItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(botEditarItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(botCadastrarNovoItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botAtualizarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(botLimparTabela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -269,10 +252,6 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     private void botCadastrarNovoItemNovoItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botCadastrarNovoItemNovoItemMouseClicked
         chamarTelaCadastro();
     }//GEN-LAST:event_botCadastrarNovoItemNovoItemMouseClicked
-
-    private void comboBoxTipoPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxTipoPessoaActionPerformed
-
-    }//GEN-LAST:event_comboBoxTipoPessoaActionPerformed
 
     private void botCadastrarNovoItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botCadastrarNovoItemActionPerformed
         chamarTelaCadastro();
@@ -326,17 +305,17 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         chamarTelaEditarDados();
     }//GEN-LAST:event_botEditarItem1KeyPressed
 
-    private void botCadastrarNovoItem1NovoItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botCadastrarNovoItem1NovoItemMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botCadastrarNovoItem1NovoItemMouseClicked
+    private void botAtualizarTabelaNovoItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botAtualizarTabelaNovoItemMouseClicked
+        atualizarTabela();
+    }//GEN-LAST:event_botAtualizarTabelaNovoItemMouseClicked
 
-    private void botCadastrarNovoItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botCadastrarNovoItem1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botCadastrarNovoItem1ActionPerformed
+    private void botAtualizarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botAtualizarTabelaActionPerformed
+        atualizarTabela();
+    }//GEN-LAST:event_botAtualizarTabelaActionPerformed
 
-    private void botCadastrarNovoItem1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botCadastrarNovoItem1KeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botCadastrarNovoItem1KeyPressed
+    private void botAtualizarTabelaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botAtualizarTabelaKeyPressed
+        atualizarTabela();
+    }//GEN-LAST:event_botAtualizarTabelaKeyPressed
 
     private void botLimparTabelaNovoItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botLimparTabelaNovoItemMouseClicked
         limparTabela();
@@ -350,6 +329,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         limparTabela();
     }//GEN-LAST:event_botLimparTabelaKeyPressed
 
+    /*
     private void pesquisar() throws SQLException {
         String cpf = caixaPesquisaUsuario.getText();
         String opçaoComboBox = (String) comboBoxTipoPessoa.getSelectedItem();
@@ -366,7 +346,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
             }
         }
     }
-
+     */
     private void chamarTelaCadastro() {
         String cpf = null;
 
@@ -385,7 +365,6 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
             if (usarCpf == JOptionPane.YES_OPTION) {
                 cpf = caixaPesquisaUsuario.getText();
             }*/
-        
         switch (opçao) {
             case JOptionPane.YES_OPTION -> {
                 // Cadastrar cliente
@@ -403,46 +382,46 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
 
     private void chamarTelaEditarDados() {
         String cpf = caixaPesquisaUsuario.getText();
-        String opçaoComboBox = (String) comboBoxTipoPessoa.getSelectedItem();
+        //String opçaoComboBox = (String) comboBoxTipoPessoa.getSelectedItem();
 
         //Verifica se cpf é válido
         if (validarCPFPesquisado(cpf)) {
-            //Verifica se o ComboBox é um gerente (não é para alterar gerente)
+
+            /*//Verifica se o ComboBox é um gerente (não é para alterar gerente)
             if (opçaoComboBox.equals("Gerente")) {
                 JOptionPane.showMessageDialog(null,
                         "Não é possível editar gerente!",
                         "Edição inválida",
                         JOptionPane.WARNING_MESSAGE);
-            } else {
-                //Verifica se há esse cpf no bd
-                Gerente pesquisa = new Gerente(null, null, null, null, null, null, null, null);
-                ResultSet resultado = pesquisa.getPesquisarCliente(cpf);
+            }else { */
+            //Verifica se há esse cpf no bd
+            Gerente pesquisa = new Gerente(null, null, null, null, null, null, null, null);
+            ResultSet resultado = pesquisa.getPesquisarCliente(cpf);
 
-                try {
-                    if (!resultado.next()) {
-                        mensagemPessoaInexixtenteBD("Cliente");
-                    } else {
-                        int opçao = JOptionPane.showConfirmDialog(null,
-                                "Deseja editar esse cliente?",
-                                "Confirmar edição",
-                                JOptionPane.YES_NO_OPTION);
+            try {
+                if (!resultado.next()) {
+                    mensagemPessoaInexixtenteBD("Cliente");
+                } else {
+                    int opçao = JOptionPane.showConfirmDialog(null,
+                            "Deseja editar esse cliente?",
+                            "Confirmar edição",
+                            JOptionPane.YES_NO_OPTION);
 
-                        switch (opçao) {
-                            case JOptionPane.YES_OPTION -> {
-                                this.dispose();
-                                new TelaEditar(cpf).setVisible(true);
-                            }
-
-                            case JOptionPane.NO_OPTION -> {
-                            }
-
-                            default ->
-                                throw new AssertionError();
+                    switch (opçao) {
+                        case JOptionPane.YES_OPTION -> {
+                            this.dispose();
+                            new TelaEditar(cpf).setVisible(true);
                         }
+
+                        case JOptionPane.NO_OPTION -> {
+                        }
+
+                        default ->
+                            throw new AssertionError();
                     }
-                } catch (SQLException u) {
-                    JOptionPane.showMessageDialog(null, "Erro ao buscar dados do cliente!", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
+            } catch (SQLException u) {
+                JOptionPane.showMessageDialog(null, "Erro ao buscar dados do cliente!", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -453,7 +432,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         switch (opçao) {
             case JOptionPane.YES_OPTION -> {
                 String cpf = caixaPesquisaUsuario.getText();
-           Gerente ger = new Gerente(null, null, null, null, null, null, null, null);
+                Gerente ger = new Gerente(null, null, null, null, null, null, null, null);
                 ger.getExcluirCliente(cpf);
             }
 
@@ -468,78 +447,87 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
 
     private void atualizarTabela() {
         limparTabela();
-        
+        DefaultTableModel modelo = (DefaultTableModel) tabelaCliente.getModel();
+
+        PegarCliente pegarClientes = new PegarCliente();
+        ArrayList<Object> tbl_Clientes = pegarClientes.getPegarClientes();
+        pegarClientes.getPegarClientes();
+
+        for (Object cliente : tbl_Clientes) {
+            modelo.addRow((Object[]) cliente);
+        }
     }
-    
+
     private void limparTabela() {
+        DefaultTableModel modelo = (DefaultTableModel) tabelaCliente.getModel();
+
         modelo.setNumRows(0);
         numeroLinha.setText("");
     }
-    
-    private void pesquisarTblCliente(String cpf) {
-        Gerente pesquisa = new Gerente(null, null, null, null, null, null, null, null);
-        ResultSet resultado = pesquisa.getPesquisarCliente(cpf);
 
-        try {
-            if (!resultado.next()) {
-                mensagemPessoaInexixtenteBD("Cliente");
+    /*    private void pesquisarTblCliente(String cpf) {
+    Gerente pesquisa = new Gerente(null, null, null, null, null, null, null, null);
+    ResultSet resultado = pesquisa.getPesquisarCliente(cpf);
+
+    try {
+        if (!resultado.next()) {
+            mensagemPessoaInexixtenteBD("Cliente");
+        } else {
+            String nome = resultado.getString("nomtabelaPessoae");
+            String cpfBD = resultado.getString("cpf");
+            int idade = resultado.getInt("idade");
+            int idCliente = resultado.getInt("idCliente");
+            String idConta = resultado.getString("idConta");
+            double saldoAtual = resultado.getDouble("saldoAtual");
+            boolean statusConta = resultado.getBoolean("statusCliente");
+
+            String statusContaStr;
+
+            if (statusConta) {
+                statusContaStr = "Ativo";
             } else {
-                String nome = resultado.getString("nomtabelaPessoae");
-                String cpfBD = resultado.getString("cpf");
-                int idade = resultado.getInt("idade");
-                int idCliente = resultado.getInt("idCliente");
-                String idConta = resultado.getString("idConta");
-                double saldoAtual = resultado.getDouble("saldoAtual");
-                boolean statusConta = resultado.getBoolean("statusCliente");
-
-                String statusContaStr;
-
-                if (statusConta) {
-                    statusContaStr = "Ativo";
-                } else {
-                    statusContaStr = "Inativo";
-                }
-
-                String mensagem = "Nome: " + nome + "\n"
-                        + "CPF: " + cpfBD + "\n"
-                        + "Idade: " + idade + "\n"
-                        + "ID Cliente: " + idCliente + "\n"
-                        + "ID Conta: " + idConta + "\n"
-                        + "Saldo Atual: " + saldoAtual + "\n"
-                        + "Status da Conta: " + statusContaStr.toUpperCase();
-
-                JOptionPane.showMessageDialog(null, mensagem, "Dados do Cliente", JOptionPane.INFORMATION_MESSAGE);
+                statusContaStr = "Inativo";
             }
-        } catch (SQLException u) {
-            JOptionPane.showMessageDialog(null, "Erro ao buscar dados do cliente!", "Erro", JOptionPane.ERROR_MESSAGE);
+
+            String mensagem = "Nome: " + nome + "\n"
+                    + "CPF: " + cpfBD + "\n"
+                    + "Idade: " + idade + "\n"
+                    + "ID Cliente: " + idCliente + "\n"
+                    + "ID Conta: " + idConta + "\n"
+                    + "Saldo Atual: " + saldoAtual + "\n"
+                    + "Status da Conta: " + statusContaStr.toUpperCase();
+
+            JOptionPane.showMessageDialog(null, mensagem, "Dados do Cliente", JOptionPane.INFORMATION_MESSAGE);
         }
+    } catch (SQLException u) {
+        JOptionPane.showMessageDialog(null, "Erro ao buscar dados do cliente!", "Erro", JOptionPane.ERROR_MESSAGE);
     }
+}*/
+ /*
+private void pesquisarTblGetente(String cpf) {
+    Gerente pesquisa = new Gerente(null, null, null, null, null, null, null, null);
+    ResultSet resultado = pesquisa.getPesquisarGerente(cpf);
 
-    private void pesquisarTblGetente(String cpf) {
-        Gerente pesquisa = new Gerente(null, null, null, null, null, null, null, null);
-        ResultSet resultado = pesquisa.getPesquisarGerente(cpf);
+    try {
+        if (!resultado.next()) {
+            mensagemPessoaInexixtenteBD("Gerente");
+        } else {
+            String nome = resultado.getString("nome");
+            String cpfBD = resultado.getString("cpf");
+            int idade = resultado.getInt("idade");
+            String idGerente = resultado.getString("idGerente");
 
-        try {
-            if (!resultado.next()) {
-                mensagemPessoaInexixtenteBD("Gerente");
-            } else {
-                String nome = resultado.getString("nome");
-                String cpfBD = resultado.getString("cpf");
-                int idade = resultado.getInt("idade");
-                String idGerente = resultado.getString("idGerente");
+            String mensagem = "Nome: " + nome + "\n"
+                    + "CPF: " + cpfBD + "\n"
+                    + "Idade: " + idade + "\n"
+                    + "ID Gerente: " + idGerente + "\n";
 
-                String mensagem = "Nome: " + nome + "\n"
-                        + "CPF: " + cpfBD + "\n"
-                        + "Idade: " + idade + "\n"
-                        + "ID Gerente: " + idGerente + "\n";
-
-                JOptionPane.showMessageDialog(null, mensagem, "Dados do Gerente", JOptionPane.INFORMATION_MESSAGE);
-            }
-        } catch (SQLException u) {
-            JOptionPane.showMessageDialog(null, "Erro ao buscar dados do gerente!", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, mensagem, "Dados do Gerente", JOptionPane.INFORMATION_MESSAGE);
         }
+    } catch (SQLException u) {
+        JOptionPane.showMessageDialog(null, "Erro ao buscar dados do gerente!", "Erro", JOptionPane.ERROR_MESSAGE);
     }
-
+}*/
     private boolean validarCPFPesquisado(String cpf) {
         CPF validador = new CPF();
         boolean validarCPF = validador.getValidarCPF(cpf);
@@ -592,17 +580,16 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botAtualizarTabela;
     private javax.swing.JButton botCadastrarNovoItem;
-    private javax.swing.JButton botCadastrarNovoItem1;
     private javax.swing.JButton botEditarItem1;
     private javax.swing.JButton botExcluirItem;
     private javax.swing.JButton botLimparTabela;
     private javax.swing.JButton botPesquisar;
     private javax.swing.JTextField caixaPesquisaUsuario;
-    private javax.swing.JComboBox<String> comboBoxTipoPessoa;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel numeroLinha;
     private javax.swing.JPanel painelTelaPesquisa;
+    private javax.swing.JTable tabelaCliente;
     private javax.swing.JScrollPane tabelaPessoa;
     // End of variables declaration//GEN-END:variables
 }
