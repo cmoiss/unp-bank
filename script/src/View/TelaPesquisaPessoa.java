@@ -202,45 +202,13 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     }//GEN-LAST:event_caixaPesquisaUsuarioActionPerformed
 
     private void botExcluirItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botExcluirItemActionPerformed
-        int opçao = JOptionPane.showConfirmDialog(null, "Realmente deseja excluir esse usuário?", "Excluir usuário", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-
-        switch (opçao) {
-            case JOptionPane.YES_OPTION -> {
-                String cpf = caixaPesquisaUsuario.getText();
-                Gerente ger=new Gerente(null, null, null, null, null, null, null, null);
-                ger.getExcluirCliente(cpf);
-            }
-
-            case JOptionPane.NO_OPTION -> {
-                //Não excluir
-            }
-
-            default ->
-                throw new AssertionError();
-        }
+        excluir();
     }//GEN-LAST:event_botExcluirItemActionPerformed
 
     private void botExcluirItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botExcluirItemMouseClicked
-        int opçao = JOptionPane.showConfirmDialog(null, "Realmente deseja excluir esse usuário?", "Excluir usuário", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-
-        switch (opçao) {
-            case JOptionPane.YES_OPTION -> {
-                String cpf = caixaPesquisaUsuario.getText();
-                Gerente ger=new Gerente(null, null, null, null, null, null, null, null);
-                ger.getExcluirCliente(cpf);
-            }
-
-            case JOptionPane.NO_OPTION -> {
-                //Não excluir
-            }
-
-            default ->
-                throw new AssertionError();
-        }
+        excluir();
     }//GEN-LAST:event_botExcluirItemMouseClicked
 
-
-    
     private void botPesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botPesquisarMouseClicked
         pesquisar();
     }//GEN-LAST:event_botPesquisarMouseClicked
@@ -265,7 +233,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         chamarTelaEditarDados();
     }//GEN-LAST:event_botEditarItem1KeyPressed
 
-   /* public void pesquisar() {
+    /* public void pesquisar() {
         // Recebe o CPF digitado na caixa de pesquisa
         String cpf = caixaPesquisaUsuario.getText();
 
@@ -280,12 +248,11 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
 
         }
     }*/
-
     private void pesquisar() {
         String cpf = caixaPesquisaUsuario.getText();
         CPF validador = new CPF();
         boolean validarCPF = validador.getValidarCPF(cpf);
-           if (true==validarCPF) {
+        if (true == validarCPF) {
             Gerente pesquisa = new Gerente(null, null, null, null, null, null, null, null);
             ResultSet resultado = pesquisa.getPesquisarCliente(cpf);
             try {
@@ -315,7 +282,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Erro ao buscar dados do cliente", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-               JOptionPane.showMessageDialog(null, "CPF inválido! Por favor, digite novamente.", "Validador de CPF", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "CPF inválido! Por favor, digite novamente.", "Validador de CPF", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -345,7 +312,6 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
             }
         }
     }*/
-
     private void chamarTelaCadastro() {
         TipoPessoa pessoa = null;
 
@@ -408,7 +374,26 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         }
     }
 
-   /* private boolean validarCPFPesquisado(String cpf) {
+    private void excluir() {
+        int opçao = JOptionPane.showConfirmDialog(null, "Realmente deseja excluir esse usuário?", "Excluir usuário", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        switch (opçao) {
+            case JOptionPane.YES_OPTION -> {
+                String cpf = caixaPesquisaUsuario.getText();
+                Gerente ger = new Gerente(null, null, null, null, null, null, null, null);
+                ger.getExcluirCliente(cpf);
+            }
+
+            case JOptionPane.NO_OPTION -> {
+                //Não excluir
+            }
+
+            default ->
+                throw new AssertionError();
+        }
+    }
+
+    /* private boolean validarCPFPesquisado(String cpf) {
         CPF validador = new CPF();
         boolean validarCPF = validador.getValidarCPF(cpf);
 
@@ -423,7 +408,6 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
 
         return valido;
     }*/
-
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
             new TelaPesquisaPessoa().setVisible(true);
