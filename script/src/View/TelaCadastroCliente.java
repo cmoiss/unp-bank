@@ -519,7 +519,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         caixaTextoEmail.setText("");
         caixaTextoLogin.setText("");
         caixaTextoSenha.setText("");
-        comboBoxSexo.setSelectedIndex(-1);
+        comboBoxSexo.setSelectedIndex(0);
         caixaTextoSaldoInicial.setText("");
     }
     

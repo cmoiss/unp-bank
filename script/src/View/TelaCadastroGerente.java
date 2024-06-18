@@ -487,7 +487,7 @@ public class TelaCadastroGerente extends javax.swing.JFrame {
         caixaTextoEmail.setText("");
         caixaTextoLogin.setText("");
         caixaTextoSenha.setText("");
-        comboBoxSexo.setSelectedIndex(-1);
+        comboBoxSexo.setSelectedIndex(0);
     }
 
     /**

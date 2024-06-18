@@ -32,6 +32,7 @@ public class TelaEditar extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         caixaTextoNovaSenha = new javax.swing.JPasswordField();
         botEditar = new javax.swing.JButton();
+        botVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("EDITAR CLIENTE");
@@ -150,6 +151,23 @@ public class TelaEditar extends javax.swing.JFrame {
             }
         });
 
+        botVoltar.setText("Voltar");
+        botVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botVoltarMouseClicked(evt);
+            }
+        });
+        botVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botVoltarActionPerformed(evt);
+            }
+        });
+        botVoltar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botVoltarKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -157,13 +175,16 @@ public class TelaEditar extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botEditar)
-                .addGap(237, 237, 237))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(botVoltar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botEditar)
+                        .addGap(237, 237, 237))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,7 +194,9 @@ public class TelaEditar extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(botEditar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botEditar)
+                    .addComponent(botVoltar))
                 .addContainerGap(70, Short.MAX_VALUE))
         );
 
@@ -232,6 +255,18 @@ public class TelaEditar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_botEditarActionPerformed
 
+    private void botVoltarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botVoltarKeyPressed
+        voltarMenuPesquisa();
+    }//GEN-LAST:event_botVoltarKeyPressed
+
+    private void botVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botVoltarActionPerformed
+        voltarMenuPesquisa();
+    }//GEN-LAST:event_botVoltarActionPerformed
+
+    private void botVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botVoltarMouseClicked
+        voltarMenuPesquisa();
+    }//GEN-LAST:event_botVoltarMouseClicked
+
     private void editarDados() throws SQLException {
         String email = caixaTextoEmail.getText();
         String login = caixaTextoNovoUsuario.getText();
@@ -241,10 +276,17 @@ public class TelaEditar extends javax.swing.JFrame {
             Gerente editar = new Gerente(null, null, null, null, null, null, null, null);
             editar.getEditarDados(this.cpf, email, login, senha);
             JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            
+            this.dispose();
             new TelaPesquisaPessoa().setVisible(true);
-        } catch(SQLException u)  {
+        } catch (SQLException u) {
             throw new RuntimeException(u);
         }
+    }
+
+    private void voltarMenuPesquisa() {
+        this.dispose();
+        new TelaPesquisaPessoa().setVisible(true);
     }
 
     public static void main(String args[]) {
@@ -280,6 +322,7 @@ public class TelaEditar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botEditar;
+    private javax.swing.JButton botVoltar;
     private javax.swing.JTextField caixaTextoCelular;
     private javax.swing.JTextField caixaTextoEmail;
     private javax.swing.JPasswordField caixaTextoNovaSenha;

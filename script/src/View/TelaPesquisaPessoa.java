@@ -7,8 +7,6 @@ import javax.swing.JOptionPane;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 public class TelaPesquisaPessoa extends javax.swing.JFrame {
@@ -310,11 +308,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     }//GEN-LAST:event_botEditarItem1ActionPerformed
 
     private void botPesquisarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botPesquisarKeyPressed
-        try {
-            pesquisar();
-        } catch (SQLException ex) {
-            Logger.getLogger(TelaPesquisaPessoa.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        pesquisarUnicaPessoa();
     }//GEN-LAST:event_botPesquisarKeyPressed
 
     private void botEditarItem1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botEditarItem1KeyPressed
@@ -415,46 +409,18 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
 
     private void chamarTelaEditarDados() {
         String cpf = pegarCPFLinha();
-        //String opçaoComboBox = (String) comboBoxTipoPessoa.getSelectedItem();
 
-        //Verifica se cpf é válido
-        if (validarCPFPesquisado(cpf)) {
+        int opçao = JOptionPane.showConfirmDialog(null,
+                "Deseja editar esse cliente?",
+                "Confirmar edição",
+                JOptionPane.YES_NO_OPTION);
+        switch (opçao) {
+            case JOptionPane.YES_OPTION -> {
+                this.dispose();
+                new TelaEditar(cpf).setVisible(true);
+            }
 
-            /*//Verifica se o ComboBox é um gerente (não é para alterar gerente)
-            if (opçaoComboBox.equals("Gerente")) {
-                JOptionPane.showMessageDialog(null,
-                        "Não é possível editar gerente!",
-                        "Edição inválida",
-                        JOptionPane.WARNING_MESSAGE);
-            }else { */
-            //Verifica se há esse cpf no bd
-            Gerente pesquisa = new Gerente(null, null, null, null, null, null, null, null);
-            ResultSet resultado = pesquisa.getPesquisarCliente(cpf);
-
-            try {
-                if (!resultado.next()) {
-                    mensagemPessoaInexixtenteBD("Cliente");
-                } else {
-                    int opçao = JOptionPane.showConfirmDialog(null,
-                            "Deseja editar esse cliente?",
-                            "Confirmar edição",
-                            JOptionPane.YES_NO_OPTION);
-
-                    switch (opçao) {
-                        case JOptionPane.YES_OPTION -> {
-                            this.dispose();
-                            new TelaEditar(cpf).setVisible(true);
-                        }
-
-                        case JOptionPane.NO_OPTION -> {
-                        }
-
-                        default ->
-                            throw new AssertionError();
-                    }
-                }
-            } catch (SQLException u) {
-                JOptionPane.showMessageDialog(null, "Erro ao buscar dados do cliente!", "Erro", JOptionPane.ERROR_MESSAGE);
+            case JOptionPane.NO_OPTION -> {
             }
         }
     }
