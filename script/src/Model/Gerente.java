@@ -85,7 +85,7 @@ public class Gerente extends Pessoa {
         cadastrarGerente(nome, cpf, dataNascimento, idade, email, login, senha, genero);
     }
 
-    public boolean getVerificarCPFEXistente(String cpf) throws SQLException {
+    public boolean getVerificarPessoaEXistente(String cpf) throws SQLException {
         return verificarCPFExistenteBD(cpf);
     }
 

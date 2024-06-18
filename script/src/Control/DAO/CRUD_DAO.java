@@ -139,7 +139,6 @@ public class CRUD_DAO {
         }
     }
 
-   
     private int excluirTblCliente(String cpf) {
         PreparedStatement comandoSQL;
         int resultado;
