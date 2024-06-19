@@ -55,14 +55,16 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="tabelaPessoa" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
+                      <Component id="tabelaPessoa" pref="749" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="botVoltar" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                           <Component id="botAtualizarTabela" min="-2" pref="115" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="botLimparTabela" min="-2" pref="109" max="-2" attributes="0"/>
-                          <EmptySpace pref="94" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                           <Component id="numeroLinha" min="-2" pref="73" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="botCadastrarNovoItem" min="-2" pref="109" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="botEditarItem1" min="-2" max="-2" attributes="0"/>
@@ -93,11 +95,16 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="numeroLinha" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="botExcluirItem" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="botExcluirItem" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="botCadastrarNovoItem" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="botEditarItem1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="botAtualizarTabela" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="botLimparTabela" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="botEditarItem1" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                          <Component id="botVoltar" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                              <Component id="botAtualizarTabela" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="botLimparTabela" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -236,6 +243,16 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JButton" name="botVoltar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Voltar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="botVoltarMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botVoltarActionPerformed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="botVoltarKeyPressed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

@@ -95,7 +95,7 @@ public class PegarCliente {
 
         try {
             conexao = (Connection) new dbConnect().getConnection();
-            comandoSQL = conexao.prepareStatement("SELECT cpf FROM tbl_cliente WHERE Login = ? and Senha = ?");
+            comandoSQL = conexao.prepareStatement("SELECT cpf FROM tbl_Cliente WHERE Login = ? and Senha = ?");
             comandoSQL.setString(1, login);
             comandoSQL.setString(2, senha);
             resultado = comandoSQL.executeQuery();
@@ -116,7 +116,7 @@ public class PegarCliente {
 
         try {
             conexao = (Connection) new dbConnect().getConnection();
-            comandoSQL = conexao.prepareStatement("SELECT idCliente FROM tbl_cliente WHERE cpf = ?");
+            comandoSQL = conexao.prepareStatement("SELECT idCliente FROM tbl_Cliente WHERE cpf = ?");
             comandoSQL.setString(1, cpf);
             resultado = comandoSQL.executeQuery();
             resultado.next();
@@ -136,12 +136,36 @@ public class PegarCliente {
     public ArrayList<Object> getPegarClienteUnico(String cpf) {
         return pegarClienteUnico(cpf);
     }
+    
+    private String pegarNomeClineteUnico(String cpf) {
+        String nome;
+        
+        PreparedStatement comandoSQL;
+        ResultSet resultado;
 
+        try {
+            conexao = (Connection) new dbConnect().getConnection();
+            comandoSQL = conexao.prepareStatement("SELECT nome FROM tbl_Pessoa WHERE cpf = ?");
+            comandoSQL.setString(1, cpf);
+            resultado = comandoSQL.executeQuery();
+            resultado.next();
+            nome = resultado.getString(1);
+            
+            return nome;
+        } catch (SQLException u) {
+            throw new RuntimeException(u);
+        }
+    }
+    
     public String getPegarCPFCliente(String login, String senha) {
         return pegarCPFCliente(login, senha);
     }
     
     public String getPegarIdCliente(String cpf) {
         return pegarIdCliente(cpf);
+    }
+
+    public String getPegarNomeClienteUnico(String cpf) {
+        return pegarNomeClineteUnico(cpf);
     }
 }
