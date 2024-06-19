@@ -13,6 +13,10 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
 
     public TelaCadastroCliente() {
         initComponents();
+        
+        //setIconImage();
+        setResizable(false);
+        setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")

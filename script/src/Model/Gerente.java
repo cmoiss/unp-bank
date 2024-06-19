@@ -71,10 +71,6 @@ public class Gerente extends Pessoa {
     public void getExcluirCliente(String cpf){
         excluirCliente(cpf);
     }
-
-    private ResultSet pesquisarGerente(String cpf) {
-        return funcao.getPesquisarTblGerente(cpf);
-    }
     
     public String getIdGerente() {
         return idGerente;
@@ -118,9 +114,5 @@ public class Gerente extends Pessoa {
     
     public ArrayList<Object> getPesquisarClienteUnico(String cpf) {
         return pesquisarClienteUnico(cpf);
-    }
-    
-    public ResultSet getPesquisarGerente(String cpf) {
-        return pesquisarGerente(cpf);
     }
 }

@@ -16,8 +16,14 @@ public class TelaLogin extends javax.swing.JFrame {
     private TipoPessoa tipoPessoa = null;
 
     public TelaLogin(TipoPessoa tipoPessoa) {
-        this.tipoPessoa = tipoPessoa;
         initComponents();
+        
+        setTitle("Tela de login");
+        //setIconImage();
+        setResizable(false);
+        setLocationRelativeTo(null);
+        
+        this.tipoPessoa = tipoPessoa;
     }
 
     @SuppressWarnings("unchecked")

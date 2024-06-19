@@ -11,9 +11,14 @@ public class TelaEditar extends javax.swing.JFrame {
     String cpf = null;
 
     public TelaEditar(String cpf) {
-        this.cpf = cpf;
-
         initComponents();
+        
+        setTitle("Menu de Edição");
+        //setIconImage();
+        setResizable(false);
+        setLocationRelativeTo(null);
+               
+        this.cpf = cpf;
     }
 
     @SuppressWarnings("unchecked")

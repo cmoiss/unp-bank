@@ -2,7 +2,6 @@ package View;
 
 import Control.Idade;
 import Control.CPF;
-import Control.TipoPessoa;
 import Model.Gerente;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -14,6 +13,10 @@ public class TelaCadastroGerente extends javax.swing.JFrame {
 
     public TelaCadastroGerente() {
         initComponents();
+        
+        //setIconImage();
+        setResizable(false);
+        setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")

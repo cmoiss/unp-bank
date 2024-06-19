@@ -13,23 +13,6 @@ public class CRUD_DAO {
         conexao = (Connection) new dbConnect().getConnection();
     }
 
-    private ResultSet pesquisarTblGerente(String CPF) {
-        PreparedStatement comandoSQL;
-        ResultSet resultado;
-        try {
-            conexao = (Connection) new dbConnect().getConnection();
-            comandoSQL = conexao.prepareStatement("SELECT p.nome, p.cpf, p.dataNascimento, p.idade, p.email, p.genero, g.idGerente, g.login, g.senha "
-                    + "FROM tbl_Pessoa p "
-                    + "INNER JOIN tbl_Gerente g ON p.cpf = g.cpf "
-                    + "WHERE p.cpf =?;");
-            comandoSQL.setString(1, CPF);
-            resultado = comandoSQL.executeQuery();
-            return resultado;
-        } catch (SQLException u) {
-            throw new RuntimeException(u);
-        }
-    }
-
     public void verificarTblContas() {
         PreparedStatement comandoSQL;
         try {
@@ -70,11 +53,4 @@ public class CRUD_DAO {
         }
     }
 
-    public ResultSet getPesquisarTblCliente(String cpf) {
-        return pesquisarTblCliente(cpf);
-    }
-
-    public ResultSet getPesquisarTblGerente(String cpf) {
-        return pesquisarTblGerente(cpf);
-    }
 }

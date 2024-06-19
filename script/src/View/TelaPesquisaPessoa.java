@@ -4,20 +4,18 @@ import Control.CPF;
 import Control.DAO.CRUD.PegarCliente;
 import Model.Gerente;
 import javax.swing.JOptionPane;
-import java.sql.SQLException;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 public class TelaPesquisaPessoa extends javax.swing.JFrame {
 
     public TelaPesquisaPessoa() {
+        initComponents();
+        
         setTitle("Menu de Pesquisa");
         //setIconImage();
         setResizable(false);
         setLocationRelativeTo(null);
-
-        initComponents();
 
         atualizarTabela();
     }
