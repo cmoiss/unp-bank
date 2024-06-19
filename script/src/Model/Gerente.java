@@ -1,10 +1,10 @@
 package Model;
 
 import Control.DAO.CRUD_DAO;
-import Control.DAO.CadastroDAO;
-import Control.DAO.EditarCliente;
-import Control.DAO.PegarCliente;
-import Control.DAO.RemoverCliente;
+import Control.DAO.CRUD.CadastroDAO;
+import Control.DAO.CRUD.EditarCliente;
+import Control.DAO.CRUD.PegarCliente;
+import Control.DAO.CRUD.RemoverCliente;
 import Control.TipoPessoa;
 import java.util.Date;
 import java.sql.SQLException;
@@ -33,6 +33,11 @@ public class Gerente extends Pessoa {
         cadastrar.getCloseConnction();
     }
 
+    private ArrayList<Object> pesquisarClienteUnico(String cpf) {
+        PegarCliente pesquisa = new PegarCliente();
+        return pesquisa.getPegarClienteUnico(cpf);
+    }
+    
     private void editarDados(String cpf, String email, String login, String senha) throws SQLException {
         EditarCliente editar = new EditarCliente();
         editar.getEditarDadosCliente(cpf, email, login, senha);
@@ -65,11 +70,6 @@ public class Gerente extends Pessoa {
     
     public void getExcluirCliente(String cpf){
         excluirCliente(cpf);
-    }
-
-    private ArrayList<Object> pesquisarClienteUnico(String cpf) {
-        PegarCliente pesquisa = new PegarCliente();
-        return pesquisa.getPegarClienteUnico(cpf);
     }
 
     private ResultSet pesquisarGerente(String cpf) {
@@ -113,6 +113,10 @@ public class Gerente extends Pessoa {
     }
     
     public ArrayList<Object> getPesquisarCliente(String cpf) {
+        return pesquisarClienteUnico(cpf);
+    }
+    
+    public ArrayList<Object> getPesquisarClienteUnico(String cpf) {
         return pesquisarClienteUnico(cpf);
     }
     

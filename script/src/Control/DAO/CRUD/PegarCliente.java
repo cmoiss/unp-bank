@@ -1,5 +1,6 @@
-package Control.DAO;
+package Control.DAO.CRUD;
 
+import Control.DAO.dbConnect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -85,12 +86,64 @@ public class PegarCliente {
             throw new RuntimeException(u);
         }
     }
+    
+    private String pegarCPFCliente(String login, String senha) {
+        String cpf = null;
 
+        PreparedStatement comandoSQL;
+        ResultSet resultado;
+
+        try {
+            conexao = (Connection) new dbConnect().getConnection();
+            comandoSQL = conexao.prepareStatement("SELECT cpf FROM tbl_cliente WHERE Login = ? and Senha = ?");
+            comandoSQL.setString(1, login);
+            comandoSQL.setString(2, senha);
+            resultado = comandoSQL.executeQuery();
+            resultado.next();
+            cpf = resultado.getString(1);
+            
+            return cpf;
+        } catch (SQLException u) {
+            throw new RuntimeException(u);
+        }
+    }
+    
+    
+    
+    private String pegarIdCliente(String cpf) {
+        String idCliente = null;
+
+        PreparedStatement comandoSQL;
+        ResultSet resultado;
+
+        try {
+            conexao = (Connection) new dbConnect().getConnection();
+            comandoSQL = conexao.prepareStatement("SELECT idCliente FROM tbl_cliente WHERE cpf = ?");
+            comandoSQL.setString(1, cpf);
+            resultado = comandoSQL.executeQuery();
+            resultado.next();
+            idCliente = resultado.getString(1);
+            
+            return idCliente;
+        } catch (SQLException u) {
+            throw new RuntimeException(u);
+        }
+    }
+    
+    
     public ArrayList<Object> getPegarClientes() {
         return pegarClientes();
     }
 
     public ArrayList<Object> getPegarClienteUnico(String cpf) {
         return pegarClienteUnico(cpf);
+    }
+
+    public String getPegarCPFCliente(String login, String senha) {
+        return pegarCPFCliente(login, senha);
+    }
+    
+    public String getPegarIdCliente(String cpf) {
+        return pegarIdCliente(cpf);
     }
 }

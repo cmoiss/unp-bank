@@ -1,5 +1,6 @@
-package Control.DAO;
+package Control.DAO.CRUD;
 
+import Control.DAO.dbConnect;
 import Control.TipoPessoa;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

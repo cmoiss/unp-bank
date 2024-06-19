@@ -1,7 +1,7 @@
 package View;
 
 import Control.CPF;
-import Control.DAO.PegarCliente;
+import Control.DAO.CRUD.PegarCliente;
 import Model.Gerente;
 import javax.swing.JOptionPane;
 import java.sql.SQLException;

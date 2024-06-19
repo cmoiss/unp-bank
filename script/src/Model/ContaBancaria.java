@@ -2,11 +2,13 @@
 package Model;
 
 import Control.DAO.CRUD_DAO;
+import Control.DAO.Conta.VerificarSaldo;
 
 
 public class ContaBancaria {
 private String idConta;
 private int saldoAtual;
+VerificarSaldo saldo = new VerificarSaldo();
 CRUD_DAO funcao = new CRUD_DAO();
 
     public ContaBancaria(String idConta, double saldoAtual) {
@@ -30,18 +32,13 @@ CRUD_DAO funcao = new CRUD_DAO();
         this.saldoAtual = saldoAtual;
     }
     
-     public double verificarSaldo() {
-         double aux;
-         aux=funcao.verificarSaldo(idConta);
-         return aux;
-         /*if(aux){
-         funcao.efetuarSaque(idConta, aux);
-         }*/
+     public double verificarSaldo(String idConta) {
+         return saldo.getVerificarSaldo(idConta);
     }
      
     
-    public double getverificarSaldo() {
-        return verificarSaldo();
+    public double getVerificarSaldo(String idConta) {
+        return verificarSaldo(idConta);
     }
     
 

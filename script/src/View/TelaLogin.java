@@ -1,7 +1,9 @@
 package View;
 
-import Control.DAO.LoginDAO;
+import Control.DAO.CRUD.LoginDAO;
+import Control.DAO.CRUD.PegarCliente;
 import Control.TipoPessoa;
+import Model.Gerente;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -165,7 +167,12 @@ public class TelaLogin extends javax.swing.JFrame {
         if (loginDAO.LoginCheck(login, senha)) {
             this.dispose();
             if (tipoPessoa.equals(TipoPessoa.CLIENTE)) {
-                new TelaLadoCliente().setVisible(true);
+                String cpf;
+                PegarCliente pegarCPF = new PegarCliente();
+
+                cpf = pegarCPF.getPegarCPFCliente(login, senha);
+                
+                new TelaLadoCliente(cpf).setVisible(true);
             } else if (tipoPessoa.equals(TipoPessoa.GERENTE)) {
                 new TelaPesquisaPessoa().setVisible(true);
             }
@@ -203,8 +210,7 @@ public class TelaLogin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
-                
+
             }
         });
     }
