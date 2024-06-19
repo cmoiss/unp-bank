@@ -76,6 +76,11 @@ public class TelaLadoCliente extends javax.swing.JFrame {
                 botEfetuarDepósitoActionPerformed(evt);
             }
         });
+        botEfetuarDepósito.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botEfetuarDepósitoKeyPressed(evt);
+            }
+        });
 
         botEfetuarTransferência.setText("Transferência bancária");
         botEfetuarTransferência.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -208,11 +213,11 @@ public class TelaLadoCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botEfetuarDepósitoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEfetuarDepósitoMouseClicked
-        // TODO add your handling code here:
+        depositar();
     }//GEN-LAST:event_botEfetuarDepósitoMouseClicked
 
     private void botEfetuarDepósitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEfetuarDepósitoActionPerformed
-        // TODO add your handling code here:
+        depositar();
     }//GEN-LAST:event_botEfetuarDepósitoActionPerformed
 
     private void botEfetuarTransferênciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEfetuarTransferênciaMouseClicked
@@ -251,14 +256,25 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         mostrarSaldo();
     }//GEN-LAST:event_botAtualizarMouseClicked
 
+    private void botEfetuarDepósitoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botEfetuarDepósitoKeyPressed
+        depositar();
+    }//GEN-LAST:event_botEfetuarDepósitoKeyPressed
+
     private void mostrarSaldo() {
         labelSaldoAtual.setText("R$" + buscarSaldoBD());
     }
 
+    private void depositar() {
+        String valorDepositoStr = JOptionPane.showInputDialog(null, "Digite o valor a ser depositado.", "Valor de depósito", JOptionPane.INFORMATION_MESSAGE);
+        double valorDeposito = Double.parseDouble(valorDepositoStr);
+        contaBancaria.getEfetuarDeposito(contaBancaria.getIdConta(), valorDeposito);
+        mostrarSaldo();
+    }
+    
     private void sacar() {
         String valorSaqueStr = JOptionPane.showInputDialog(null, "Digite o valor a ser sacado.", "Valor de saque", JOptionPane.INFORMATION_MESSAGE);
         double valorSaque = Double.parseDouble(valorSaqueStr);
-        contaBancaria.getSacar(contaBancaria.getIdConta(), valorSaque);
+        contaBancaria.getEfetuarSaque(contaBancaria.getIdConta(), valorSaque);
         mostrarSaldo();
     }
 

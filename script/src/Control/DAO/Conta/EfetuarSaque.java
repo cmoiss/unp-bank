@@ -29,7 +29,7 @@ public class EfetuarSaque {
             if (saldo < 0) {
                 JOptionPane.showMessageDialog(null, "Não há saldo disponível na conta!", "Saldo insuficiente", JOptionPane.WARNING_MESSAGE);
             } else if (saldo < valorSolicitado) { //Saldo insuficiente
-                JOptionPane.showMessageDialog(null, "Valor solicitado para saque é menor que o valor atual!", "Saldo insuficiente", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Valor solicitado para saque é maior que o valor disponível na conta!", "Saldo insuficiente", JOptionPane.WARNING_MESSAGE);
             } else {
                 saldo = saldo - valorSolicitado;
                 comandoSQL = conexao.prepareStatement("UPDATE tbl_contabancaria SET saldoAtual = ? WHERE idconta = ?;");
