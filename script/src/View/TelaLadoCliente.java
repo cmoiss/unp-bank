@@ -3,15 +3,21 @@ package View;
 import Control.DAO.CRUD.PegarCliente;
 import Control.DAO.Conta.BuscarIDConta;
 import Model.ContaBancaria;
+import javax.swing.JOptionPane;
 
 public class TelaLadoCliente extends javax.swing.JFrame {
+
     String cpf = null;
-    
+
+    ContaBancaria contaBancaria = new ContaBancaria(null, 0);
+
     public TelaLadoCliente(String cpf) {
         initComponents();
-        
+
         this.cpf = cpf;
-        
+
+        buscarIDContaCliente(cpf);
+
         mostrarSaldo();
     }
 
@@ -28,6 +34,7 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         botEfetuarTransferência = new javax.swing.JButton();
         botAdicionarFoto = new javax.swing.JButton();
         butSaque = new javax.swing.JButton();
+        botAtualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,9 +97,36 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         });
 
         butSaque.setText("Efetuar Saque");
+        butSaque.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                butSaqueMouseClicked(evt);
+            }
+        });
         butSaque.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 butSaqueActionPerformed(evt);
+            }
+        });
+        butSaque.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                butSaqueKeyPressed(evt);
+            }
+        });
+
+        botAtualizar.setText("Atualizar");
+        botAtualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botAtualizarMouseClicked(evt);
+            }
+        });
+        botAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botAtualizarActionPerformed(evt);
+            }
+        });
+        botAtualizar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botAtualizarKeyPressed(evt);
             }
         });
 
@@ -121,7 +155,9 @@ public class TelaLadoCliente extends javax.swing.JFrame {
                             .addGroup(painelLadoClienteLayout.createSequentialGroup()
                                 .addComponent(labelSaldo)
                                 .addGap(18, 18, 18)
-                                .addComponent(labelSaldoAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(labelSaldoAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(botAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(painelLadoClienteLayout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addComponent(botAdicionarFoto)))
@@ -138,7 +174,8 @@ public class TelaLadoCliente extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(painelLadoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(labelSaldo)
-                            .addComponent(labelSaldoAtual))))
+                            .addComponent(labelSaldoAtual)
+                            .addComponent(botAtualizar))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botAdicionarFoto)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
@@ -191,43 +228,70 @@ public class TelaLadoCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_botAdicionarFotoActionPerformed
 
     private void butSaqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butSaqueActionPerformed
-        // TODO add your handling code here:
+        sacar();
     }//GEN-LAST:event_butSaqueActionPerformed
 
+    private void butSaqueKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_butSaqueKeyPressed
+        sacar();
+    }//GEN-LAST:event_butSaqueKeyPressed
+
+    private void butSaqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_butSaqueMouseClicked
+        sacar();
+    }//GEN-LAST:event_butSaqueMouseClicked
+
+    private void botAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botAtualizarActionPerformed
+        mostrarSaldo();
+    }//GEN-LAST:event_botAtualizarActionPerformed
+
+    private void botAtualizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botAtualizarKeyPressed
+        mostrarSaldo();
+    }//GEN-LAST:event_botAtualizarKeyPressed
+
+    private void botAtualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botAtualizarMouseClicked
+        mostrarSaldo();
+    }//GEN-LAST:event_botAtualizarMouseClicked
+
     private void mostrarSaldo() {
-        labelSaldoAtual.setText("R$" + buscarSaldo());
+        labelSaldoAtual.setText("R$" + buscarSaldoBD());
     }
-    
-    private double buscarSaldo() {
+
+    private void sacar() {
+        String valorSaqueStr = JOptionPane.showInputDialog(null, "Digite o valor a ser sacado.", "Valor de saque", JOptionPane.INFORMATION_MESSAGE);
+        double valorSaque = Double.parseDouble(valorSaqueStr);
+        contaBancaria.getSacar(contaBancaria.getIdConta(), valorSaque);
+        mostrarSaldo();
+    }
+
+    private double buscarSaldoBD() {
         double saldoAtual;
         String id = buscarIDContaCliente(this.cpf);
-        
+
         PegarCliente cliente = new PegarCliente();
-        ContaBancaria saldo = new ContaBancaria(null, 0);
-        
-        saldoAtual = saldo.getVerificarSaldo(id);
-        
+
+        saldoAtual = contaBancaria.getVerificarSaldo(id);
+        contaBancaria.setSaldoAtual(saldoAtual);
+
         return saldoAtual;
     }
-    
+
     private String buscarIDContaCliente(String cpf) {
-        String id = null;
-        
         BuscarIDConta buscaID = new BuscarIDConta();
-        
-        return buscaID.getBuscarIdConta(cpf);
+
+        contaBancaria.setIdConta(buscaID.getBuscarIdConta(cpf));
+
+        return contaBancaria.getIdConta();
     }
-    
+
     private void buscarCliente() {
         PegarCliente cliente = new PegarCliente();
         cliente.getPegarClienteUnico(this.cpf);
     }
-    
+
     private void buscarConta() {
         BuscarIDConta buscarID = new BuscarIDConta();
         buscarID.getBuscarIdConta(cpf);
     }
-    
+
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -238,6 +302,7 @@ public class TelaLadoCliente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botAdicionarFoto;
+    private javax.swing.JButton botAtualizar;
     private javax.swing.JButton botEfetuarDepósito;
     private javax.swing.JButton botEfetuarTransferência;
     private javax.swing.JButton butSaque;

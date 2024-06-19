@@ -78,6 +78,8 @@
                                   <Component id="labelSaldo" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="labelSaldoAtual" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="botAtualizar" min="-2" pref="28" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -102,6 +104,7 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="labelSaldo" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="labelSaldoAtual" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="botAtualizar" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -203,7 +206,19 @@
             <Property name="text" type="java.lang.String" value="Efetuar Saque"/>
           </Properties>
           <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="butSaqueMouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="butSaqueActionPerformed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="butSaqueKeyPressed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="botAtualizar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Atualizar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="botAtualizarMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botAtualizarActionPerformed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="botAtualizarKeyPressed"/>
           </Events>
         </Component>
       </SubComponents>

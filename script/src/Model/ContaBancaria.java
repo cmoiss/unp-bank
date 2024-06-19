@@ -2,12 +2,13 @@
 package Model;
 
 import Control.DAO.CRUD_DAO;
+import Control.DAO.Conta.EfetuarSaque;
 import Control.DAO.Conta.VerificarSaldo;
 
 
 public class ContaBancaria {
 private String idConta;
-private int saldoAtual;
+private double saldoAtual;
 VerificarSaldo saldo = new VerificarSaldo();
 CRUD_DAO funcao = new CRUD_DAO();
 
@@ -28,25 +29,23 @@ CRUD_DAO funcao = new CRUD_DAO();
         return saldoAtual;
     }
 
-    public void setSaldoAtual(int saldoAtual) {
+    public void setSaldoAtual(double saldoAtual) {
         this.saldoAtual = saldoAtual;
     }
-    
-     public double verificarSaldo(String idConta) {
-         return saldo.getVerificarSaldo(idConta);
-    }
-     
-    
-    public double getVerificarSaldo(String idConta) {
-        return verificarSaldo(idConta);
-    }
-    
-
     
     public double verificarDeposito() {
     funcao.efetuarDeposito(idConta, saldoAtual);
     return 0;
     }
+    
+    public double getVerificarSaldo(String idConta) {
+        return saldo.getVerificarSaldo(idConta);
+    }
+    
+    public void getSacar(String idConta, double valorSolicitado) {
+        new EfetuarSaque().getSacar(idConta, valorSolicitado);
+    }
+    
     public double getDeposito(){
     return verificarDeposito();
     }
