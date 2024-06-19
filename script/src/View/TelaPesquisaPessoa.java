@@ -2,6 +2,7 @@ package View;
 
 import Control.CPF;
 import Control.DAO.CRUD.PegarCliente;
+import Control.TipoPessoa;
 import Model.Gerente;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
 
     public TelaPesquisaPessoa() {
         initComponents();
-        
+
         setTitle("Menu de Pesquisa");
         //setIconImage();
         setResizable(false);
@@ -40,6 +41,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         numeroLinha = new javax.swing.JLabel();
         tabelaPessoa = new javax.swing.JScrollPane();
         tabelaCliente = new javax.swing.JTable();
+        botVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -198,6 +200,23 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         });
         tabelaPessoa.setViewportView(tabelaCliente);
 
+        botVoltar.setText("Voltar");
+        botVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botVoltarMouseClicked(evt);
+            }
+        });
+        botVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botVoltarActionPerformed(evt);
+            }
+        });
+        botVoltar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botVoltarKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelTelaPesquisaLayout = new javax.swing.GroupLayout(painelTelaPesquisa);
         painelTelaPesquisa.setLayout(painelTelaPesquisaLayout);
         painelTelaPesquisaLayout.setHorizontalGroup(
@@ -205,14 +224,16 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
             .addGroup(painelTelaPesquisaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(painelTelaPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tabelaPessoa)
+                    .addComponent(tabelaPessoa, javax.swing.GroupLayout.DEFAULT_SIZE, 749, Short.MAX_VALUE)
                     .addGroup(painelTelaPesquisaLayout.createSequentialGroup()
+                        .addComponent(botVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                        .addGap(45, 45, 45)
                         .addComponent(botAtualizarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(botLimparTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                        .addGap(29, 29, 29)
                         .addComponent(numeroLinha, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(49, 49, 49)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botCadastrarNovoItem, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botEditarItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -239,13 +260,16 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
                     .addGroup(painelTelaPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botExcluirItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(botCadastrarNovoItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(botEditarItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(botAtualizarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(botLimparTabela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(botEditarItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTelaPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botVoltar)
+                        .addGroup(painelTelaPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botAtualizarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botLimparTabela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
-        painelTelaPesquisaLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botCadastrarNovoItem, numeroLinha});
+        painelTelaPesquisaLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botAtualizarTabela, botCadastrarNovoItem, botEditarItem1, botExcluirItem, botLimparTabela, botVoltar, numeroLinha});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -352,6 +376,18 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     private void caixaPesquisaUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_caixaPesquisaUsuarioKeyPressed
 
     }//GEN-LAST:event_caixaPesquisaUsuarioKeyPressed
+
+    private void botVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botVoltarActionPerformed
+        voltar();
+    }//GEN-LAST:event_botVoltarActionPerformed
+
+    private void botVoltarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botVoltarKeyPressed
+        voltar();
+    }//GEN-LAST:event_botVoltarKeyPressed
+
+    private void botVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botVoltarMouseClicked
+        voltar();
+    }//GEN-LAST:event_botVoltarMouseClicked
 
     private void pesquisarUnicaPessoa() {
         //Armazena cpf
@@ -555,6 +591,11 @@ private void pesquisarTblGetente(String cpf) {
         JOptionPane.showMessageDialog(null, "Esse " + tipoPessoa.toLowerCase() + " não existe!", tipoPessoa + " inexistente", JOptionPane.WARNING_MESSAGE);
     }
 
+    private void voltar() {
+        this.dispose();
+        new TelaLogin(TipoPessoa.GERENTE).setVisible(true);
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -595,6 +636,7 @@ private void pesquisarTblGetente(String cpf) {
     private javax.swing.JButton botExcluirItem;
     private javax.swing.JButton botLimparTabela;
     private javax.swing.JButton botPesquisar;
+    private javax.swing.JButton botVoltar;
     private javax.swing.JTextField caixaPesquisaUsuario;
     private javax.swing.JLabel numeroLinha;
     private javax.swing.JPanel painelTelaPesquisa;

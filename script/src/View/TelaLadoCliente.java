@@ -2,6 +2,7 @@ package View;
 
 import Control.DAO.CRUD.PegarCliente;
 import Control.DAO.Conta.BuscarConta;
+import Control.TipoPessoa;
 import Model.ContaBancaria;
 import javax.swing.JOptionPane;
 
@@ -20,6 +21,8 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         setLocationRelativeTo(null);
 
         this.cpf = cpf;
+        
+        mensagemBoasVindas();
 
         buscarIDContaCliente(cpf);
 
@@ -38,6 +41,7 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         botEfetuarTransferência = new javax.swing.JButton();
         butSaque = new javax.swing.JButton();
         botAtualizar = new javax.swing.JButton();
+        botVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -122,26 +126,51 @@ public class TelaLadoCliente extends javax.swing.JFrame {
             }
         });
 
+        botVoltar.setText("Voltar");
+        botVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botVoltarMouseClicked(evt);
+            }
+        });
+        botVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botVoltarActionPerformed(evt);
+            }
+        });
+        botVoltar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botVoltarKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelLadoClienteLayout = new javax.swing.GroupLayout(painelLadoCliente);
         painelLadoCliente.setLayout(painelLadoClienteLayout);
         painelLadoClienteLayout.setHorizontalGroup(
             painelLadoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelLadoClienteLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(painelLadoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(labelNomeCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(painelLadoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelLadoClienteLayout.createSequentialGroup()
-                        .addComponent(labelSaldo)
-                        .addGap(18, 18, 18)
+                        .addContainerGap()
+                        .addComponent(botVoltar)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(painelLadoClienteLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(painelLadoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(butSaque, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botEfetuarTransferência, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botEfetuarDepósito, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelNomeCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                             .addGroup(painelLadoClienteLayout.createSequentialGroup()
-                                .addComponent(labelSaldoAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelSaldo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelSaldoAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(botAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(painelLadoClienteLayout.createSequentialGroup()
+                .addGap(83, 83, 83)
+                .addGroup(painelLadoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(butSaque, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botEfetuarTransferência, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botEfetuarDepósito, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         painelLadoClienteLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botEfetuarDepósito, botEfetuarTransferência, butSaque});
@@ -156,30 +185,28 @@ public class TelaLadoCliente extends javax.swing.JFrame {
                     .addComponent(labelSaldo)
                     .addComponent(labelSaldoAtual)
                     .addComponent(botAtualizar))
-                .addGap(35, 35, 35)
+                .addGap(18, 18, 18)
                 .addComponent(botEfetuarDepósito)
                 .addGap(18, 18, 18)
                 .addComponent(butSaque)
                 .addGap(18, 18, 18)
                 .addComponent(botEfetuarTransferência)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(botVoltar)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(painelLadoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(painelLadoCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(painelLadoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(painelLadoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -232,6 +259,18 @@ public class TelaLadoCliente extends javax.swing.JFrame {
     private void botEfetuarDepósitoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEfetuarDepósitoMouseClicked
         depositar();
     }//GEN-LAST:event_botEfetuarDepósitoMouseClicked
+
+    private void botVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botVoltarMouseClicked
+        voltar();
+    }//GEN-LAST:event_botVoltarMouseClicked
+
+    private void botVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botVoltarActionPerformed
+        voltar();
+    }//GEN-LAST:event_botVoltarActionPerformed
+
+    private void botVoltarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botVoltarKeyPressed
+        voltar();
+    }//GEN-LAST:event_botVoltarKeyPressed
 
     private void mostrarSaldo() {
         labelSaldoAtual.setText("R$" + buscarSaldoBD());
@@ -306,6 +345,11 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         }
     }
 
+    private void voltar() {
+        this.dispose();
+        new TelaLogin(TipoPessoa.CLIENTE).setVisible(true);
+    }
+    
     private double buscarSaldoBD() {
         double saldoAtual;
         String id = buscarIDContaCliente(this.cpf);
@@ -326,6 +370,10 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         return contaBancaria.getIdConta();
     }
 
+    private String buscarNomeCliente(String cpf) {
+        return new PegarCliente().getPegarNomeClienteUnico(cpf);
+    }
+    
     private boolean checkContaExiste(String idConta) {
         return new BuscarConta().getCheckExistenciaContaPorID(idConta);
     }
@@ -338,6 +386,13 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "O valor digitado não é válido! Por favor, digite novamente", "Valor nulo ou vazio", JOptionPane.ERROR_MESSAGE);
     }
 
+    private void mensagemExitoOperaçao(String mensagem, String titulo) {
+        JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.INFORMATION_MESSAGE); }
+
+    private void mensagemBoasVindas() {
+        labelNomeCliente.setText("Olá, " + buscarNomeCliente(cpf));
+    }
+    
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -350,13 +405,11 @@ public class TelaLadoCliente extends javax.swing.JFrame {
     private javax.swing.JButton botAtualizar;
     private javax.swing.JButton botEfetuarDepósito;
     private javax.swing.JButton botEfetuarTransferência;
+    private javax.swing.JButton botVoltar;
     private javax.swing.JButton butSaque;
     private javax.swing.JLabel labelNomeCliente;
     private javax.swing.JLabel labelSaldo;
     private javax.swing.JLabel labelSaldoAtual;
     private javax.swing.JPanel painelLadoCliente;
     // End of variables declaration//GEN-END:variables
-
-    private void mensagemExitoOperaçao(String mensagem, String titulo) {
-        JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.INFORMATION_MESSAGE); }
 }
