@@ -26,7 +26,7 @@ public class TelaLadoCliente extends javax.swing.JFrame {
 
         buscarIDContaCliente(cpf);
 
-        mostrarSaldo();
+        atualizarSaldo();
     }
 
     @SuppressWarnings("unchecked")
@@ -213,15 +213,15 @@ public class TelaLadoCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botAtualizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botAtualizarKeyPressed
-        mostrarSaldo();
+        atualizarSaldo();
     }//GEN-LAST:event_botAtualizarKeyPressed
 
     private void botAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botAtualizarActionPerformed
-        mostrarSaldo();
+        atualizarSaldo();
     }//GEN-LAST:event_botAtualizarActionPerformed
 
     private void botAtualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botAtualizarMouseClicked
-        mostrarSaldo();
+        atualizarSaldo();
     }//GEN-LAST:event_botAtualizarMouseClicked
 
     private void butSaqueKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_butSaqueKeyPressed
@@ -272,7 +272,7 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         voltar();
     }//GEN-LAST:event_botVoltarKeyPressed
 
-    private void mostrarSaldo() {
+    private void atualizarSaldo() {
         labelSaldoAtual.setText("R$" + buscarSaldoBD());
     }
 
@@ -286,7 +286,7 @@ public class TelaLadoCliente extends javax.swing.JFrame {
             double valorDeposito = Double.parseDouble(valorDepositoStr);
             contaBancaria.getEfetuarDeposito(contaBancaria.getIdConta(), valorDeposito);
             mensagemExitoOperaçao("Depósito realizado com sucesso!", "Êxito no depósito");
-            mostrarSaldo();
+            atualizarSaldo();
         }
     }
 
@@ -306,7 +306,7 @@ public class TelaLadoCliente extends javax.swing.JFrame {
             } else {
                 contaBancaria.getEfetuarSaque(contaBancaria.getIdConta(), valorSolicitadoSaque);
                 mensagemExitoOperaçao("Saque realizado com sucesso!", "Êxito no saque");
-                mostrarSaldo();
+                atualizarSaldo();
             }
         }
     }
@@ -338,7 +338,7 @@ public class TelaLadoCliente extends javax.swing.JFrame {
                     } else {
                         contaBancaria.getEfetuarTransferencia(contaBancaria.getIdConta(), valorTransferir, idContaDestinatario);
                         mensagemExitoOperaçao("Transferência realizada com sucesso!", "Êxito na transferência");
-                        mostrarSaldo();
+                        atualizarSaldo();
                     }
                 }
             }

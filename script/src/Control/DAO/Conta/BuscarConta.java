@@ -18,7 +18,7 @@ public class BuscarConta {
 
         try {
             conexao = (Connection) new dbConnect().getConnection();
-            comandoSQL = conexao.prepareStatement("select idConta from tbl_cliente where cpf = ?");
+            comandoSQL = conexao.prepareStatement("select idConta from tbl_Cliente where cpf = ?");
             comandoSQL.setString(1, cpf);
             resultado = comandoSQL.executeQuery();
             resultado.next();
@@ -39,7 +39,7 @@ public class BuscarConta {
 
         try {
             conexao = (Connection) new dbConnect().getConnection();
-            comandoSQL = conexao.prepareStatement("select idConta from tbl_contabancaria where idconta = ?");
+            comandoSQL = conexao.prepareStatement("select idConta from tbl_ContaBancaria where idconta = ?");
             comandoSQL.setString(1, idConta);
             resultado = comandoSQL.executeQuery();
 
