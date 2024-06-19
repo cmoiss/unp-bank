@@ -3,6 +3,7 @@ package Model;
 import Control.DAO.CRUD_DAO;
 import Control.DAO.Conta.EfetuarDeposito;
 import Control.DAO.Conta.EfetuarSaque;
+import Control.DAO.Conta.TransferenciaBancaria;
 import Control.DAO.Conta.VerificarSaldo;
 
 public class ContaBancaria {
@@ -47,4 +48,7 @@ public class ContaBancaria {
 
     /* O metodo de transferir dinheiro deve ser discutido
     public void tranferirDinheiro() {} */
+    public void getEfetuarTransferencia(String idConta, double valorSaque, String idContaDestinatario) {
+        new TransferenciaBancaria().getTransferirDinheiro(idConta, valorSaque, idContaDestinatario);
+    }
 }

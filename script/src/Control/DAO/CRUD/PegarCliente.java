@@ -108,8 +108,6 @@ public class PegarCliente {
         }
     }
     
-    
-    
     private String pegarIdCliente(String cpf) {
         String idCliente = null;
 

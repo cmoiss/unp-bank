@@ -1,7 +1,7 @@
 package View;
 
 import Control.DAO.CRUD.PegarCliente;
-import Control.DAO.Conta.BuscarIDConta;
+import Control.DAO.Conta.BuscarConta;
 import Model.ContaBancaria;
 import javax.swing.JOptionPane;
 
@@ -91,6 +91,11 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         botEfetuarTransferência.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botEfetuarTransferênciaActionPerformed(evt);
+            }
+        });
+        botEfetuarTransferência.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botEfetuarTransferênciaKeyPressed(evt);
             }
         });
 
@@ -221,11 +226,11 @@ public class TelaLadoCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_botEfetuarDepósitoActionPerformed
 
     private void botEfetuarTransferênciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botEfetuarTransferênciaMouseClicked
-        // TODO add your handling code here:
+        transferir();
     }//GEN-LAST:event_botEfetuarTransferênciaMouseClicked
 
     private void botEfetuarTransferênciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botEfetuarTransferênciaActionPerformed
-
+        transferir();
     }//GEN-LAST:event_botEfetuarTransferênciaActionPerformed
 
     private void botAdicionarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botAdicionarFotoActionPerformed
@@ -260,22 +265,79 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         depositar();
     }//GEN-LAST:event_botEfetuarDepósitoKeyPressed
 
+    private void botEfetuarTransferênciaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botEfetuarTransferênciaKeyPressed
+        transferir();
+    }//GEN-LAST:event_botEfetuarTransferênciaKeyPressed
+
     private void mostrarSaldo() {
         labelSaldoAtual.setText("R$" + buscarSaldoBD());
     }
 
     private void depositar() {
-        String valorDepositoStr = JOptionPane.showInputDialog(null, "Digite o valor a ser depositado.", "Valor de depósito", JOptionPane.INFORMATION_MESSAGE);
-        double valorDeposito = Double.parseDouble(valorDepositoStr);
-        contaBancaria.getEfetuarDeposito(contaBancaria.getIdConta(), valorDeposito);
-        mostrarSaldo();
+        String valorDepositoStr = JOptionPane.showInputDialog(null, "Digite o valor a ser depositado.", "Depósito", JOptionPane.INFORMATION_MESSAGE);
+
+        //verifica se valor é vazio
+        if (valorDepositoStr.isEmpty()) {
+            mensagemValorVazio();
+        } else {
+            double valorDeposito = Double.parseDouble(valorDepositoStr);
+            contaBancaria.getEfetuarDeposito(contaBancaria.getIdConta(), valorDeposito);
+            mostrarSaldo();
+        }
     }
-    
+
     private void sacar() {
-        String valorSaqueStr = JOptionPane.showInputDialog(null, "Digite o valor a ser sacado.", "Valor de saque", JOptionPane.INFORMATION_MESSAGE);
-        double valorSaque = Double.parseDouble(valorSaqueStr);
-        contaBancaria.getEfetuarSaque(contaBancaria.getIdConta(), valorSaque);
-        mostrarSaldo();
+        String valorSaqueStr = JOptionPane.showInputDialog(null, "Digite o valor a ser sacado.", "Saque", JOptionPane.INFORMATION_MESSAGE);
+
+        //verifica se valor é vazio
+        if (valorSaqueStr.isEmpty()) {
+            mensagemValorVazio();
+        } else {
+
+            double valorSolicitadoSaque = Double.parseDouble(valorSaqueStr);
+
+            // Não há saldo
+            if (contaBancaria.getSaldoAtual() < valorSolicitadoSaque) { //Saldo insuficiente
+                mensagemSaldoInsuficiente("saque");
+            } else {
+                contaBancaria.getEfetuarSaque(contaBancaria.getIdConta(), valorSolicitadoSaque);
+                mostrarSaldo();
+            }
+        }
+    }
+
+    private void transferir() {
+        //solicitar valor
+        String valorTransferirStr = JOptionPane.showInputDialog(null, "Digite o valor a ser transferido.", "Valor de Transferência", JOptionPane.INFORMATION_MESSAGE);
+
+        //verifica se valor é vazio
+        if (valorTransferirStr.isEmpty()) {
+            mensagemValorVazio();
+        } else {
+            double valorTransferir = Double.parseDouble(valorTransferirStr);
+
+            //verificar valor existe na conta 
+            if (contaBancaria.getSaldoAtual() < valorTransferir) {
+                mensagemSaldoInsuficiente("transferência");
+            } else {
+                //solicitar idConta a receber transferencia
+                String idContaDestinatario = JOptionPane.showInputDialog(null, "Digite id da conta a ser transferida", "Transferência", JOptionPane.INFORMATION_MESSAGE);
+
+                //verifica se id digitado é vazio
+                if (idContaDestinatario.isEmpty()) {
+                    mensagemValorVazio();
+                } else {
+                    //verifica se essa conta existe
+                    if (!checkContaExiste(idContaDestinatario)) {
+                        JOptionPane.showMessageDialog(null, "Essa conta não existe.", "Conta inexistente", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        contaBancaria.getEfetuarTransferencia(contaBancaria.getIdConta(), valorTransferir, idContaDestinatario);
+                        JOptionPane.showMessageDialog(null, "Transferência realizada com sucesso!", "Êxito na transferência", JOptionPane.INFORMATION_MESSAGE);
+                        mostrarSaldo();
+                    }
+                }
+            }
+        }
     }
 
     private double buscarSaldoBD() {
@@ -291,7 +353,7 @@ public class TelaLadoCliente extends javax.swing.JFrame {
     }
 
     private String buscarIDContaCliente(String cpf) {
-        BuscarIDConta buscaID = new BuscarIDConta();
+        BuscarConta buscaID = new BuscarConta();
 
         contaBancaria.setIdConta(buscaID.getBuscarIdConta(cpf));
 
@@ -304,8 +366,20 @@ public class TelaLadoCliente extends javax.swing.JFrame {
     }
 
     private void buscarConta() {
-        BuscarIDConta buscarID = new BuscarIDConta();
+        BuscarConta buscarID = new BuscarConta();
         buscarID.getBuscarIdConta(cpf);
+    }
+
+    private boolean checkContaExiste(String idConta) {
+        return new BuscarConta().getCheckExistenciaContaPorID(idConta);
+    }
+
+    private void mensagemSaldoInsuficiente(String tipoOperação) {
+        JOptionPane.showMessageDialog(null, "Não há saldo disponível na conta para efetuar " + tipoOperação + "!", "Saldo insuficiente", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void mensagemValorVazio() {
+        JOptionPane.showMessageDialog(null, "O valor digitado não é válido! Por favor, digite novamente", "Valor nulo ou vazio", JOptionPane.ERROR_MESSAGE);
     }
 
     public static void main(String args[]) {
