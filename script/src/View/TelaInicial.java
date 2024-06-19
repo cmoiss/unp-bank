@@ -6,6 +6,11 @@ public class TelaInicial extends javax.swing.JFrame {
 
     public TelaInicial() {
         initComponents();
+        
+        setTitle("Tela inicial");
+        //setIconImage();
+        setResizable(false);
+        setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")

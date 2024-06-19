@@ -3,7 +3,6 @@ package View;
 import Control.DAO.CRUD.LoginDAO;
 import Control.DAO.CRUD.PegarCliente;
 import Control.TipoPessoa;
-import Model.Gerente;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,11 +36,10 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         botEfetuarLogin = new javax.swing.JButton();
         caixaTextoSenha = new javax.swing.JPasswordField();
+        botVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
-
-        painelTelaLogin.setBorder(javax.swing.BorderFactory.createTitledBorder("LOGIN DE " + tipoPessoa));
 
         jLabel3.setText("Senha:");
 
@@ -79,26 +77,49 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
 
+        botVoltar.setText("Voltar");
+        botVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botVoltarMouseClicked(evt);
+            }
+        });
+        botVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botVoltarActionPerformed(evt);
+            }
+        });
+        botVoltar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botVoltarKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelTelaLoginLayout = new javax.swing.GroupLayout(painelTelaLogin);
         painelTelaLogin.setLayout(painelTelaLoginLayout);
         painelTelaLoginLayout.setHorizontalGroup(
             painelTelaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelTelaLoginLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(painelTelaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                .addGroup(painelTelaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelTelaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTelaLoginLayout.createSequentialGroup()
+                            .addComponent(logotipoUNPBANK, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(27, 27, 27))
+                        .addGroup(painelTelaLoginLayout.createSequentialGroup()
+                            .addGroup(painelTelaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                .addGroup(painelTelaLoginLayout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addGap(20, 20, 20)
+                                    .addComponent(caixaTextoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(painelTelaLoginLayout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addGap(19, 19, 19)
+                                    .addComponent(caixaTextoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addContainerGap()))
                     .addGroup(painelTelaLoginLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(20, 20, 20)
-                        .addComponent(caixaTextoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(painelTelaLoginLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(19, 19, 19)
-                        .addComponent(caixaTextoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(botEfetuarLogin)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTelaLoginLayout.createSequentialGroup()
-                        .addComponent(logotipoUNPBANK, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21)))
-                .addContainerGap())
+                        .addComponent(botVoltar)
+                        .addGap(33, 33, 33)
+                        .addComponent(botEfetuarLogin))))
         );
         painelTelaLoginLayout.setVerticalGroup(
             painelTelaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,7 +135,9 @@ public class TelaLogin extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(caixaTextoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
-                .addComponent(botEfetuarLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(painelTelaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botEfetuarLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botVoltar))
                 .addContainerGap())
         );
 
@@ -164,6 +187,18 @@ public class TelaLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botEfetuarLoginKeyPressed
 
+    private void botVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botVoltarMouseClicked
+        voltar();
+    }//GEN-LAST:event_botVoltarMouseClicked
+
+    private void botVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botVoltarActionPerformed
+        voltar();
+    }//GEN-LAST:event_botVoltarActionPerformed
+
+    private void botVoltarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botVoltarKeyPressed
+        voltar();
+    }//GEN-LAST:event_botVoltarKeyPressed
+
     private void efetuarLogin() throws SQLException {
 
         LoginDAO loginDAO = new LoginDAO(tipoPessoa);
@@ -188,6 +223,11 @@ public class TelaLogin extends javax.swing.JFrame {
         }
     }
 
+    private void voltar() {
+        this.dispose();
+        new TelaInicial().setVisible(true);
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -223,6 +263,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botEfetuarLogin;
+    private javax.swing.JButton botVoltar;
     private javax.swing.JTextField caixaTextoLogin;
     private javax.swing.JPasswordField caixaTextoSenha;
     private javax.swing.JLabel jLabel2;

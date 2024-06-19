@@ -25,7 +25,7 @@ public class LoginDAO {
         
          if (tipoPessoa.equals(TipoPessoa.CLIENTE)){
         try{
-            comandoSQL=conexao.prepareStatement("SELECT*FROM tbl_cliente WHERE Login=? and Senha=?");
+            comandoSQL=conexao.prepareStatement("SELECT*FROM tbl_Cliente WHERE Login=? and Senha=?");
             comandoSQL.setString(1,Login);
             comandoSQL.setString(2,Senha);
             result=comandoSQL.executeQuery();

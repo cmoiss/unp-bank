@@ -19,14 +19,14 @@ public class EfetuarDeposito {
         try {
             conexao = (Connection) new dbConnect().getConnection();
             
-            comandoSQL = conexao.prepareStatement("SELECT saldoAtual FROM tbl_contabancaria WHERE idconta=?");
+            comandoSQL = conexao.prepareStatement("SELECT saldoAtual FROM tbl_ContaBancaria WHERE idconta=?");
             comandoSQL.setString(1, idConta);
             resultado = comandoSQL.executeQuery();
             resultado.next();
             saldo = resultado.getDouble(1);
             
             saldo += valorDepositado;
-            comandoSQL = conexao.prepareStatement("UPDATE tbl_contabancaria SET saldoAtual = ? WHERE idconta = ?;");
+            comandoSQL = conexao.prepareStatement("UPDATE tbl_ContaBancaria SET saldoAtual = ? WHERE idconta = ?;");
             comandoSQL.setDouble(1, saldo);
             comandoSQL.setString(2, idConta);
             comandoSQL.execute();
