@@ -7,7 +7,7 @@ public class TelaInicial extends javax.swing.JFrame {
     public TelaInicial() {
         initComponents();
         
-        setTitle("Tela de login");
+        setTitle("Tela inicial");
         //setIconImage();
         setResizable(false);
         setLocationRelativeTo(null);
