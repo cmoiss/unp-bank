@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Caio/Documents/GitHub/unp-bank/script/src/Control/DAO/CadastroDAO.java</file>
-            <file>file:/C:/Users/Caio/Documents/GitHub/unp-bank/script/src/Control/DAO/CRUD_DAO.java</file>
-            <file>file:/C:/Users/Caio/Documents/GitHub/unp-bank/script/src/View/TelaCadastroCliente.java</file>
-            <file>file:/C:/Users/Caio/Documents/GitHub/unp-bank/script/src/View/TelaLogin.java</file>
-            <file>file:/C:/Users/Caio/Documents/GitHub/unp-bank/script/src/View/TelaPesquisaPessoa.java</file>
-            <file>file:/C:/Users/Caio/Documents/GitHub/unp-bank/script/src/Model/Gerente.java</file>
+            <file>file:/home/caio/Documents/GitHub/unp-bank/script/src/Control/DAO/CRUD/PegarCliente.java</file>
+            <file>file:/home/caio/Documents/GitHub/unp-bank/script/src/View/TelaPesquisaPessoa.java</file>
+            <file>file:/home/caio/Documents/GitHub/unp-bank/script/test/Teste.java</file>
+            <file>file:/home/caio/Documents/GitHub/unp-bank/script/src/Control/Idade.java</file>
+            <file>file:/home/caio/Documents/GitHub/unp-bank/script/src/View/TelaInicial.java</file>
         </group>
     </open-files>
 </project-private>
