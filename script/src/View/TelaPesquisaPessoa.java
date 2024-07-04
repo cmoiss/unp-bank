@@ -412,12 +412,12 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         String cpf = null;
 
         String mensagem = "Deseja cadastrar um novo usuário?";
-        String[] options = {"Cancelar", "Gerente", "Cliente"};
+        String[] opçao = {"Cancelar", "Gerente", "Cliente"};
 
         //Pergunta quem quer cadastrar
-        int choice = JOptionPane.showOptionDialog(null, mensagem, "Selecionar tipo de cadastro",
+        int escolha = JOptionPane.showOptionDialog(null, mensagem, "Selecionar tipo de cadastro",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-                null, options, options[2]);
+                null, opçao, opçao[2]);
 
         /*Pergunta se deseja cadastrar esse cpf digitado
             int usarCpf = JOptionPane.showConfirmDialog(null,
@@ -428,7 +428,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
             if (usarCpf == JOptionPane.YES_OPTION) {
                 cpf = caixaPesquisaUsuario.getText();
             }*/
-        switch (choice) {
+        switch (escolha) {
             case 2 -> {
                 //Cadastrar cliente
                 this.dispose();
@@ -467,16 +467,27 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     }
 
     private void excluir() {
-        int opçao = JOptionPane.showConfirmDialog(null, "Realmente deseja excluir esse usuário?", "Excluir usuário", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        String mensagem = "Realmente deseja excluir esse usuário?";
+        String[] opçao = {"Não", "Sim"};
 
-        switch (opçao) {
-            case JOptionPane.YES_OPTION -> {
+        //Primeira confirmação de exclusão
+        int escolha = JOptionPane.showOptionDialog(null,
+                mensagem,
+                "Excluir usuário",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opçao,
+                opçao[0]);
+
+        switch (escolha) {
+            case 1 -> {
                 Gerente ger = new Gerente(null, null, null, null, null, null, null, null);
                 ger.getExcluirCliente(pegarCPFLinha());
                 atualizarTabela();
             }
 
-            case JOptionPane.NO_OPTION -> {
+            case 0 -> {
                 //Não exclui
             }
 
