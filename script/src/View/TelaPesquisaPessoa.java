@@ -411,11 +411,13 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     private void chamarTelaCadastro() {
         String cpf = null;
 
+        String mensagem = "Deseja cadastrar um novo usuário?";
+        String[] options = {"Cancelar", "Gerente", "Cliente"};
+
         //Pergunta quem quer cadastrar
-        int opçao = JOptionPane.showConfirmDialog(null,
-                "Deseja cadastrar um cliente ou gerente?",
-                "Selecionar tipo de cadastro",
-                JOptionPane.YES_NO_OPTION);
+        int choice = JOptionPane.showOptionDialog(null, mensagem, "Selecionar tipo de cadastro",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+                null, options, options[2]);
 
         /*Pergunta se deseja cadastrar esse cpf digitado
             int usarCpf = JOptionPane.showConfirmDialog(null,
@@ -426,17 +428,22 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
             if (usarCpf == JOptionPane.YES_OPTION) {
                 cpf = caixaPesquisaUsuario.getText();
             }*/
-        switch (opçao) {
-            case JOptionPane.YES_OPTION -> {
-                // Cadastrar cliente
+        switch (choice) {
+            case 2 -> {
+                //Cadastrar cliente
                 this.dispose();
                 new TelaCadastroCliente().setVisible(true);
             }
 
-            case JOptionPane.NO_OPTION -> {
-                // Cadastrar gerente
+            case 1 -> {
+                //Cadastrar gerente
                 this.dispose();
                 new TelaCadastroGerente().setVisible(true);
+            }
+
+            case 0 -> {
+            }
+            default -> {
             }
         }
     }
