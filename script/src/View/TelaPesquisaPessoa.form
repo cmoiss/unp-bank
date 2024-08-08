@@ -99,12 +99,12 @@
                           <Component id="botCadastrarNovoItem" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="botEditarItem1" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                          <Component id="botVoltar" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="botAtualizarTabela" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botLimparTabela" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="botVoltar" linkSize="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>

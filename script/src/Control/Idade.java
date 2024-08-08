@@ -15,7 +15,7 @@ public class Idade {
         //Lê e armazena data de nascimento
         String dataNascimentoString;
         Scanner ler = new Scanner(System.in);
-        
+
         dataNascimentoString = ler.nextLine();
         ler.close();
 
@@ -29,11 +29,33 @@ public class Idade {
         SimpleDateFormat formatarData = new SimpleDateFormat("dd/MM/yyyy");
         dataNascimentoDate = formatarData.parse(dataNascimentoString);
         this.dataNascimento = dataNascimentoDate;
-        
+
         return dataNascimentoDate;
     }
 
-    private void calcularIdade() {
+    private String convertDataDatabaseToJavaString(String dataNascimentoDB) {
+        String dataJavaString = "";
+
+        for (int i = 8; i < 10; i++) {
+            dataJavaString += dataNascimentoDB.charAt(i);
+        }
+
+        dataJavaString += "/";
+
+        for (int i = 5; i < 7; i++) {
+            dataJavaString += dataNascimentoDB.charAt(i);
+        }
+
+        dataJavaString += "/";
+
+        for (int i = 0; i < 4; i++) {
+            dataJavaString += dataNascimentoDB.charAt(i);
+        }
+
+        return dataJavaString;
+    }
+
+    private int calcularIdade() {
         //Armazena as partes da data de nascimento para viabilizar o cálculo da idade
         int diaAtual, mesAtual, anoAtual;
         int diaNascimento, mesNascimento, anoNascimento;
@@ -66,6 +88,8 @@ public class Idade {
         if (this.idade < 0) {
             this.idade = 0;
         }
+        
+        return this.idade;
     }
 
     private void imprimirIdade() {
@@ -100,7 +124,7 @@ public class Idade {
     public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
-    
+
     public int getIdade() {
         return idade;
     }
@@ -117,8 +141,12 @@ public class Idade {
         formatarDataNascimento(dataNascimento);
     }
 
-    public void getCalcularIdade() {
-        calcularIdade();
+    public String getConvertFromDataDatabaseToJavaString(String dataNascimentoDB) {
+        return convertDataDatabaseToJavaString(dataNascimentoDB);
+    }
+    
+    public int getCalcularIdade() {
+        return calcularIdade();
     }
 
     public void getImprimirIdade() {

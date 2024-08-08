@@ -226,7 +226,7 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
                 .addGroup(painelTelaPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tabelaPessoa, javax.swing.GroupLayout.DEFAULT_SIZE, 749, Short.MAX_VALUE)
                     .addGroup(painelTelaPesquisaLayout.createSequentialGroup()
-                        .addComponent(botVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                        .addComponent(botVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addGap(45, 45, 45)
                         .addComponent(botAtualizarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -261,11 +261,11 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
                         .addComponent(botExcluirItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(botCadastrarNovoItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(botEditarItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTelaPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(botVoltar)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTelaPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(painelTelaPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(botAtualizarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botLimparTabela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(botLimparTabela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(botVoltar)))
                 .addContainerGap())
         );
 
@@ -411,11 +411,13 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     private void chamarTelaCadastro() {
         String cpf = null;
 
+        String mensagem = "Deseja cadastrar um novo usuário?";
+        String[] opçao = {"Cancelar", "Gerente", "Cliente"};
+
         //Pergunta quem quer cadastrar
-        int opçao = JOptionPane.showConfirmDialog(null,
-                "Deseja cadastrar um cliente ou gerente?",
-                "Selecionar tipo de cadastro",
-                JOptionPane.YES_NO_OPTION);
+        int escolha = JOptionPane.showOptionDialog(null, mensagem, "Selecionar tipo de cadastro",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+                null, opçao, opçao[2]);
 
         /*Pergunta se deseja cadastrar esse cpf digitado
             int usarCpf = JOptionPane.showConfirmDialog(null,
@@ -426,17 +428,22 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
             if (usarCpf == JOptionPane.YES_OPTION) {
                 cpf = caixaPesquisaUsuario.getText();
             }*/
-        switch (opçao) {
-            case JOptionPane.YES_OPTION -> {
-                // Cadastrar cliente
+        switch (escolha) {
+            case 2 -> {
+                //Cadastrar cliente
                 this.dispose();
                 new TelaCadastroCliente().setVisible(true);
             }
 
-            case JOptionPane.NO_OPTION -> {
-                // Cadastrar gerente
+            case 1 -> {
+                //Cadastrar gerente
                 this.dispose();
                 new TelaCadastroGerente().setVisible(true);
+            }
+
+            case 0 -> {
+            }
+            default -> {
             }
         }
     }
@@ -460,16 +467,27 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     }
 
     private void excluir() {
-        int opçao = JOptionPane.showConfirmDialog(null, "Realmente deseja excluir esse usuário?", "Excluir usuário", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        String mensagem = "Realmente deseja excluir esse usuário?";
+        String[] opçao = {"Não", "Sim"};
 
-        switch (opçao) {
-            case JOptionPane.YES_OPTION -> {
+        //Primeira confirmação de exclusão
+        int escolha = JOptionPane.showOptionDialog(null,
+                mensagem,
+                "Excluir usuário",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opçao,
+                opçao[0]);
+
+        switch (escolha) {
+            case 1 -> {
                 Gerente ger = new Gerente(null, null, null, null, null, null, null, null);
                 ger.getExcluirCliente(pegarCPFLinha());
                 atualizarTabela();
             }
 
-            case JOptionPane.NO_OPTION -> {
+            case 0 -> {
                 //Não exclui
             }
 

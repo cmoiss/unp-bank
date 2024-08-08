@@ -4,11 +4,10 @@ import Control.DAO.CRUD_DAO;
 import Control.DAO.CRUD.CadastroDAO;
 import Control.DAO.CRUD.EditarCliente;
 import Control.DAO.CRUD.PegarCliente;
-import Control.DAO.CRUD.RemoverCliente;
+import Control.DAO.CRUD.DesativarCliente;
 import Control.TipoPessoa;
 import java.util.Date;
 import java.sql.SQLException;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class Gerente extends Pessoa {
@@ -63,9 +62,8 @@ public class Gerente extends Pessoa {
     }
 
     private void excluirCliente(String cpf) {
-        RemoverCliente remover = new RemoverCliente();
-        remover.getRemoverTblClientes(cpf);
-        remover.getRemoverTblPessoa(cpf);
+        DesativarCliente remover = new DesativarCliente();
+        remover.getDesativarCliente(cpf);
     }
     
     public void getExcluirCliente(String cpf){
