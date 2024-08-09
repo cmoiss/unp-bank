@@ -14,14 +14,14 @@ public class TelaLadoCliente extends javax.swing.JFrame {
 
     public TelaLadoCliente(String cpf) {
         initComponents();
-        
+
         setTitle("Menu de Pesquisa");
         //setIconImage();
         setResizable(false);
         setLocationRelativeTo(null);
 
         this.cpf = cpf;
-        
+
         mensagemBoasVindas();
 
         buscarIDContaCliente(cpf);
@@ -278,13 +278,12 @@ public class TelaLadoCliente extends javax.swing.JFrame {
 
     private void depositar() {
         String valorDepositoStr = JOptionPane.showInputDialog(null, "Digite o valor a ser depositado.", "Depósito", JOptionPane.INFORMATION_MESSAGE);
+        double valorDepositoDouble;
 
-        //verifica se valor é vazio
-        if (valorDepositoStr.isEmpty()) {
-            mensagemValorVazio();
-        } else {
-            double valorDeposito = Double.parseDouble(valorDepositoStr);
-            contaBancaria.getEfetuarDeposito(contaBancaria.getIdConta(), valorDeposito);
+        // Verifica se o input é um valor válido
+        if (validarInputMovimentaçoes(valorDepositoStr)) {
+            valorDepositoDouble = Double.parseDouble(valorDepositoStr);
+            contaBancaria.getEfetuarDeposito(contaBancaria.getIdConta(), valorDepositoDouble);
             mensagemExitoOperaçao("Depósito realizado com sucesso!", "Êxito no depósito");
             atualizarSaldo();
         }
@@ -292,19 +291,17 @@ public class TelaLadoCliente extends javax.swing.JFrame {
 
     private void sacar() {
         String valorSaqueStr = JOptionPane.showInputDialog(null, "Digite o valor a ser sacado.", "Saque", JOptionPane.INFORMATION_MESSAGE);
+        double valorSolicitadoSaqueDouble;
 
-        //verifica se valor é vazio
-        if (valorSaqueStr.isEmpty()) {
-            mensagemValorVazio();
-        } else {
+        // Verifica se o input é um valor válido
+        if (validarInputMovimentaçoes(valorSaqueStr)) {
+            valorSolicitadoSaqueDouble = Double.parseDouble(valorSaqueStr);
 
-            double valorSolicitadoSaque = Double.parseDouble(valorSaqueStr);
-
-            // Não há saldo
-            if (contaBancaria.getSaldoAtual() < valorSolicitadoSaque) { //Saldo insuficiente
+            // Saldo insuficiente
+            if (contaBancaria.getSaldoAtual() < valorSolicitadoSaqueDouble) {
                 mensagemSaldoInsuficiente("saque");
             } else {
-                contaBancaria.getEfetuarSaque(contaBancaria.getIdConta(), valorSolicitadoSaque);
+                contaBancaria.getEfetuarSaque(contaBancaria.getIdConta(), valorSolicitadoSaqueDouble);
                 mensagemExitoOperaçao("Saque realizado com sucesso!", "Êxito no saque");
                 atualizarSaldo();
             }
@@ -314,15 +311,14 @@ public class TelaLadoCliente extends javax.swing.JFrame {
     private void transferir() {
         //solicitar valor
         String valorTransferirStr = JOptionPane.showInputDialog(null, "Digite o valor a ser transferido.", "Valor de Transferência", JOptionPane.INFORMATION_MESSAGE);
+        double valorTransferirDouble;
 
-        //verifica se valor é vazio
-        if (valorTransferirStr.isEmpty()) {
-            mensagemValorVazio();
-        } else {
-            double valorTransferir = Double.parseDouble(valorTransferirStr);
+        // Verifica se o input é válido
+        if (validarInputMovimentaçoes(valorTransferirStr)) {
+            valorTransferirDouble = Double.parseDouble(valorTransferirStr);
 
             //verificar valor existe na conta 
-            if (contaBancaria.getSaldoAtual() < valorTransferir) {
+            if (contaBancaria.getSaldoAtual() < valorTransferirDouble) {
                 mensagemSaldoInsuficiente("transferência");
             } else {
                 //solicitar idConta a receber transferencia
@@ -336,7 +332,7 @@ public class TelaLadoCliente extends javax.swing.JFrame {
                     if (!checkContaExiste(idContaDestinatario)) {
                         JOptionPane.showMessageDialog(null, "Essa conta não existe.", "Conta inexistente", JOptionPane.WARNING_MESSAGE);
                     } else {
-                        contaBancaria.getEfetuarTransferencia(contaBancaria.getIdConta(), valorTransferir, idContaDestinatario);
+                        contaBancaria.getEfetuarTransferencia(contaBancaria.getIdConta(), valorTransferirDouble, idContaDestinatario);
                         mensagemExitoOperaçao("Transferência realizada com sucesso!", "Êxito na transferência");
                         atualizarSaldo();
                     }
@@ -349,7 +345,7 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         this.dispose();
         new TelaLogin(TipoPessoa.CLIENTE).setVisible(true);
     }
-    
+
     private double buscarSaldoBD() {
         double saldoAtual;
         String id = buscarIDContaCliente(this.cpf);
@@ -373,7 +369,7 @@ public class TelaLadoCliente extends javax.swing.JFrame {
     private String buscarNomeCliente(String cpf) {
         return new PegarCliente().getPegarNomeClienteUnico(cpf);
     }
-    
+
     private boolean checkContaExiste(String idConta) {
         return new BuscarConta().getCheckExistenciaContaPorID(idConta);
     }
@@ -387,12 +383,51 @@ public class TelaLadoCliente extends javax.swing.JFrame {
     }
 
     private void mensagemExitoOperaçao(String mensagem, String titulo) {
-        JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.INFORMATION_MESSAGE); }
+        JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.INFORMATION_MESSAGE);
+    }
 
     private void mensagemBoasVindas() {
         labelNomeCliente.setText("Olá, " + buscarNomeCliente(cpf));
     }
-    
+
+    private boolean validarInputMovimentaçoes(String inputString) {
+        /* Método responsável por validar valores de entrada nas movimentações (depósito, saque, transferência)
+        Essa validação ocorre em duas etapas:
+        1ª Etapa - Verificar se input é vazio/nulo/zero
+        2ª Etapa - Verificar se input é negativo        
+        
+        true - input válido
+        false - input inválido
+         */
+
+        boolean validade = false;
+        double inputDouble; //Converte o valor para double
+
+        // 1ª Etapa
+        if (inputString == null || inputString.isEmpty()) {
+            // Input é nulo ou vazio
+            mensagemValorVazio();
+        } else {
+            inputDouble = Double.parseDouble(inputString); //Converte o valor para double
+            if (inputDouble == 0) {
+                // Input é igual a 0
+                mensagemValorVazio();
+            } else {
+                // O input possui valor
+
+                // Verifica se o valor é negativo 
+                if (inputDouble < 0) {
+                    // Input é negativo
+                    JOptionPane.showMessageDialog(null, "O valor digitado é negativo. Por favor, insira um valor válido", "Valor inválido", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    // Input é positivo
+                    validade = true;
+                }
+            }
+        }
+        return validade;
+    }
+
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
