@@ -1,16 +1,17 @@
 package View;
 
-import Control.DAO.CRUD.PegarCliente;
-import Control.DAO.Conta.BuscarConta;
+import Control.BuscasContaBancaria;
+import Control.MovimentacoesBancarias;
 import Control.TipoPessoa;
 import Model.ContaBancaria;
-import javax.swing.JOptionPane;
 
 public class TelaLadoCliente extends javax.swing.JFrame {
 
     String cpf = null;
 
     ContaBancaria contaBancaria = new ContaBancaria(null, 0);
+    MovimentacoesBancarias movimentacoesBancarias;
+    BuscasContaBancaria buscar;
 
     public TelaLadoCliente(String cpf) {
         initComponents();
@@ -21,12 +22,13 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         setLocationRelativeTo(null);
 
         this.cpf = cpf;
+        this.movimentacoesBancarias = new MovimentacoesBancarias(cpf, contaBancaria, labelSaldoAtual);
 
-        mensagemBoasVindas();
+        buscar = new BuscasContaBancaria(contaBancaria);
+        setLabelNomeCliente();
+        buscar.buscarIDContaCliente(cpf);
 
-        buscarIDContaCliente(cpf);
-
-        atualizarSaldo();
+        movimentacoesBancarias.atualizarSaldo();
     }
 
     @SuppressWarnings("unchecked")
@@ -213,15 +215,15 @@ public class TelaLadoCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botAtualizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botAtualizarKeyPressed
-        atualizarSaldo();
+        movimentacoesBancarias.atualizarSaldo();
     }//GEN-LAST:event_botAtualizarKeyPressed
 
     private void botAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botAtualizarActionPerformed
-        atualizarSaldo();
+        movimentacoesBancarias.atualizarSaldo();
     }//GEN-LAST:event_botAtualizarActionPerformed
 
     private void botAtualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botAtualizarMouseClicked
-        atualizarSaldo();
+        movimentacoesBancarias.atualizarSaldo();
     }//GEN-LAST:event_botAtualizarMouseClicked
 
     private void butSaqueKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_butSaqueKeyPressed
@@ -272,73 +274,16 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         voltar();
     }//GEN-LAST:event_botVoltarKeyPressed
 
-    private void atualizarSaldo() {
-        labelSaldoAtual.setText("R$" + buscarSaldoBD());
-    }
-
     private void depositar() {
-        String valorDepositoStr = JOptionPane.showInputDialog(null, "Digite o valor a ser depositado.", "Depósito", JOptionPane.INFORMATION_MESSAGE);
-        double valorDepositoDouble;
-
-        // Verifica se o input é um valor válido
-        if (validarInputMovimentaçoes(valorDepositoStr)) {
-            valorDepositoDouble = Double.parseDouble(valorDepositoStr);
-            contaBancaria.getEfetuarDeposito(contaBancaria.getIdConta(), valorDepositoDouble);
-            mensagemExitoOperaçao("Depósito realizado com sucesso!", "Êxito no depósito");
-            atualizarSaldo();
-        }
+        movimentacoesBancarias.depositar();
     }
 
     private void sacar() {
-        String valorSaqueStr = JOptionPane.showInputDialog(null, "Digite o valor a ser sacado.", "Saque", JOptionPane.INFORMATION_MESSAGE);
-        double valorSolicitadoSaqueDouble;
-
-        // Verifica se o input é um valor válido
-        if (validarInputMovimentaçoes(valorSaqueStr)) {
-            valorSolicitadoSaqueDouble = Double.parseDouble(valorSaqueStr);
-
-            // Saldo insuficiente
-            if (contaBancaria.getSaldoAtual() < valorSolicitadoSaqueDouble) {
-                mensagemSaldoInsuficiente("saque");
-            } else {
-                contaBancaria.getEfetuarSaque(contaBancaria.getIdConta(), valorSolicitadoSaqueDouble);
-                mensagemExitoOperaçao("Saque realizado com sucesso!", "Êxito no saque");
-                atualizarSaldo();
-            }
-        }
+        movimentacoesBancarias.sacar();
     }
 
     private void transferir() {
-        //solicitar valor
-        String valorTransferirStr = JOptionPane.showInputDialog(null, "Digite o valor a ser transferido.", "Valor de Transferência", JOptionPane.INFORMATION_MESSAGE);
-        double valorTransferirDouble;
-
-        // Verifica se o input é válido
-        if (validarInputMovimentaçoes(valorTransferirStr)) {
-            valorTransferirDouble = Double.parseDouble(valorTransferirStr);
-
-            //verificar valor existe na conta 
-            if (contaBancaria.getSaldoAtual() < valorTransferirDouble) {
-                mensagemSaldoInsuficiente("transferência");
-            } else {
-                //solicitar idConta a receber transferencia
-                String idContaDestinatario = JOptionPane.showInputDialog(null, "Digite id da conta a ser transferida", "Transferência", JOptionPane.INFORMATION_MESSAGE);
-
-                //verifica se id digitado é vazio
-                if (idContaDestinatario.isEmpty()) {
-                    mensagemValorVazio();
-                } else {
-                    //verifica se essa conta existe
-                    if (!checkContaExiste(idContaDestinatario)) {
-                        JOptionPane.showMessageDialog(null, "Essa conta não existe.", "Conta inexistente", JOptionPane.WARNING_MESSAGE);
-                    } else {
-                        contaBancaria.getEfetuarTransferencia(contaBancaria.getIdConta(), valorTransferirDouble, idContaDestinatario);
-                        mensagemExitoOperaçao("Transferência realizada com sucesso!", "Êxito na transferência");
-                        atualizarSaldo();
-                    }
-                }
-            }
-        }
+        movimentacoesBancarias.transferir();
     }
 
     private void voltar() {
@@ -346,86 +291,8 @@ public class TelaLadoCliente extends javax.swing.JFrame {
         new TelaLogin(TipoPessoa.CLIENTE).setVisible(true);
     }
 
-    private double buscarSaldoBD() {
-        double saldoAtual;
-        String id = buscarIDContaCliente(this.cpf);
-
-        PegarCliente cliente = new PegarCliente();
-
-        saldoAtual = contaBancaria.getVerificarSaldo(id);
-        contaBancaria.setSaldoAtual(saldoAtual);
-
-        return saldoAtual;
-    }
-
-    private String buscarIDContaCliente(String cpf) {
-        BuscarConta buscaID = new BuscarConta();
-
-        contaBancaria.setIdConta(buscaID.getBuscarIdConta(cpf));
-
-        return contaBancaria.getIdConta();
-    }
-
-    private String buscarNomeCliente(String cpf) {
-        return new PegarCliente().getPegarNomeClienteUnico(cpf);
-    }
-
-    private boolean checkContaExiste(String idConta) {
-        return new BuscarConta().getCheckExistenciaContaPorID(idConta);
-    }
-
-    private void mensagemSaldoInsuficiente(String tipoOperação) {
-        JOptionPane.showMessageDialog(null, "Não há saldo disponível na conta para efetuar " + tipoOperação + "!", "Saldo insuficiente", JOptionPane.ERROR_MESSAGE);
-    }
-
-    private void mensagemValorVazio() {
-        JOptionPane.showMessageDialog(null, "O valor digitado não é válido! Por favor, digite novamente", "Valor nulo ou vazio", JOptionPane.ERROR_MESSAGE);
-    }
-
-    private void mensagemExitoOperaçao(String mensagem, String titulo) {
-        JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    private void mensagemBoasVindas() {
-        labelNomeCliente.setText("Olá, " + buscarNomeCliente(cpf));
-    }
-
-    private boolean validarInputMovimentaçoes(String inputString) {
-        /* Método responsável por validar valores de entrada nas movimentações (depósito, saque, transferência)
-        Essa validação ocorre em duas etapas:
-        1ª Etapa - Verificar se input é vazio/nulo/zero
-        2ª Etapa - Verificar se input é negativo        
-        
-        true - input válido
-        false - input inválido
-         */
-
-        boolean validade = false;
-        double inputDouble; //Converte o valor para double
-
-        // 1ª Etapa
-        if (inputString == null || inputString.isEmpty()) {
-            // Input é nulo ou vazio
-            mensagemValorVazio();
-        } else {
-            inputDouble = Double.parseDouble(inputString); //Converte o valor para double
-            if (inputDouble == 0) {
-                // Input é igual a 0
-                mensagemValorVazio();
-            } else {
-                // O input possui valor
-
-                // Verifica se o valor é negativo 
-                if (inputDouble < 0) {
-                    // Input é negativo
-                    JOptionPane.showMessageDialog(null, "O valor digitado é negativo. Por favor, insira um valor válido", "Valor inválido", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    // Input é positivo
-                    validade = true;
-                }
-            }
-        }
-        return validade;
+    private void setLabelNomeCliente() {
+        labelNomeCliente.setText("Olá, " + buscar.buscarNomeCliente(cpf));
     }
 
     public static void main(String args[]) {
