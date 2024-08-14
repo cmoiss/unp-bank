@@ -19,4 +19,8 @@ public class DialogMessages {
     public void mensagemContaInexistente() {
         JOptionPane.showMessageDialog(null, "Essa conta não existe.", "Conta inexistente", JOptionPane.WARNING_MESSAGE);
     }
+
+    public void mensagemClienteNaoSelecionado() {
+        JOptionPane.showMessageDialog(null, "Por favor, selecione algum cliente", "Nenhum cliente selecionado!", JOptionPane.WARNING_MESSAGE);
+    }
 }

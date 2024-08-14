@@ -10,6 +10,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class TelaPesquisaPessoa extends javax.swing.JFrame {
 
+    DialogMessages mensagem = new DialogMessages();
+
     public TelaPesquisaPessoa() {
         initComponents();
 
@@ -449,50 +451,59 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
     }
 
     private void chamarTelaEditarDados() {
-        String cpf = pegarCPFLinha();
+        if (!checkIfThereIsASelectedLine()) {
+            mensagem.mensagemClienteNaoSelecionado();
+        } else {
+            String cpf = pegarCPFLinha();   
 
-        int opçao = JOptionPane.showConfirmDialog(null,
-                "Deseja editar esse cliente?",
-                "Confirmar edição",
-                JOptionPane.YES_NO_OPTION);
-        switch (opçao) {
-            case JOptionPane.YES_OPTION -> {
-                this.dispose();
-                new TelaEditar(cpf).setVisible(true);
-            }
+            int opçao = JOptionPane.showConfirmDialog(null,
+                    "Deseja editar esse cliente?",
+                    "Confirmar edição",
+                    JOptionPane.YES_NO_OPTION);
+            switch (opçao) {
+                case JOptionPane.YES_OPTION -> {
+                    this.dispose();
+                    new TelaEditar(cpf).setVisible(true);
+                }
 
-            case JOptionPane.NO_OPTION -> {
+                case JOptionPane.NO_OPTION -> {
+                }
             }
         }
     }
 
     private void excluir() {
-        String mensagem = "Realmente deseja excluir esse usuário?";
-        String[] opçao = {"Não", "Sim"};
+        // Verifica se alguma linha foi selecionada
+        if (!checkIfThereIsASelectedLine()) {
+            mensagem.mensagemClienteNaoSelecionado();
+        } else {
+            String mensagem = "Realmente deseja excluir esse usuário?";
+            String[] opçao = {"Não", "Sim"};
 
-        //Primeira confirmação de exclusão
-        int escolha = JOptionPane.showOptionDialog(null,
-                mensagem,
-                "Excluir usuário",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                opçao,
-                opçao[0]);
+            //Primeira confirmação de exclusão
+            int escolha = JOptionPane.showOptionDialog(null,
+                    mensagem,
+                    "Excluir usuário",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    opçao,
+                    opçao[0]);
 
-        switch (escolha) {
-            case 1 -> {
-                Gerente ger = new Gerente(null, null, null, null, null, null, null, null);
-                ger.getExcluirCliente(pegarCPFLinha());
-                atualizarTabela();
-            }
+            switch (escolha) {
+                case 1 -> {
+                    Gerente gerente = new Gerente();
+                    gerente.getDesativarCliente(pegarCPFLinha());
+                    atualizarTabela();
+                }
 
-            case 0 -> {
-                //Não exclui
-            }
+                case 0 -> {
+                    //Não exclui
+                }
 
-            default -> {
-                //Não exclui
+                default -> {
+                    //Não exclui
+                }
             }
         }
     }
@@ -528,69 +539,6 @@ public class TelaPesquisaPessoa extends javax.swing.JFrame {
         return ((String) modelo.getValueAt(linha, 1));
     }
 
-    /*    private void pesquisarTblCliente(String cpf) {
-    Gerente pesquisa = new Gerente(null, null, null, null, null, null, null, null);
-    ResultSet resultado = pesquisa.getPesquisarCliente(cpf);
-
-    try {
-        if (!resultado.next()) {
-            mensagemPessoaInexixtenteBD("Cliente");
-        } else {
-            String nome = resultado.getString("nomtabelaPessoae");
-            String cpfBD = resultado.getString("cpf");
-            int idade = resultado.getInt("idade");
-            int idCliente = resultado.getInt("idCliente");
-            String idConta = resultado.getString("idConta");
-            double saldoAtual = resultado.getDouble("saldoAtual");
-            boolean statusConta = resultado.getBoolean("statusCliente");
-
-            String statusContaStr;
-
-            if (statusConta) {
-                statusContaStr = "Ativo";
-            } else {
-                statusContaStr = "Inativo";
-            }
-
-            String mensagem = "Nome: " + nome + "\n"
-                    + "CPF: " + cpfBD + "\n"
-                    + "Idade: " + idade + "\n"
-                    + "ID Cliente: " + idCliente + "\n"
-                    + "ID Conta: " + idConta + "\n"
-                    + "Saldo Atual: " + saldoAtual + "\n"
-                    + "Status da Conta: " + statusContaStr.toUpperCase();
-
-            JOptionPane.showMessageDialog(null, mensagem, "Dados do Cliente", JOptionPane.INFORMATION_MESSAGE);
-        }
-    } catch (SQLException u) {
-        JOptionPane.showMessageDialog(null, "Erro ao buscar dados do cliente!", "Erro", JOptionPane.ERROR_MESSAGE);
-    }
-}*/
- /*
-private void pesquisarTblGetente(String cpf) {
-    Gerente pesquisa = new Gerente(null, null, null, null, null, null, null, null);
-    ResultSet resultado = pesquisa.getPesquisarGerente(cpf);
-
-    try {
-        if (!resultado.next()) {
-            mensagemPessoaInexixtenteBD("Gerente");
-        } else {
-            String nome = resultado.getString("nome");
-            String cpfBD = resultado.getString("cpf");
-            int idade = resultado.getInt("idade");
-            String idGerente = resultado.getString("idGerente");
-
-            String mensagem = "Nome: " + nome + "\n"
-                    + "CPF: " + cpfBD + "\n"
-                    + "Idade: " + idade + "\n"
-                    + "ID Gerente: " + idGerente + "\n";
-
-            JOptionPane.showMessageDialog(null, mensagem, "Dados do Gerente", JOptionPane.INFORMATION_MESSAGE);
-        }
-    } catch (SQLException u) {
-        JOptionPane.showMessageDialog(null, "Erro ao buscar dados do gerente!", "Erro", JOptionPane.ERROR_MESSAGE);
-    }
-}*/
     private boolean validarCPFPesquisado(String cpf) {
         CPF validador = new CPF();
         boolean validarCPF = validador.getValidarCPF(cpf);
@@ -607,6 +555,16 @@ private void pesquisarTblGetente(String cpf) {
 
     private void mensagemPessoaInexixtenteBD(String tipoPessoa) {
         JOptionPane.showMessageDialog(null, "Esse " + tipoPessoa.toLowerCase() + " não existe!", tipoPessoa + " inexistente", JOptionPane.WARNING_MESSAGE);
+    }
+
+    private boolean checkIfThereIsASelectedLine() {
+        boolean isSelected = false;
+
+        if (tabelaCliente.getSelectedRow() >= 0) {
+            isSelected = true;
+        }
+
+        return isSelected;
     }
 
     private void voltar() {

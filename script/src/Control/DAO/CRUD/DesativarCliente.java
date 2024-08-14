@@ -9,7 +9,7 @@ public class DesativarCliente {
 
     private Connection conexao;
 
-    private void desativarCliente(String cpf) {
+    public void desativarCliente(String cpf) {
         conexao = (Connection) new dbConnect().getConnection();
         PreparedStatement comandoSQL;
 
@@ -26,9 +26,5 @@ public class DesativarCliente {
         } catch (SQLException u) {
             throw new RuntimeException(u);
         }
-    }
-
-    public void getDesativarCliente(String cpf) {
-        desativarCliente(cpf);
     }
 }

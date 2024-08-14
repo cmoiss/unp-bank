@@ -18,6 +18,9 @@ public class Pessoa {
     private String genero = null;
     Idade idade = new Idade();
 
+    public Pessoa() {
+    }
+    
     public Pessoa(TipoPessoa tipoPessoa, String nome, String CPF, Date dataNascimento, String email, String login, String senha, String genero) {
         GerarID gerarID = new GerarID();
         this.id = gerarID.getGerarID();

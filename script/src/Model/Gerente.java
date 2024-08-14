@@ -15,11 +15,14 @@ public class Gerente extends Pessoa {
     private String idGerente;
     CRUD_DAO funcao = new CRUD_DAO();
 
+    public Gerente() {
+    }
+    
     public Gerente(String idGerente, String nome, String CPF, Date dataNascimento, String email, String login, String senha, String genero) {
         super(TipoPessoa.GERENTE, nome, CPF, dataNascimento, email, login, senha, genero);
         this.idGerente = idGerente;
     }
-
+    
     private void cadastrarCliente(String nome, String cpf, Date data, int idade, String email, String login, String senha, double saldoAtual, String genero) throws SQLException {
         CadastroDAO cadastrar = new CadastroDAO();
         cadastrar.getCadastrarCliente(nome, cpf, data, idade, email, login, senha, saldoAtual, genero);
@@ -61,13 +64,12 @@ public class Gerente extends Pessoa {
         funcao.verifcarTblCliente();
     }
 
-    private void excluirCliente(String cpf) {
-        DesativarCliente remover = new DesativarCliente();
-        remover.getDesativarCliente(cpf);
+    private void desativarCliente(String cpf) {
+        new DesativarCliente().desativarCliente(cpf);
     }
     
-    public void getExcluirCliente(String cpf){
-        excluirCliente(cpf);
+    public void getDesativarCliente(String cpf){
+        desativarCliente(cpf);
     }
     
     public String getIdGerente() {
