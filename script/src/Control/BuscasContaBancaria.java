@@ -1,16 +1,20 @@
 package Control;
 
 import Control.DAO.CRUD.PegarCliente;
-import Control.DAO.Conta.BuscarConta;
+import Control.DAO.Conta.BuscarContaDAO;
 import Model.ContaBancaria;
 
 public class BuscasContaBancaria {
+
     ContaBancaria contaBancaria = new ContaBancaria(null, 0);
+
+    public BuscasContaBancaria() {
+    }
 
     public BuscasContaBancaria(ContaBancaria contaBancaria) {
         this.contaBancaria = contaBancaria;
     }
-    
+
     public double buscarSaldoBD(String cpf) {
         double saldoAtual;
         String id = buscarIDContaCliente(cpf);
@@ -24,7 +28,7 @@ public class BuscasContaBancaria {
     }
 
     public String buscarIDContaCliente(String cpf) {
-        BuscarConta buscaID = new BuscarConta();
+        BuscarContaDAO buscaID = new BuscarContaDAO();
 
         contaBancaria.setIdConta(buscaID.getBuscarIdConta(cpf));
 
@@ -36,6 +40,10 @@ public class BuscasContaBancaria {
     }
 
     public boolean checkContaExiste(String idConta) {
-        return new BuscarConta().getCheckExistenciaContaPorID(idConta);
+        return new BuscarContaDAO().getCheckExistenciaContaPorID(idConta);
+    }
+
+    public boolean checkContaAtiva(String idConta) {
+        return new BuscarContaDAO().checkIfAccountIsActive(idConta);
     }
 }

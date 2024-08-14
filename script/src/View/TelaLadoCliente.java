@@ -215,15 +215,15 @@ public class TelaLadoCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botAtualizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botAtualizarKeyPressed
-        movimentacoesBancarias.atualizarSaldo();
+        atualizarSaldo();
     }//GEN-LAST:event_botAtualizarKeyPressed
 
     private void botAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botAtualizarActionPerformed
-        movimentacoesBancarias.atualizarSaldo();
+        atualizarSaldo();
     }//GEN-LAST:event_botAtualizarActionPerformed
 
     private void botAtualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botAtualizarMouseClicked
-        movimentacoesBancarias.atualizarSaldo();
+        atualizarSaldo();
     }//GEN-LAST:event_botAtualizarMouseClicked
 
     private void butSaqueKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_butSaqueKeyPressed
@@ -283,7 +283,11 @@ public class TelaLadoCliente extends javax.swing.JFrame {
     }
 
     private void transferir() {
-        movimentacoesBancarias.transferir();
+        movimentacoesBancarias.solicitarTransferencia();
+    }
+    
+    private void atualizarSaldo() {
+        movimentacoesBancarias.atualizarSaldo();
     }
 
     private void voltar() {

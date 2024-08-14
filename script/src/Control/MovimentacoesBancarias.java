@@ -10,13 +10,13 @@ public class MovimentacoesBancarias {
     javax.swing.JLabel labelSaldoAtual;
     ContaBancaria contaBancaria = new ContaBancaria(null, 0);
     DialogMessages mensagem = new DialogMessages();
-    
+
     public MovimentacoesBancarias(String cpf, ContaBancaria contaBancaria, javax.swing.JLabel labelSaldoAtual) {
         this.cpf = cpf;
         this.contaBancaria = contaBancaria;
         this.labelSaldoAtual = labelSaldoAtual;
     }
-    
+
     public void depositar() {
         String valorDepositoStr = JOptionPane.showInputDialog(null, "Digite o valor a ser depositado.", "Depósito", JOptionPane.INFORMATION_MESSAGE);
         double valorDepositoDouble;
@@ -49,7 +49,7 @@ public class MovimentacoesBancarias {
         }
     }
 
-    public void transferir() {
+    public void solicitarTransferencia() {
         //solicitar valor
         String valorTransferirStr = JOptionPane.showInputDialog(null, "Digite o valor a ser transferido.", "Valor de Transferência", JOptionPane.INFORMATION_MESSAGE);
         double valorTransferirDouble;
@@ -69,17 +69,28 @@ public class MovimentacoesBancarias {
                 if (idContaDestinatario.isEmpty()) {
                     mensagem.mensagemValorVazio();
                 } else {
+                    BuscasContaBancaria buscar = new BuscasContaBancaria();
+
                     //verifica se essa conta existe
-                    if (!new BuscasContaBancaria(contaBancaria).checkContaExiste(idContaDestinatario)) {
-                        JOptionPane.showMessageDialog(null, "Essa conta não existe.", "Conta inexistente", JOptionPane.WARNING_MESSAGE);
+                    if (!buscar.checkContaExiste(idContaDestinatario)) {
+                        mensagem.mensagemContaInexistente();
                     } else {
-                        contaBancaria.getEfetuarTransferencia(contaBancaria.getIdConta(), valorTransferirDouble, idContaDestinatario);
-                        mensagem.mensagemExitoOperaçao("Transferência realizada com sucesso!", "Êxito na transferência");
-                        atualizarSaldo();
+                        // Verifica se essa conta está ativa
+                        if (!buscar.checkContaAtiva(idContaDestinatario)) {
+                            mensagem.mensagemContaInexistente();
+                        } else {
+                            transferirValor(valorTransferirDouble, idContaDestinatario);
+                        }
                     }
                 }
             }
         }
+    }
+
+    private void transferirValor(Double valorTransferirDouble, String idContaDestinatario) {
+        contaBancaria.getEfetuarTransferencia(contaBancaria.getIdConta(), valorTransferirDouble, idContaDestinatario);
+        mensagem.mensagemExitoOperaçao("Transferência realizada com sucesso!", "Êxito na transferência");
+        atualizarSaldo();
     }
 
     private boolean validarInputMovimentaçoes(String inputString) {
@@ -119,7 +130,7 @@ public class MovimentacoesBancarias {
         }
         return validade;
     }
-    
+
     public void atualizarSaldo() {
         BuscasContaBancaria buscar = new BuscasContaBancaria(contaBancaria);
         labelSaldoAtual.setText("R$" + buscar.buscarSaldoBD(cpf));

@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class BuscarConta {
+public class BuscarContaDAO {
 
     private Connection conexao;
 
@@ -52,6 +52,35 @@ public class BuscarConta {
         }
 
         return existe;
+    }
+
+    public boolean checkIfAccountIsActive(String idConta) {
+        boolean active = false;
+
+        PreparedStatement comandoSQL;
+        ResultSet resultado;
+
+        try {
+            conexao = (Connection) new dbConnect().getConnection();
+
+            comandoSQL = conexao.prepareStatement("select statusCliente from tbl_Cliente where idConta = ?");
+            comandoSQL.setString(1, idConta);
+            resultado = comandoSQL.executeQuery();
+
+            // Verifica se há algum resultado
+            if (resultado.next()) {
+                int status = resultado.getInt("statusCliente");
+
+                // Verifica se a conta está ativa
+                if (status == 1) {
+                    active = true;
+                }
+            }
+        } catch (SQLException u) {
+            throw new RuntimeException(u);
+        }
+
+        return active;
     }
 
     public String getBuscarIdConta(String cpf) {
